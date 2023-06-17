@@ -5,7 +5,7 @@ from sqlalchemy.orm.base import Mapped
 
 Base = declarative_base()
 metadata = Base.metadata
-engine = create_engine("sqlite:///db.db")
+engine = create_engine("sqlite:///database.db")
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -155,19 +155,21 @@ class Clients(Base):
         for llave in arg:
             if llave in switcher:
                 funcion = switcher.get(llave)
-                funcion(arg[llave])
-        try:
-            int(arg.value) #evalua si el argumento es un numero o no
-            #si es numero usa estos filtros
-            q1 = session.query(Clients).filter(Clients.ci.like(f"%{arg.value}%")).all() #filtro por ci
-            q2 = session.query(Clients).filter(Clients.phone.like(f"%{arg.value}%")).all() #filtro por telefono
-            lista = q1 + q2 #agregar resultados a la lista
-        except ValueError:
-            q1 = session.query(Clients).filter(Clients.nombre_apellidos.like(f"%{arg.value}%")).all() # filtro por nombre y apellidos
-            q2 = session.query(Clients).join(t_r_clients_socials).filter(t_r_clients_socials.c.username.like(f"%{arg.value}%")).all()
-            lista = q1 + q2
-        q = session.query(Clients).filter(Clients.direccion.like(f"%{arg.value}%")).all() #filtro por direccion
-        lista += q
+                lista.extend(funcion(arg[llave]))
+        print(lista)
+        if "search" in arg:
+            try:
+                int(arg["search"]) #evalua si el argumento es un numero o no
+                #si es numero usa estos filtros
+                q1 = session.query(Clients).filter(Clients.ci.like(f"%{arg['search']}%")).all() #filtro por ci
+                q2 = session.query(Clients).filter(Clients.phone.like(f"%{arg['search']}%")).all() #filtro por telefono
+                lista = q1 + q2 #agregar resultados a la lista
+            except ValueError:
+                q1 = session.query(Clients).filter(Clients.nombre_apellidos.like(f"%{arg['search']}%")).all() # filtro por nombre y apellidos
+                q2 = session.query(Clients).join(t_r_clients_socials).filter(t_r_clients_socials.c.username.like(f"%{arg['search']}%")).all()
+                lista = q1 + q2
+            q = session.query(Clients).filter(Clients.direccion.like(f"%{arg['search']}%")).all() #filtro por direccion
+            lista += q
         lista = set(lista)
         res = tuple(lista)
         return res

@@ -4,9 +4,11 @@ from sqlalchemy import create_engine, insert
 from sqlalchemy.orm import sessionmaker
 import random
 from datetime import date
+from app.config import get_config, set_config
 
 fake  = Faker()
-engine = create_engine('sqlite:///db.db')
+db = get_config()["db"]
+engine = create_engine(f'sqlite:///{db}')
 Session = sessionmaker(bind=engine)
 session = Session()
 def crear():
@@ -83,7 +85,6 @@ def crear():
 
         trabajo_obj = Trabajos(created_at=c_at, price=p, fecha_pago=f_p)
         trabajo_obj.cliente = fake.random_element(clientes)
-        trabajo_obj.material = fake.random_element(materiales)
         trabajo_obj.tecnica = fake.random_element(tecnicas)
         trabajo_obj.tipo_pago = fake.random_element(tipo_pagos)
         trabajo_obj.tipo_trabajo = fake.random_element(tipo_trabajos)
@@ -103,7 +104,7 @@ def crear():
         turno_obj.tipo_trabajo = fake.random_element(tipo_trabajos)
         turnos.append(turno_obj)
 
-    with session in Session():
+
         session.add_all(materiales)
         session.add_all(provincias)
         session.add_all(socials)
@@ -116,6 +117,7 @@ def crear():
         session.add_all(trabajos)
         session.add_all(turnos)
         session.commit()
+        session.close()
 
 
 def relacionar():
@@ -128,17 +130,15 @@ def relacionar():
         social_aleatoria = fake.random_elements(elements=socials, unique=True)
         for social in social_aleatoria:
             username = fake.user_name()
-            with session in Session():
-                stmp = insert(t_r_clients_socials).values(username=username, client_id=client.id, social_id=social.id)
-                session.execute(stmp)
+            stmp = insert(t_r_clients_socials).values(username=username, client_id=client.id, social_id=social.id)
+            session.execute(stmp)
 
     for trabajo in trabajos:
         material_aleatorio = fake.random_elements(elements=materiales, unique=False)
         if material_aleatorio:
             trabajo.material.extend(material_aleatorio)
 
-    with session in Session():
-        session.commit()
+    session.commit()
 
 def obtener_datos():
     materiales = session.query(Materiales.material).all()
@@ -155,6 +155,14 @@ def obtener_datos():
     
     return map(lambda item: tuple(map(lambda x: x.nombre_apellidos,item.client)),socials)
 
-if __name__ == "__main__":
-    result = Clients.getByProvinciaId(3)
-    print(result, len(result), sep="\n")
+def cr_del_wr_db(b, e):
+    b.metadata.drop_all(e)
+    b.metadata.create_all(e)
+    crear()
+    relacionar()
+
+def execute_falsos():
+    created = get_config()['created']
+    if not created:
+        cr_del_wr_db(Base, engine)
+        set_config("DATABASE", 'created', True)
