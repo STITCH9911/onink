@@ -1,8 +1,17 @@
-from .app.data.falsos import execute_falsos
 import os
-from .app.config import config_create
+from config import config_create, get_config
+from const import CONFIG_FILE_NAME
+
+
+
 
 if __name__ == "__main__":
-    if os.path.isfile('config.ini'):
+    if not os.path.isfile(CONFIG_FILE_NAME):
         config_create()
-    execute_falsos()
+        print("Archivo de configuración creado correctamente")
+        db = get_config()["db"]
+        if not os.path.isfile(db):
+            print("No existe base de datos\nProcediendo a crear base de datos...")
+            from falsos import execute_falsos
+            execute_falsos()
+    print("INICIANDO APLICACIÓN")

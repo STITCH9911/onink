@@ -2,10 +2,12 @@ from typing import List, Optional, Tuple
 from sqlalchemy import Column, Date, DateTime, Float, ForeignKey, Integer, Table, Text, UniqueConstraint, create_engine, text
 from sqlalchemy.orm import Mapped, declarative_base, mapped_column, relationship, sessionmaker
 from sqlalchemy.orm.base import Mapped
+from config import get_config
 
 Base = declarative_base()
 metadata = Base.metadata
-engine = create_engine("sqlite:///database.db")
+db = get_config()["db"]
+engine = create_engine(f"sqlite:///{db}")
 Session = sessionmaker(bind=engine)
 session = Session()
 

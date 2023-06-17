@@ -4,13 +4,16 @@ from sqlalchemy import create_engine, insert
 from sqlalchemy.orm import sessionmaker
 import random
 from datetime import date
-from app.config import get_config, set_config
+from config import get_config, set_config
+import os
+from const import CONFIG_FILE_NAME
 
 fake  = Faker()
-db = get_config()["db"]
-engine = create_engine(f'sqlite:///{db}')
-Session = sessionmaker(bind=engine)
-session = Session()
+if os.path.isfile(CONFIG_FILE_NAME):
+    db = get_config()["db"]
+    engine = create_engine(f'sqlite:///{db}')
+    Session = sessionmaker(bind=engine)
+    session = Session()
 def crear():
     materiales, provincias, socials, tecnicas, tipo_trabajos, tipo_pagos, tonalidades, municipios, clientes, trabajos, turnos = [], [], [], [], [], [], [], [], [], [], []
 
@@ -162,7 +165,6 @@ def cr_del_wr_db(b, e):
     relacionar()
 
 def execute_falsos():
-    created = get_config()['created']
-    if not created:
-        cr_del_wr_db(Base, engine)
-        set_config("DATABASE", 'created', True)
+    cr_del_wr_db(Base, engine)
+    set_config("DATABASE", 'created', True)
+    print("Base de datos creada correctamente.")
