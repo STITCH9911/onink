@@ -1,19 +1,12 @@
 from faker import Faker
-from models import *
-from sqlalchemy import create_engine, insert
-from sqlalchemy.orm import sessionmaker
+from models import Materiales, Provincias, Socials, Tecnicas, TipoTrabajos, TiposPagos, Tonalidades, Municipios, Clients, Trabajos, Turnos, t_r_clients_socials, Base
+from sqlalchemy import insert
 import random
 from datetime import date
-from config import get_config, set_config
-import os
-from const import CONFIG_FILE_NAME
+from config import set_config
+from const import Session, engine
 
 fake  = Faker()
-if os.path.isfile(CONFIG_FILE_NAME):
-    db = get_config()["db"]
-    engine = create_engine(f'sqlite:///{db}')
-    Session = sessionmaker(bind=engine)
-    session = Session()
 def crear():
     materiales, provincias, socials, tecnicas, tipo_trabajos, tipo_pagos, tonalidades, municipios, clientes, trabajos, turnos = [], [], [], [], [], [], [], [], [], [], []
 
@@ -77,7 +70,7 @@ def crear():
 
         client_obj = Clients(direccion=dir, ci=ci, notes= n, created_at= c_at, phone=t, alcance=alc)
         client_obj.nombre_apellidos = fake.name()
-        client_obj.municipo = fake.random_element(municipios)
+        client_obj.municipio = fake.random_element(municipios)
         clientes.append(client_obj)
 
 
@@ -107,55 +100,56 @@ def crear():
         turno_obj.tipo_trabajo = fake.random_element(tipo_trabajos)
         turnos.append(turno_obj)
 
-
-        session.add_all(materiales)
-        session.add_all(provincias)
-        session.add_all(socials)
-        session.add_all(tecnicas)
-        session.add_all(tipo_trabajos)
-        session.add_all(tipo_pagos)
-        session.add_all(tonalidades)
-        session.add_all(municipios)
-        session.add_all(clientes)
-        session.add_all(trabajos)
-        session.add_all(turnos)
-        session.commit()
-        session.close()
+        with Session() as session:
+            session.add_all(materiales)
+            session.add_all(provincias)
+            session.add_all(socials)
+            session.add_all(tecnicas)
+            session.add_all(tipo_trabajos)
+            session.add_all(tipo_pagos)
+            session.add_all(tonalidades)
+            session.add_all(municipios)
+            session.add_all(clientes)
+            session.add_all(trabajos)
+            session.add_all(turnos)
+            session.commit()
 
 
 def relacionar():
-    materiales = session.query(Materiales).all()
-    socials = session.query(Socials).all()
-    clientes = session.query(Clients).all()
-    trabajos = session.query(Trabajos).all()
+    with Session() as session:
+        materiales = session.query(Materiales).all()
+        socials = session.query(Socials).all()
+        clientes = session.query(Clients).all()
+        trabajos = session.query(Trabajos).all()
 
-    for client in clientes:
-        social_aleatoria = fake.random_elements(elements=socials, unique=True)
-        for social in social_aleatoria:
-            username = fake.user_name()
-            stmp = insert(t_r_clients_socials).values(username=username, client_id=client.id, social_id=social.id)
-            session.execute(stmp)
+        for client in clientes:
+            social_aleatoria = fake.random_elements(elements=socials, unique=True)
+            for social in social_aleatoria:
+                username = fake.user_name()
+                stmp = insert(t_r_clients_socials).values(username=username, client_id=client.id, social_id=social.id)
+                session.execute(stmp)
 
-    for trabajo in trabajos:
-        material_aleatorio = fake.random_elements(elements=materiales, unique=False)
-        if material_aleatorio:
-            trabajo.material.extend(material_aleatorio)
+        for trabajo in trabajos:
+            material_aleatorio = fake.random_elements(elements=materiales, unique=False)
+            if material_aleatorio:
+                trabajo.material.extend(material_aleatorio)
 
-    session.commit()
+        session.commit()
 
 def obtener_datos():
-    materiales = session.query(Materiales.material).all()
-    socials = session.query(Socials).all()
-    clientes = session.query(Clients.nombre_apellidos, Clients.id, t_r_clients_socials.c.username, Socials.social).select_from(Clients).join(t_r_clients_socials).join(Socials).filter(t_r_clients_socials.c.username == "michelebrown").all()
-    trabajos = session.query(Trabajos.price, TipoTrabajos.tipo).join(TipoTrabajos).all()
-    municipios = session.query(Municipios).all()
-    tecnicas = session.query(Tecnicas)
-    t_trabajos = session.query(TipoTrabajos)
-    t_pagos = session.query(TiposPagos)
-    tonalidades = session.query(Tonalidades)
-    turnos = session.query(Turnos)
-    provincias = session.query(Provincias).all()
-    
+    with Session() as session:
+        materiales = session.query(Materiales.material).all()
+        socials = session.query(Socials).all()
+        clientes = session.query(Clients.nombre_apellidos, Clients.id, t_r_clients_socials.c.username, Socials.social).select_from(Clients).join(t_r_clients_socials).join(Socials).filter(t_r_clients_socials.c.username == "michelebrown").all()
+        trabajos = session.query(Trabajos.price, TipoTrabajos.tipo).join(TipoTrabajos).all()
+        municipios = session.query(Municipios).all()
+        tecnicas = session.query(Tecnicas)
+        t_trabajos = session.query(TipoTrabajos)
+        t_pagos = session.query(TiposPagos)
+        tonalidades = session.query(Tonalidades)
+        turnos = session.query(Turnos)
+        provincias = session.query(Provincias).all()
+        
     return map(lambda item: tuple(map(lambda x: x.nombre_apellidos,item.client)),socials)
 
 def cr_del_wr_db(b, e):

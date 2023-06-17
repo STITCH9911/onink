@@ -15,3 +15,8 @@ if __name__ == "__main__":
             from falsos import execute_falsos
             execute_falsos()
     print("INICIANDO APLICACIÓN")
+    a = input("Escriba el filtro de busqueda:\n")
+    b = input("Escriba el valor a buscar:\n")
+    from models import Clients
+    r = Clients.getByCriterion(**{a:b})
+    print(r)
