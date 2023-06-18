@@ -3,8 +3,6 @@ from config import config_create, get_config
 from const import CONFIG_FILE_NAME
 
 
-
-
 if __name__ == "__main__":
     if not os.path.isfile(CONFIG_FILE_NAME):
         config_create()
