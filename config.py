@@ -1,7 +1,11 @@
 import configparser
-from const import CONFIG_FILE_NAME
+import os
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm.session import sessionmaker
 
 config = configparser.ConfigParser()
+CONFIG_FILE_NAME = 'config.ini'
 
 def config_create():
     print("Creando archivo de configuración...")
@@ -21,3 +25,8 @@ def get_config():
     db = config.get('DATABASE', 'name')
     created = config.getboolean("DATABASE", 'created')
     return {'db': db, 'created': created}
+
+if os.path.isfile(CONFIG_FILE_NAME):
+    db = get_config()["db"]
+    engine = create_engine(f"sqlite:///{db}")
+    Session = sessionmaker(bind=engine)
