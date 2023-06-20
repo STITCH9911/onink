@@ -1,7 +1,6 @@
 import os
-from config import config_create, get_config
-from const import CONFIG_FILE_NAME
-
+from config import config_create, get_config, CONFIG_FILE_NAME
+from main import main
 
 if __name__ == "__main__":
     if not os.path.isfile(CONFIG_FILE_NAME):
@@ -13,8 +12,4 @@ if __name__ == "__main__":
             from falsos import execute_falsos
             execute_falsos()
     print("INICIANDO APLICACIÓN")
-    a = input("Escriba el filtro de busqueda:\n")
-    b = input("Escriba el valor a buscar:\n")
-    from models import Clients
-    r = Clients.getByCriterion(**{a:b})
-    print(r)
+    main()
