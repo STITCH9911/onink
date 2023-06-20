@@ -2,7 +2,7 @@ from typing import List, Optional, Tuple
 from sqlalchemy import Column, Date, DateTime, Float, ForeignKey, Integer, Table, Text, UniqueConstraint, text, or_
 from sqlalchemy.orm import Mapped, declarative_base, mapped_column, relationship
 from sqlalchemy.orm.base import Mapped
-from const import Session
+from config import Session
 from PyQt6.QtCore import QDate
 
 Base = declarative_base()

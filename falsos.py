@@ -3,8 +3,7 @@ from models import Materiales, Provincias, Socials, Tecnicas, TipoTrabajos, Tipo
 from sqlalchemy import insert
 import random
 from datetime import date
-from config import set_config
-from const import Session, engine
+from config import set_config, Session, engine
 
 fake  = Faker()
 def crear():
