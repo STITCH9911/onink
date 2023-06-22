@@ -232,9 +232,9 @@ class Clients(Base):
 
     id = mapped_column(Integer, primary_key=True)
     nombre_apellidos = mapped_column(Text(255), nullable=False)
-    direccion = mapped_column(Text(255), nullable=False)
+    direccion = mapped_column(Text(255))
     ci = mapped_column(Text, nullable=False)
-    notes = mapped_column(Text, nullable=False)
+    notes = mapped_column(Text)
     created_at = mapped_column(DateTime, nullable=False)
     phone = mapped_column(Text)
     alcance = mapped_column(Text)

@@ -13,6 +13,7 @@ def main():
     gui = MainWindow(app)
     gui.show()
     sys.exit(qapp.exec())
+    
 
 if __name__ == '__main__':
     main()
