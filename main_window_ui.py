@@ -177,12 +177,54 @@ class Ui_OnInkMainWindow(object):
 "    background-color: rgb(255,255,255);\n"
 "    border-top-left-radius: 20px;\n"
 "    border-bottom-left-radius: 20px;\n"
-"}")
+"}\n"
+"\n"
+"QScrollArea {\n"
+"        border-radius: 5px;\n"
+"        margin: 5px;\n"
+"    }\n"
+"\n"
+"QScrollBar:vertical {\n"
+"    background-color: rgb(235, 235, 235);\n"
+"        width: 10px;\n"
+"        margin: 0px 0 0px 0;\n"
+"        border-radius: 5px;\n"
+"    }\n"
+"\n"
+"    QScrollBar::handle:vertical {\n"
+"    background-color: rgb(118, 118, 118);\n"
+"        min-height: 20px;\n"
+"        border-radius: 5px;\n"
+"    }\n"
+"\n"
+"    QScrollBar::add-line:vertical {\n"
+"        background-color: #F5F5F5;\n"
+"        height: 0px;\n"
+"        subcontrol-position: bottom;\n"
+"        subcontrol-origin: margin;\n"
+"        border-top-left-radius: 5px;\n"
+"        border-top-right-radius: 5px;\n"
+"    }\n"
+"\n"
+"    QScrollBar::sub-line:vertical {\n"
+"        background-color: #F5F5F5;\n"
+"        height: 0px;\n"
+"        subcontrol-position: top;\n"
+"        subcontrol-origin: margin;\n"
+"        border-bottom-left-radius: 5px;\n"
+"        border-bottom-right-radius: 5px;\n"
+"    }\n"
+"\n"
+"    QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"        background-color: none;\n"
+"    }\n"
+"\n"
+"    ")
         self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.widget_menu_lateral = QtWidgets.QWidget()
-        self.widget_menu_lateral.setGeometry(QtCore.QRect(0, 0, 198, 522))
+        self.widget_menu_lateral.setGeometry(QtCore.QRect(0, 0, 171, 1392))
         self.widget_menu_lateral.setObjectName("widget_menu_lateral")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.widget_menu_lateral)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
@@ -202,6 +244,141 @@ class Ui_OnInkMainWindow(object):
         self.bt_menu_clientes.setIconSize(QtCore.QSize(35, 35))
         self.bt_menu_clientes.setObjectName("bt_menu_clientes")
         self.verticalLayout_4.addWidget(self.bt_menu_clientes)
+        self.bt_redes_sociales_28 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_28.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_28.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_28.setObjectName("bt_redes_sociales_28")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_28)
+        self.bt_redes_sociales_27 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_27.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_27.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_27.setObjectName("bt_redes_sociales_27")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_27)
+        self.bt_redes_sociales_26 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_26.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_26.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_26.setObjectName("bt_redes_sociales_26")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_26)
+        self.bt_redes_sociales_25 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_25.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_25.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_25.setObjectName("bt_redes_sociales_25")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_25)
+        self.bt_redes_sociales_24 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_24.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_24.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_24.setObjectName("bt_redes_sociales_24")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_24)
+        self.bt_redes_sociales_23 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_23.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_23.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_23.setObjectName("bt_redes_sociales_23")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_23)
+        self.bt_redes_sociales_22 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_22.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_22.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_22.setObjectName("bt_redes_sociales_22")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_22)
+        self.bt_redes_sociales_21 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_21.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_21.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_21.setObjectName("bt_redes_sociales_21")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_21)
+        self.bt_redes_sociales_20 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_20.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_20.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_20.setObjectName("bt_redes_sociales_20")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_20)
+        self.bt_redes_sociales_19 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_19.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_19.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_19.setObjectName("bt_redes_sociales_19")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_19)
+        self.bt_redes_sociales_18 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_18.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_18.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_18.setObjectName("bt_redes_sociales_18")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_18)
+        self.bt_redes_sociales_17 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_17.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_17.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_17.setObjectName("bt_redes_sociales_17")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_17)
+        self.bt_redes_sociales_16 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_16.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_16.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_16.setObjectName("bt_redes_sociales_16")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_16)
+        self.bt_redes_sociales_15 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_15.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_15.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_15.setObjectName("bt_redes_sociales_15")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_15)
+        self.bt_redes_sociales_14 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_14.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_14.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_14.setObjectName("bt_redes_sociales_14")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_14)
+        self.bt_redes_sociales_13 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_13.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_13.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_13.setObjectName("bt_redes_sociales_13")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_13)
+        self.bt_redes_sociales_12 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_12.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_12.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_12.setObjectName("bt_redes_sociales_12")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_12)
+        self.bt_redes_sociales_11 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_11.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_11.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_11.setObjectName("bt_redes_sociales_11")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_11)
+        self.bt_redes_sociales_10 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_10.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_10.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_10.setObjectName("bt_redes_sociales_10")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_10)
+        self.bt_redes_sociales_9 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_9.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_9.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_9.setObjectName("bt_redes_sociales_9")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_9)
+        self.bt_redes_sociales_8 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_8.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_8.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_8.setObjectName("bt_redes_sociales_8")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_8)
+        self.bt_redes_sociales_7 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_7.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_7.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_7.setObjectName("bt_redes_sociales_7")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_7)
+        self.bt_redes_sociales_6 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_6.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_6.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_6.setObjectName("bt_redes_sociales_6")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_6)
+        self.bt_redes_sociales_5 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_5.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_5.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_5.setObjectName("bt_redes_sociales_5")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_5)
+        self.bt_redes_sociales_4 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_4.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_4.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_4.setObjectName("bt_redes_sociales_4")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_4)
+        self.bt_redes_sociales_3 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_3.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_3.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_3.setObjectName("bt_redes_sociales_3")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_3)
+        self.bt_redes_sociales_2 = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
+        self.bt_redes_sociales_2.setMinimumSize(QtCore.QSize(0, 40))
+        self.bt_redes_sociales_2.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.bt_redes_sociales_2.setObjectName("bt_redes_sociales_2")
+        self.verticalLayout_4.addWidget(self.bt_redes_sociales_2)
         self.bt_redes_sociales = QtWidgets.QPushButton(parent=self.widget_menu_lateral)
         self.bt_redes_sociales.setMinimumSize(QtCore.QSize(0, 40))
         self.bt_redes_sociales.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
@@ -238,7 +415,63 @@ class Ui_OnInkMainWindow(object):
 "QPushButton:hover{\n"
 "    background-color: rgb(244, 240, 240);\n"
 "    border-color: rgb(204,204,204);\n"
-"}")
+"}\n"
+"\n"
+"QLineEdit {\n"
+"        border: 0;\n"
+"    background-color: rgb(255, 240, 33);\n"
+"        border-bottom: 2px solid black;\n"
+"        padding: 5px;\n"
+"        font-size: 16px;\n"
+"        color: #333;\n"
+"    }\n"
+"\n"
+"    QLineEdit:focus {\n"
+"        \n"
+"    border-color: rgb(0, 0, 255);\n"
+"    }\n"
+"\n"
+"QComboBox {\n"
+"        background-color: #F5F5F5;\n"
+"        border: 2px solid #F0A500;\n"
+"        border-radius: 10px;\n"
+"        padding: 5px;\n"
+"        font-size: 16px;\n"
+"        color: #333;\n"
+"    }\n"
+"\n"
+"    QComboBox::drop-down {\n"
+"        subcontrol-origin: padding;\n"
+"        subcontrol-position: top right;\n"
+"        width: 20px;\n"
+"        border-left-width: 0px;\n"
+"        border-top-right-radius: 10px;\n"
+"        border-bottom-right-radius: 10px;\n"
+"        background-color: #F0A500;\n"
+"    }\n"
+"\n"
+"    QComboBox::down-arrow {\n"
+"        image: url(\"images/dropdownbtn.png\");\n"
+"        width: 20px;\n"
+"        height: 20px;\n"
+"    }\n"
+"\n"
+"    QComboBox:focus {\n"
+"        border-color: #A0184B;\n"
+"    }\n"
+"\n"
+"QTextEdit {\n"
+"        background-color: #F5F5F5;\n"
+"        border: 2px solid #F0A500;\n"
+"        border-radius: 10px;\n"
+"        padding: 5px;\n"
+"        font-size: 16px;\n"
+"        color: #333;\n"
+"    }\n"
+"\n"
+"    QTextEdit:focus {\n"
+"        border-color: #A0184B;\n"
+"    }")
         self.stackedWidget.setObjectName("stackedWidget")
         self.page_inicio = QtWidgets.QWidget()
         self.page_inicio.setObjectName("page_inicio")
@@ -272,6 +505,10 @@ class Ui_OnInkMainWindow(object):
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.bt_volver_cliente_c = QtWidgets.QPushButton(parent=self.page_insertar_cliente)
         self.bt_volver_cliente_c.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\images/back-arrow.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.bt_volver_cliente_c.setIcon(icon6)
+        self.bt_volver_cliente_c.setIconSize(QtCore.QSize(25, 25))
         self.bt_volver_cliente_c.setObjectName("bt_volver_cliente_c")
         self.horizontalLayout_4.addWidget(self.bt_volver_cliente_c)
         spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
@@ -295,6 +532,7 @@ class Ui_OnInkMainWindow(object):
         self.le_ci_insertar = QtWidgets.QLineEdit(parent=self.page_insertar_cliente)
         self.le_ci_insertar.setInputMask("")
         self.le_ci_insertar.setText("")
+        self.le_ci_insertar.setMaxLength(11)
         self.le_ci_insertar.setObjectName("le_ci_insertar")
         self.horizontalLayout_5.addWidget(self.le_ci_insertar)
         spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
@@ -331,19 +569,12 @@ class Ui_OnInkMainWindow(object):
         self.cb_municipio_insertar = QtWidgets.QComboBox(parent=self.page_insertar_cliente)
         self.cb_municipio_insertar.setObjectName("cb_municipio_insertar")
         self.horizontalLayout_7.addWidget(self.cb_municipio_insertar)
+        self.horizontalLayout_7.setStretch(0, 1)
+        self.horizontalLayout_7.setStretch(1, 3)
+        self.horizontalLayout_7.setStretch(2, 1)
+        self.horizontalLayout_7.setStretch(3, 1)
+        self.horizontalLayout_7.setStretch(4, 3)
         self.verticalLayout_6.addLayout(self.horizontalLayout_7)
-        self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
-        self.label_8 = QtWidgets.QLabel(parent=self.page_insertar_cliente)
-        self.label_8.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignLeft|QtCore.Qt.AlignmentFlag.AlignTop)
-        self.label_8.setObjectName("label_8")
-        self.horizontalLayout_8.addWidget(self.label_8)
-        self.txtedt_direccion_insertar = QtWidgets.QTextEdit(parent=self.page_insertar_cliente)
-        self.txtedt_direccion_insertar.setObjectName("txtedt_direccion_insertar")
-        self.horizontalLayout_8.addWidget(self.txtedt_direccion_insertar)
-        self.horizontalLayout_8.setStretch(0, 2)
-        self.horizontalLayout_8.setStretch(1, 7)
-        self.verticalLayout_6.addLayout(self.horizontalLayout_8)
         self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
         self.label_11 = QtWidgets.QLabel(parent=self.page_insertar_cliente)
@@ -351,17 +582,32 @@ class Ui_OnInkMainWindow(object):
         self.label_11.setObjectName("label_11")
         self.horizontalLayout_9.addWidget(self.label_11)
         self.txtedt_notas_insertar = QtWidgets.QTextEdit(parent=self.page_insertar_cliente)
+        self.txtedt_notas_insertar.setMinimumSize(QtCore.QSize(0, 30))
         self.txtedt_notas_insertar.setObjectName("txtedt_notas_insertar")
         self.horizontalLayout_9.addWidget(self.txtedt_notas_insertar)
         self.horizontalLayout_9.setStretch(0, 2)
         self.horizontalLayout_9.setStretch(1, 7)
         self.verticalLayout_6.addLayout(self.horizontalLayout_9)
+        spacerItem8 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.verticalLayout_6.addItem(spacerItem8)
         self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_10.setObjectName("horizontalLayout_10")
-        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.horizontalLayout_10.addItem(spacerItem8)
+        self.bt_cliente_insertar_reestablecer = QtWidgets.QPushButton(parent=self.page_insertar_cliente)
+        self.bt_cliente_insertar_reestablecer.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\images/navigation.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.bt_cliente_insertar_reestablecer.setIcon(icon7)
+        self.bt_cliente_insertar_reestablecer.setIconSize(QtCore.QSize(25, 25))
+        self.bt_cliente_insertar_reestablecer.setObjectName("bt_cliente_insertar_reestablecer")
+        self.horizontalLayout_10.addWidget(self.bt_cliente_insertar_reestablecer)
+        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_10.addItem(spacerItem9)
         self.bt_store_cliente = QtWidgets.QPushButton(parent=self.page_insertar_cliente)
         self.bt_store_cliente.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\images/icons8-plus-100.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.bt_store_cliente.setIcon(icon8)
+        self.bt_store_cliente.setIconSize(QtCore.QSize(25, 25))
         self.bt_store_cliente.setObjectName("bt_store_cliente")
         self.horizontalLayout_10.addWidget(self.bt_store_cliente)
         self.verticalLayout_6.addLayout(self.horizontalLayout_10)
@@ -397,6 +643,33 @@ class Ui_OnInkMainWindow(object):
         self.bt_close.setToolTip(_translate("OnInkMainWindow", "<html><head/><body><p><span style=\" font-size:9pt; font-weight:600;\">Cerrar</span></p></body></html>"))
         self.label_2.setText(_translate("OnInkMainWindow", "Menú de opciones"))
         self.bt_menu_clientes.setText(_translate("OnInkMainWindow", "Clientes"))
+        self.bt_redes_sociales_28.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_27.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_26.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_25.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_24.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_23.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_22.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_21.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_20.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_19.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_18.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_17.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_16.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_15.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_14.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_13.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_12.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_11.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_10.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_9.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_8.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_7.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_6.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_5.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_4.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_3.setText(_translate("OnInkMainWindow", "Redes Sociales"))
+        self.bt_redes_sociales_2.setText(_translate("OnInkMainWindow", "Redes Sociales"))
         self.bt_redes_sociales.setText(_translate("OnInkMainWindow", "Redes Sociales"))
         self.label_3.setText(_translate("OnInkMainWindow", "Gestión de clientes"))
         self.bt_create_cliente.setText(_translate("OnInkMainWindow", "Agregar nuevo"))
@@ -412,8 +685,7 @@ class Ui_OnInkMainWindow(object):
         self.cb_provincia_insertar.setPlaceholderText(_translate("OnInkMainWindow", "Seleccionar provincia"))
         self.label_10.setText(_translate("OnInkMainWindow", "Municipio:"))
         self.cb_municipio_insertar.setPlaceholderText(_translate("OnInkMainWindow", "Seleccionar municipio"))
-        self.label_8.setText(_translate("OnInkMainWindow", "Dirección:"))
-        self.txtedt_direccion_insertar.setPlaceholderText(_translate("OnInkMainWindow", "Dirección"))
         self.label_11.setText(_translate("OnInkMainWindow", "Notas:"))
         self.txtedt_notas_insertar.setPlaceholderText(_translate("OnInkMainWindow", "Notas acerca del cliente"))
+        self.bt_cliente_insertar_reestablecer.setText(_translate("OnInkMainWindow", "Reestablecer"))
         self.bt_store_cliente.setText(_translate("OnInkMainWindow", "Agregar"))
