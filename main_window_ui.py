@@ -12,8 +12,8 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_OnInkMainWindow(object):
     def setupUi(self, OnInkMainWindow):
         OnInkMainWindow.setObjectName("OnInkMainWindow")
-        OnInkMainWindow.resize(840, 600)
-        OnInkMainWindow.setMinimumSize(QtCore.QSize(840, 600))
+        OnInkMainWindow.resize(900, 700)
+        OnInkMainWindow.setMinimumSize(QtCore.QSize(900, 700))
         OnInkMainWindow.setStyleSheet("@font-face{\n"
 " font-family: \"Oswald\";\n"
 " src: url(\"/fonts/Oswald/Oswald-VariableFont_wght.ttf\");\n"
@@ -28,7 +28,7 @@ class Ui_OnInkMainWindow(object):
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.frame = QtWidgets.QFrame(parent=self.centralwidget)
-        self.frame.setStyleSheet("background-color: rgb(255, 240, 33);\n"
+        self.frame.setStyleSheet("background-color: rgb(44, 62, 80);\n"
 "font-family: \"Oswald\";")
         self.frame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
@@ -41,15 +41,15 @@ class Ui_OnInkMainWindow(object):
         self.frame_superior.setMinimumSize(QtCore.QSize(0, 42))
         self.frame_superior.setStyleSheet("QPushButton{\n"
 "    border-radius:20px;\n"
-"    background-color: rgb(255, 240, 33);\n"
+"    background-color: rgb(44, 62, 80);\n"
 "}\n"
 "\n"
 "QPushButton:hover{\n"
-"    \n"
-"    background-color: rgb(180, 180, 180);\n"
+"    background-color: rgb(128, 128, 128);\n"
 "}\n"
 "\n"
 "QLabel{\n"
+"    color: white;\n"
 "    font-size:16pt;\n"
 "    font-weight: bold;\n"
 "\n"
@@ -73,12 +73,11 @@ class Ui_OnInkMainWindow(object):
         self.bt_menu.setAccessibleDescription("")
         self.bt_menu.setStyleSheet("QPushButton{\n"
 "    border-radius:0px;\n"
-"    background-color: rgb(255, 240, 33);\n"
+"    background-color: rgb(44, 62, 80);\n"
 "}\n"
 "\n"
 "QPushButton:hover{\n"
-"    \n"
-"    background-color: rgb(180, 180, 180);\n"
+"    background-color:rgb(128, 128, 128);\n"
 "}\n"
 "")
         self.bt_menu.setText("")
@@ -159,13 +158,13 @@ class Ui_OnInkMainWindow(object):
         self.scrollArea.setStyleSheet("QWidget{\n"
 "border: none;\n"
 "    \n"
-"    background-color: rgb(255, 181, 10);\n"
+"    background-color: rgb(128, 128, 128);\n"
 "}\n"
 "\n"
 "QPushButton{\n"
 "    \n"
 "    \n"
-"    background-color: rgb(255, 255, 127);\n"
+"    background-color: rgb(128, 128, 0);\n"
 "    border-top-left-radius: 20px;\n"
 "    border-bottom-left-radius: 20px;\n"
 "    font-family:\"Oswald\";\n"
@@ -192,7 +191,7 @@ class Ui_OnInkMainWindow(object):
 "    }\n"
 "\n"
 "    QScrollBar::handle:vertical {\n"
-"    background-color: rgb(118, 118, 118);\n"
+"    background-color: rgb(243, 156, 18);\n"
 "        min-height: 20px;\n"
 "        border-radius: 5px;\n"
 "    }\n"
@@ -224,7 +223,7 @@ class Ui_OnInkMainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.widget_menu_lateral = QtWidgets.QWidget()
-        self.widget_menu_lateral.setGeometry(QtCore.QRect(0, 0, 171, 1392))
+        self.widget_menu_lateral.setGeometry(QtCore.QRect(0, 0, 178, 1392))
         self.widget_menu_lateral.setObjectName("widget_menu_lateral")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.widget_menu_lateral)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
@@ -400,11 +399,12 @@ class Ui_OnInkMainWindow(object):
 "font-family:\"Oswald\";\n"
 "font-weight: bold;\n"
 "font-size: 12pt;\n"
+"color:white;\n"
 "}\n"
 "\n"
 "QPushButton{\n"
-"    background-color: rgb(249, 234, 33);\n"
-"    border: 3px solid   rgb(204, 204, 204);\n"
+"    background-color: rgb(180, 180, 180);\n"
+"    border: 3px solid   rgb(50, 50, 50);\n"
 "    padding: 5px;\n"
 "    border-radius:10px;\n"
 "font-family:\"Oswald\";\n"
@@ -414,30 +414,29 @@ class Ui_OnInkMainWindow(object):
 "\n"
 "QPushButton:hover{\n"
 "    background-color: rgb(244, 240, 240);\n"
-"    border-color: rgb(204,204,204);\n"
+"    \n"
 "}\n"
 "\n"
-"QLineEdit {\n"
-"        border: 0;\n"
-"    background-color: rgb(255, 240, 33);\n"
-"        border-bottom: 2px solid black;\n"
-"        padding: 5px;\n"
-"        font-size: 16px;\n"
-"        color: #333;\n"
-"    }\n"
-"\n"
-"    QLineEdit:focus {\n"
-"        \n"
-"    border-color: rgb(0, 0, 255);\n"
-"    }\n"
-"\n"
-"QComboBox {\n"
-"        background-color: #F5F5F5;\n"
-"        border: 2px solid #F0A500;\n"
+" QLineEdit {\n"
+"        background-color: rgb(70, 90, 110);\n"
+"        color: white;\n"
+"        border: 2px solid white;\n"
 "        border-radius: 10px;\n"
+"        font-family: \"Oswald\";\n"
+"        font-size: 12pt;\n"
 "        padding: 5px;\n"
-"        font-size: 16px;\n"
-"        color: #333;\n"
+"    }\n"
+"    QLineEdit:focus {\n"
+"        border: 2px solid rgb(255, 140, 0);\n"
+"    }\n"
+"QComboBox {\n"
+"        background-color: rgb(70, 90, 110);\n"
+"        color: white;\n"
+"        border: 2px solid white;\n"
+"        border-radius: 10px;\n"
+"        font-family: \"Oswald\";\n"
+"        font-size: 12pt;\n"
+"        padding: 5px;\n"
 "    }\n"
 "\n"
 "    QComboBox::drop-down {\n"
@@ -447,7 +446,7 @@ class Ui_OnInkMainWindow(object):
 "        border-left-width: 0px;\n"
 "        border-top-right-radius: 10px;\n"
 "        border-bottom-right-radius: 10px;\n"
-"        background-color: #F0A500;\n"
+"        background-color: rgb(255, 255, 255);\n"
 "    }\n"
 "\n"
 "    QComboBox::down-arrow {\n"
@@ -456,21 +455,26 @@ class Ui_OnInkMainWindow(object):
 "        height: 20px;\n"
 "    }\n"
 "\n"
-"    QComboBox:focus {\n"
-"        border-color: #A0184B;\n"
+"   QComboBox:focus {\n"
+"        border: 2px solid rgb(255, 255, 255);\n"
 "    }\n"
-"\n"
+"    \n"
+"    QComboBox QAbstractItemView {\n"
+"        background-color: rgb(21, 128, 194);\n"
+"        color: white;\n"
+"        selection-background-color: rgb(255, 255, 255);\n"
+"        selection-color: black;\n"
+"    }\n"
 "QTextEdit {\n"
-"        background-color: #F5F5F5;\n"
-"        border: 2px solid #F0A500;\n"
+"        background-color: rgb(70, 90, 110);\n"
+"        color: white;\n"
+"        border: 2px solid white;\n"
 "        border-radius: 10px;\n"
+"        font-size: 12pt;\n"
 "        padding: 5px;\n"
-"        font-size: 16px;\n"
-"        color: #333;\n"
 "    }\n"
-"\n"
 "    QTextEdit:focus {\n"
-"        border-color: #A0184B;\n"
+"         border: 2px solid rgb(255, 140, 0);\n"
 "    }")
         self.stackedWidget.setObjectName("stackedWidget")
         self.page_inicio = QtWidgets.QWidget()
@@ -499,8 +503,9 @@ class Ui_OnInkMainWindow(object):
         self.stackedWidget.addWidget(self.page_clientes)
         self.page_insertar_cliente = QtWidgets.QWidget()
         self.page_insertar_cliente.setObjectName("page_insertar_cliente")
-        self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.page_insertar_cliente)
-        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.page_insertar_cliente)
+        self.verticalLayout_9.setSpacing(9)
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.bt_volver_cliente_c = QtWidgets.QPushButton(parent=self.page_insertar_cliente)
@@ -523,10 +528,51 @@ class Ui_OnInkMainWindow(object):
         self.horizontalLayout_4.setStretch(1, 2)
         self.horizontalLayout_4.setStretch(2, 3)
         self.horizontalLayout_4.setStretch(3, 3)
-        self.verticalLayout_6.addLayout(self.horizontalLayout_4)
+        self.verticalLayout_9.addLayout(self.horizontalLayout_4)
+        self.horizontalLayout_13 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_13.setObjectName("horizontalLayout_13")
+        self.horizontalLayout_12 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_12.setObjectName("horizontalLayout_12")
+        self.lb_pic_insert_cliente = QtWidgets.QLabel(parent=self.page_insertar_cliente)
+        self.lb_pic_insert_cliente.setMinimumSize(QtCore.QSize(230, 230))
+        self.lb_pic_insert_cliente.setStyleSheet("border: 3px solid white")
+        self.lb_pic_insert_cliente.setText("")
+        self.lb_pic_insert_cliente.setPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\clients_pictures/00000000000.png"))
+        self.lb_pic_insert_cliente.setScaledContents(True)
+        self.lb_pic_insert_cliente.setObjectName("lb_pic_insert_cliente")
+        self.horizontalLayout_12.addWidget(self.lb_pic_insert_cliente)
+        self.verticalLayout_7 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.verticalLayout_6 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.bt_add_image_clients_insert = QtWidgets.QPushButton(parent=self.page_insertar_cliente)
+        self.bt_add_image_clients_insert.setText("")
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\images/upload-picture.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.bt_add_image_clients_insert.setIcon(icon7)
+        self.bt_add_image_clients_insert.setIconSize(QtCore.QSize(32, 32))
+        self.bt_add_image_clients_insert.setObjectName("bt_add_image_clients_insert")
+        self.verticalLayout_6.addWidget(self.bt_add_image_clients_insert)
+        self.bt_delete_image_clients_insert = QtWidgets.QPushButton(parent=self.page_insertar_cliente)
+        self.bt_delete_image_clients_insert.setText("")
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\images/refresh.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.bt_delete_image_clients_insert.setIcon(icon8)
+        self.bt_delete_image_clients_insert.setIconSize(QtCore.QSize(32, 32))
+        self.bt_delete_image_clients_insert.setObjectName("bt_delete_image_clients_insert")
+        self.verticalLayout_6.addWidget(self.bt_delete_image_clients_insert)
+        self.verticalLayout_7.addLayout(self.verticalLayout_6)
+        spacerItem6 = QtWidgets.QSpacerItem(17, 13, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.verticalLayout_7.addItem(spacerItem6)
+        self.horizontalLayout_12.addLayout(self.verticalLayout_7)
+        self.horizontalLayout_13.addLayout(self.horizontalLayout_12)
+        self.verticalLayout_8 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_8.setSpacing(0)
+        self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.label_5 = QtWidgets.QLabel(parent=self.page_insertar_cliente)
+        self.label_5.setAlignment(QtCore.Qt.AlignmentFlag.AlignRight|QtCore.Qt.AlignmentFlag.AlignTrailing|QtCore.Qt.AlignmentFlag.AlignVCenter)
         self.label_5.setObjectName("label_5")
         self.horizontalLayout_5.addWidget(self.label_5)
         self.le_ci_insertar = QtWidgets.QLineEdit(parent=self.page_insertar_cliente)
@@ -535,15 +581,27 @@ class Ui_OnInkMainWindow(object):
         self.le_ci_insertar.setMaxLength(11)
         self.le_ci_insertar.setObjectName("le_ci_insertar")
         self.horizontalLayout_5.addWidget(self.le_ci_insertar)
-        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.horizontalLayout_5.addItem(spacerItem6)
+        self.horizontalLayout_5.setStretch(0, 2)
+        self.horizontalLayout_5.setStretch(1, 7)
+        self.verticalLayout_8.addLayout(self.horizontalLayout_5)
+        self.horizontalLayout_11 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_11.setObjectName("horizontalLayout_11")
         self.label_7 = QtWidgets.QLabel(parent=self.page_insertar_cliente)
+        self.label_7.setAlignment(QtCore.Qt.AlignmentFlag.AlignRight|QtCore.Qt.AlignmentFlag.AlignTrailing|QtCore.Qt.AlignmentFlag.AlignVCenter)
         self.label_7.setObjectName("label_7")
-        self.horizontalLayout_5.addWidget(self.label_7)
+        self.horizontalLayout_11.addWidget(self.label_7)
         self.le_telefono_insertar = QtWidgets.QLineEdit(parent=self.page_insertar_cliente)
         self.le_telefono_insertar.setObjectName("le_telefono_insertar")
-        self.horizontalLayout_5.addWidget(self.le_telefono_insertar)
-        self.verticalLayout_6.addLayout(self.horizontalLayout_5)
+        self.horizontalLayout_11.addWidget(self.le_telefono_insertar)
+        self.horizontalLayout_11.setStretch(0, 2)
+        self.horizontalLayout_11.setStretch(1, 7)
+        self.verticalLayout_8.addLayout(self.horizontalLayout_11)
+        self.verticalLayout_8.setStretch(0, 1)
+        self.verticalLayout_8.setStretch(1, 1)
+        self.horizontalLayout_13.addLayout(self.verticalLayout_8)
+        self.verticalLayout_9.addLayout(self.horizontalLayout_13)
+        spacerItem7 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem7)
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
         self.label_6 = QtWidgets.QLabel(parent=self.page_insertar_cliente)
@@ -552,29 +610,35 @@ class Ui_OnInkMainWindow(object):
         self.le_nombre_apellidos_insertar = QtWidgets.QLineEdit(parent=self.page_insertar_cliente)
         self.le_nombre_apellidos_insertar.setObjectName("le_nombre_apellidos_insertar")
         self.horizontalLayout_6.addWidget(self.le_nombre_apellidos_insertar)
-        self.verticalLayout_6.addLayout(self.horizontalLayout_6)
+        self.verticalLayout_9.addLayout(self.horizontalLayout_6)
+        spacerItem8 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem8)
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
+        self.label_8 = QtWidgets.QLabel(parent=self.page_insertar_cliente)
+        self.label_8.setObjectName("label_8")
+        self.horizontalLayout_7.addWidget(self.label_8)
+        self.cb_pais_insertar = QtWidgets.QComboBox(parent=self.page_insertar_cliente)
+        self.cb_pais_insertar.setObjectName("cb_pais_insertar")
+        self.horizontalLayout_7.addWidget(self.cb_pais_insertar)
         self.label_9 = QtWidgets.QLabel(parent=self.page_insertar_cliente)
         self.label_9.setObjectName("label_9")
         self.horizontalLayout_7.addWidget(self.label_9)
         self.cb_provincia_insertar = QtWidgets.QComboBox(parent=self.page_insertar_cliente)
         self.cb_provincia_insertar.setObjectName("cb_provincia_insertar")
         self.horizontalLayout_7.addWidget(self.cb_provincia_insertar)
-        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.horizontalLayout_7.addItem(spacerItem7)
         self.label_10 = QtWidgets.QLabel(parent=self.page_insertar_cliente)
         self.label_10.setObjectName("label_10")
         self.horizontalLayout_7.addWidget(self.label_10)
         self.cb_municipio_insertar = QtWidgets.QComboBox(parent=self.page_insertar_cliente)
         self.cb_municipio_insertar.setObjectName("cb_municipio_insertar")
         self.horizontalLayout_7.addWidget(self.cb_municipio_insertar)
-        self.horizontalLayout_7.setStretch(0, 1)
         self.horizontalLayout_7.setStretch(1, 3)
-        self.horizontalLayout_7.setStretch(2, 1)
-        self.horizontalLayout_7.setStretch(3, 1)
-        self.horizontalLayout_7.setStretch(4, 3)
-        self.verticalLayout_6.addLayout(self.horizontalLayout_7)
+        self.horizontalLayout_7.setStretch(3, 3)
+        self.horizontalLayout_7.setStretch(5, 3)
+        self.verticalLayout_9.addLayout(self.horizontalLayout_7)
+        spacerItem9 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem9)
         self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
         self.label_11 = QtWidgets.QLabel(parent=self.page_insertar_cliente)
@@ -587,30 +651,43 @@ class Ui_OnInkMainWindow(object):
         self.horizontalLayout_9.addWidget(self.txtedt_notas_insertar)
         self.horizontalLayout_9.setStretch(0, 2)
         self.horizontalLayout_9.setStretch(1, 7)
-        self.verticalLayout_6.addLayout(self.horizontalLayout_9)
-        spacerItem8 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
-        self.verticalLayout_6.addItem(spacerItem8)
+        self.verticalLayout_9.addLayout(self.horizontalLayout_9)
+        spacerItem10 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem10)
+        self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
+        self.label_12 = QtWidgets.QLabel(parent=self.page_insertar_cliente)
+        self.label_12.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignLeft|QtCore.Qt.AlignmentFlag.AlignTop)
+        self.label_12.setObjectName("label_12")
+        self.horizontalLayout_8.addWidget(self.label_12)
+        self.txedt_alcance = QtWidgets.QTextEdit(parent=self.page_insertar_cliente)
+        self.txedt_alcance.setMinimumSize(QtCore.QSize(0, 30))
+        self.txedt_alcance.setObjectName("txedt_alcance")
+        self.horizontalLayout_8.addWidget(self.txedt_alcance)
+        self.horizontalLayout_8.setStretch(0, 2)
+        self.horizontalLayout_8.setStretch(1, 7)
+        self.verticalLayout_9.addLayout(self.horizontalLayout_8)
+        spacerItem11 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem11)
         self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_10.setObjectName("horizontalLayout_10")
         self.bt_cliente_insertar_reestablecer = QtWidgets.QPushButton(parent=self.page_insertar_cliente)
         self.bt_cliente_insertar_reestablecer.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\images/navigation.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.bt_cliente_insertar_reestablecer.setIcon(icon7)
+        self.bt_cliente_insertar_reestablecer.setIcon(icon8)
         self.bt_cliente_insertar_reestablecer.setIconSize(QtCore.QSize(25, 25))
         self.bt_cliente_insertar_reestablecer.setObjectName("bt_cliente_insertar_reestablecer")
         self.horizontalLayout_10.addWidget(self.bt_cliente_insertar_reestablecer)
-        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.horizontalLayout_10.addItem(spacerItem9)
+        spacerItem12 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_10.addItem(spacerItem12)
         self.bt_store_cliente = QtWidgets.QPushButton(parent=self.page_insertar_cliente)
         self.bt_store_cliente.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
-        icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\images/icons8-plus-100.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.bt_store_cliente.setIcon(icon8)
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\images/icons8-plus-100.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.bt_store_cliente.setIcon(icon9)
         self.bt_store_cliente.setIconSize(QtCore.QSize(25, 25))
         self.bt_store_cliente.setObjectName("bt_store_cliente")
         self.horizontalLayout_10.addWidget(self.bt_store_cliente)
-        self.verticalLayout_6.addLayout(self.horizontalLayout_10)
+        self.verticalLayout_9.addLayout(self.horizontalLayout_10)
         self.stackedWidget.addWidget(self.page_insertar_cliente)
         self.verticalLayout_5.addWidget(self.stackedWidget)
         self.horizontalLayout_2.addWidget(self.frame_paginas)
@@ -675,17 +752,23 @@ class Ui_OnInkMainWindow(object):
         self.bt_create_cliente.setText(_translate("OnInkMainWindow", "Agregar nuevo"))
         self.bt_volver_cliente_c.setText(_translate("OnInkMainWindow", "Volver"))
         self.label_4.setText(_translate("OnInkMainWindow", "Insertar datos del cliente"))
+        self.bt_add_image_clients_insert.setToolTip(_translate("OnInkMainWindow", "<html><head/><body><p>Añadir imagen</p></body></html>"))
+        self.bt_delete_image_clients_insert.setToolTip(_translate("OnInkMainWindow", "<html><head/><body><p>Reestablecer imagen</p></body></html>"))
         self.label_5.setText(_translate("OnInkMainWindow", "CI: "))
         self.le_ci_insertar.setPlaceholderText(_translate("OnInkMainWindow", "Número de identidad"))
-        self.label_7.setText(_translate("OnInkMainWindow", "Teléfono:"))
+        self.label_7.setText(_translate("OnInkMainWindow", "Teléfono: "))
         self.le_telefono_insertar.setPlaceholderText(_translate("OnInkMainWindow", "Número de teléfono"))
         self.label_6.setText(_translate("OnInkMainWindow", "Nombre y apellidos: "))
         self.le_nombre_apellidos_insertar.setPlaceholderText(_translate("OnInkMainWindow", "Nombre y apellidos"))
+        self.label_8.setText(_translate("OnInkMainWindow", "País: "))
+        self.cb_pais_insertar.setPlaceholderText(_translate("OnInkMainWindow", "Seleccionar País"))
         self.label_9.setText(_translate("OnInkMainWindow", "Provincia:"))
         self.cb_provincia_insertar.setPlaceholderText(_translate("OnInkMainWindow", "Seleccionar provincia"))
         self.label_10.setText(_translate("OnInkMainWindow", "Municipio:"))
         self.cb_municipio_insertar.setPlaceholderText(_translate("OnInkMainWindow", "Seleccionar municipio"))
         self.label_11.setText(_translate("OnInkMainWindow", "Notas:"))
         self.txtedt_notas_insertar.setPlaceholderText(_translate("OnInkMainWindow", "Notas acerca del cliente"))
+        self.label_12.setText(_translate("OnInkMainWindow", "Vía de llegada:"))
+        self.txedt_alcance.setPlaceholderText(_translate("OnInkMainWindow", "Vía por la que llegó"))
         self.bt_cliente_insertar_reestablecer.setText(_translate("OnInkMainWindow", "Reestablecer"))
         self.bt_store_cliente.setText(_translate("OnInkMainWindow", "Agregar"))

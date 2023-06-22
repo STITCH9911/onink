@@ -1,8 +1,12 @@
-import sys, traceback
+import sys, traceback, logging
 from app import Application
+
+logging.basicConfig(filename='log.txt', level=logging.ERROR)
 
 def new_excepthook(type, value, tb):
     traceback.print_exception(type, value, tb)
+    logging.exception("Excepción de aplicación", exc_info=(type,value,tb))
+    
 sys.excepthook= new_excepthook
 
 def main():

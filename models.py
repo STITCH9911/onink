@@ -239,11 +239,13 @@ class Clients(Base):
     phone = mapped_column(Text)
     alcance = mapped_column(Text)
     municipio_id = mapped_column(ForeignKey('municipios.id', ondelete='SET NULL', onupdate='CASCADE'))
+    pais_id = mapped_column(ForeignKey('paises.id', ondelete='SET NULL', onupdate='CASCADE'))
 
     municipio: Mapped[Optional['Municipios']] = relationship('Municipios', back_populates='clients')
     trabajos: Mapped[List['Trabajos']] = relationship('Trabajos', uselist=True, back_populates='cliente')
     turnos: Mapped[List['Turnos']] = relationship('Turnos', uselist=True, back_populates='cliente')
     social: Mapped[List['Socials']] = relationship('Socials', secondary=t_r_clients_socials, back_populates='client')
+    pais: Mapped[List['Paises']] = relationship('Paises', uselist=True, back_populates='clients')
 
     
     @staticmethod
@@ -252,6 +254,7 @@ class Clients(Base):
         switcher = {
             "municipio_id": Clients.getByMunicipioId,
             "provincia_id": Clients.getByProvinciaId,
+            "pais_id": Clients.getByPaisId,
         }
         for llave in arg:
             if llave in switcher:
@@ -289,6 +292,11 @@ class Clients(Base):
             q = session.query(Clients).join(Municipios).join(Provincias).filter(Provincias.id == id).all()
         return q
     
+    @staticmethod
+    def getByPaisId(id):
+        with Session() as session:
+            q = session.query(Clients).filter_by(pais_id=id).all()
+        return q
     
 
 class Trabajos(Base):
@@ -474,3 +482,22 @@ class Turnos(Base):
         return tuple(res)
 
 
+class Paises(Base):
+    __tablename__ = 'paises'
+
+    id = mapped_column(Integer, primary_key=True)
+    pais = mapped_column(Text, nullable=False)
+
+    clients: Mapped[List['Clients']] = relationship('Clients', uselist=True, back_populates='pais')
+
+    @staticmethod
+    def getByCriterion(**arg):
+        lista = []
+
+        if "search" in arg:
+            with Session() as session:
+                q = session.query(Paises).filter(Paises.pais.like(f"%{arg['search']}%")).all()
+                lista += q
+
+        r = set(lista)
+        return tuple(r)

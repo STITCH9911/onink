@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>840</width>
-    <height>600</height>
+    <width>900</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>840</width>
-    <height>600</height>
+    <width>900</width>
+    <height>700</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -50,7 +50,7 @@
     <item>
      <widget class="QFrame" name="frame">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 240, 33);
+       <string notr="true">background-color: rgb(44, 62, 80);
 font-family: &quot;Oswald&quot;;</string>
       </property>
       <property name="frameShape">
@@ -86,15 +86,15 @@ font-family: &quot;Oswald&quot;;</string>
          <property name="styleSheet">
           <string notr="true">QPushButton{
 	border-radius:20px;
-	background-color: rgb(255, 240, 33);
+	background-color: rgb(44, 62, 80);
 }
 
 QPushButton:hover{
-	
-	background-color: rgb(180, 180, 180);
+	background-color: rgb(128, 128, 128);
 }
 
 QLabel{
+	color: white;
 	font-size:16pt;
 	font-weight: bold;
 
@@ -151,12 +151,11 @@ QLabel{
             <property name="styleSheet">
              <string notr="true">QPushButton{
 	border-radius:0px;
-	background-color: rgb(255, 240, 33);
+	background-color: rgb(44, 62, 80);
 }
 
 QPushButton:hover{
-	
-	background-color: rgb(180, 180, 180);
+	background-color:rgb(128, 128, 128);
 }
 </string>
             </property>
@@ -396,13 +395,13 @@ QPushButton:hover{
                 <string notr="true">QWidget{
 border: none;
 	
-	background-color: rgb(255, 181, 10);
+	background-color: rgb(128, 128, 128);
 }
 
 QPushButton{
 	
 	
-	background-color: rgb(255, 255, 127);
+	background-color: rgb(128, 128, 0);
 	border-top-left-radius: 20px;
 	border-bottom-left-radius: 20px;
 	font-family:&quot;Oswald&quot;;
@@ -429,7 +428,7 @@ QScrollBar:vertical {
     }
 
     QScrollBar::handle:vertical {
-	background-color: rgb(118, 118, 118);
+	background-color: rgb(243, 156, 18);
         min-height: 20px;
         border-radius: 5px;
     }
@@ -469,7 +468,7 @@ QScrollBar:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>171</width>
+                  <width>178</width>
                   <height>1392</height>
                  </rect>
                 </property>
@@ -1006,11 +1005,12 @@ font-size: 12pt;</string>
 font-family:&quot;Oswald&quot;;
 font-weight: bold;
 font-size: 12pt;
+color:white;
 }
 
 QPushButton{
-	background-color: rgb(249, 234, 33);
-	border: 3px solid   rgb(204, 204, 204);
+	background-color: rgb(180, 180, 180);
+	border: 3px solid   rgb(50, 50, 50);
 	padding: 5px;
 	border-radius:10px;
 font-family:&quot;Oswald&quot;;
@@ -1020,30 +1020,29 @@ font-size: 12pt;
 
 QPushButton:hover{
 	background-color: rgb(244, 240, 240);
-	border-color: rgb(204,204,204);
+	
 }
 
-QLineEdit {
-		border: 0;
-	background-color: rgb(255, 240, 33);
-        border-bottom: 2px solid black;
-        padding: 5px;
-        font-size: 16px;
-        color: #333;
-    }
-
-    QLineEdit:focus {
-        
-	border-color: rgb(0, 0, 255);
-    }
-
-QComboBox {
-        background-color: #F5F5F5;
-        border: 2px solid #F0A500;
+ QLineEdit {
+        background-color: rgb(70, 90, 110);
+        color: white;
+        border: 2px solid white;
         border-radius: 10px;
+		font-family: &quot;Oswald&quot;;
+		font-size: 12pt;
         padding: 5px;
-        font-size: 16px;
-        color: #333;
+    }
+    QLineEdit:focus {
+        border: 2px solid rgb(255, 140, 0);
+    }
+QComboBox {
+        background-color: rgb(70, 90, 110);
+        color: white;
+        border: 2px solid white;
+        border-radius: 10px;
+		font-family: &quot;Oswald&quot;;
+		font-size: 12pt;
+        padding: 5px;
     }
 
     QComboBox::drop-down {
@@ -1053,7 +1052,7 @@ QComboBox {
         border-left-width: 0px;
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
-        background-color: #F0A500;
+		background-color: rgb(255, 255, 255);
     }
 
     QComboBox::down-arrow {
@@ -1062,21 +1061,26 @@ QComboBox {
         height: 20px;
     }
 
-    QComboBox:focus {
-        border-color: #A0184B;
+   QComboBox:focus {
+        border: 2px solid rgb(255, 255, 255);
     }
-
+	
+	QComboBox QAbstractItemView {
+		background-color: rgb(21, 128, 194);
+        color: white;
+        selection-background-color: rgb(255, 255, 255);
+        selection-color: black;
+    }
 QTextEdit {
-        background-color: #F5F5F5;
-        border: 2px solid #F0A500;
+        background-color: rgb(70, 90, 110);
+        color: white;
+        border: 2px solid white;
         border-radius: 10px;
+		font-size: 12pt;
         padding: 5px;
-        font-size: 16px;
-        color: #333;
     }
-
     QTextEdit:focus {
-        border-color: #A0184B;
+         border: 2px solid rgb(255, 140, 0);
     }</string>
                </property>
                <property name="currentIndex">
@@ -1144,7 +1148,10 @@ QTextEdit {
                 </widget>
                </widget>
                <widget class="QWidget" name="page_insertar_cliente">
-                <layout class="QVBoxLayout" name="verticalLayout_6">
+                <layout class="QVBoxLayout" name="verticalLayout_9">
+                 <property name="spacing">
+                  <number>9</number>
+                 </property>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,2,3,3">
                    <item>
@@ -1206,58 +1213,166 @@ QTextEdit {
                   </layout>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_5">
+                  <layout class="QHBoxLayout" name="horizontalLayout_13">
                    <item>
-                    <widget class="QLabel" name="label_5">
-                     <property name="text">
-                      <string>CI: </string>
-                     </property>
-                    </widget>
+                    <layout class="QHBoxLayout" name="horizontalLayout_12">
+                     <item>
+                      <widget class="QLabel" name="lb_pic_insert_cliente">
+                       <property name="minimumSize">
+                        <size>
+                         <width>230</width>
+                         <height>230</height>
+                        </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">border: 3px solid white</string>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="pixmap">
+                        <pixmap>clients_pictures/00000000000.png</pixmap>
+                       </property>
+                       <property name="scaledContents">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <layout class="QVBoxLayout" name="verticalLayout_7">
+                       <item>
+                        <layout class="QVBoxLayout" name="verticalLayout_6">
+                         <item>
+                          <widget class="QPushButton" name="bt_add_image_clients_insert">
+                           <property name="toolTip">
+                            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Añadir imagen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                           </property>
+                           <property name="text">
+                            <string/>
+                           </property>
+                           <property name="icon">
+                            <iconset>
+                             <normaloff>images/upload-picture.svg</normaloff>images/upload-picture.svg</iconset>
+                           </property>
+                           <property name="iconSize">
+                            <size>
+                             <width>32</width>
+                             <height>32</height>
+                            </size>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="bt_delete_image_clients_insert">
+                           <property name="toolTip">
+                            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reestablecer imagen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                           </property>
+                           <property name="text">
+                            <string/>
+                           </property>
+                           <property name="icon">
+                            <iconset>
+                             <normaloff>images/refresh.svg</normaloff>images/refresh.svg</iconset>
+                           </property>
+                           <property name="iconSize">
+                            <size>
+                             <width>32</width>
+                             <height>32</height>
+                            </size>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                       <item>
+                        <spacer name="verticalSpacer">
+                         <property name="orientation">
+                          <enum>Qt::Vertical</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>17</width>
+                           <height>13</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="le_ci_insertar">
-                     <property name="inputMask">
-                      <string/>
+                    <layout class="QVBoxLayout" name="verticalLayout_8" stretch="1,1">
+                     <property name="spacing">
+                      <number>0</number>
                      </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="maxLength">
-                      <number>11</number>
-                     </property>
-                     <property name="placeholderText">
-                      <string>Número de identidad</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_7">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>40</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="label_7">
-                     <property name="text">
-                      <string>Teléfono:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="le_telefono_insertar">
-                     <property name="placeholderText">
-                      <string>Número de teléfono</string>
-                     </property>
-                    </widget>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="2,7">
+                       <item>
+                        <widget class="QLabel" name="label_5">
+                         <property name="text">
+                          <string>CI: </string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="le_ci_insertar">
+                         <property name="inputMask">
+                          <string/>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="maxLength">
+                          <number>11</number>
+                         </property>
+                         <property name="placeholderText">
+                          <string>Número de identidad</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="2,7">
+                       <item>
+                        <widget class="QLabel" name="label_7">
+                         <property name="text">
+                          <string>Teléfono: </string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="le_telefono_insertar">
+                         <property name="placeholderText">
+                          <string>Número de teléfono</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
                    </item>
                   </layout>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -1278,7 +1393,34 @@ QTextEdit {
                   </layout>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,3,1,1,3">
+                  <spacer name="verticalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="0,3,0,3,0,3">
+                   <item>
+                    <widget class="QLabel" name="label_8">
+                     <property name="text">
+                      <string>País: </string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="cb_pais_insertar">
+                     <property name="placeholderText">
+                      <string>Seleccionar País</string>
+                     </property>
+                    </widget>
+                   </item>
                    <item>
                     <widget class="QLabel" name="label_9">
                      <property name="text">
@@ -1292,19 +1434,6 @@ QTextEdit {
                       <string>Seleccionar provincia</string>
                      </property>
                     </widget>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_9">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>40</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
                    </item>
                    <item>
                     <widget class="QLabel" name="label_10">
@@ -1321,6 +1450,19 @@ QTextEdit {
                     </widget>
                    </item>
                   </layout>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="2,7">
@@ -1350,7 +1492,47 @@ QTextEdit {
                   </layout>
                  </item>
                  <item>
-                  <spacer name="verticalSpacer">
+                  <spacer name="verticalSpacer_6">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="2,7">
+                   <item>
+                    <widget class="QLabel" name="label_12">
+                     <property name="text">
+                      <string>Vía de llegada:</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QTextEdit" name="txedt_alcance">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="placeholderText">
+                      <string>Vía por la que llegó</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_5">
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>
                    </property>
@@ -1374,7 +1556,7 @@ QTextEdit {
                      </property>
                      <property name="icon">
                       <iconset>
-                       <normaloff>images/navigation.svg</normaloff>images/navigation.svg</iconset>
+                       <normaloff>images/refresh.svg</normaloff>images/refresh.svg</iconset>
                      </property>
                      <property name="iconSize">
                       <size>

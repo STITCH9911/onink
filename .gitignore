@@ -3,3 +3,5 @@
 __pycache__/
 *.db
 *.ini
+log.txt
+clients_pictures/
