@@ -245,7 +245,7 @@ class Clients(Base):
     trabajos: Mapped[List['Trabajos']] = relationship('Trabajos', uselist=True, back_populates='cliente')
     turnos: Mapped[List['Turnos']] = relationship('Turnos', uselist=True, back_populates='cliente')
     social: Mapped[List['Socials']] = relationship('Socials', secondary=t_r_clients_socials, back_populates='client')
-    pais: Mapped[List['Paises']] = relationship('Paises', uselist=True, back_populates='clients')
+    pais: Mapped[Optional['Paises']] = relationship('Paises', back_populates='clients')
 
     
     @staticmethod
