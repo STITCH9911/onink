@@ -11,5 +11,4 @@ if __name__ == "__main__":
             print("No existe base de datos\nProcediendo a crear base de datos...")
             from falsos import execute_falsos
             execute_falsos()
-    print("INICIANDO APLICACIÓN")
     main()
