@@ -757,6 +757,7 @@ class Ui_OnInkMainWindow(object):
         self.verticalLayout_usernames.setObjectName("verticalLayout_usernames")
         self.label_13 = QtWidgets.QLabel(parent=self.page_add_social_usernames)
         self.label_13.setMaximumSize(QtCore.QSize(16777215, 60))
+        self.label_13.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_13.setObjectName("label_13")
         self.verticalLayout_usernames.addWidget(self.label_13)
         self.horizontalLayout_14 = QtWidgets.QHBoxLayout()
@@ -786,7 +787,7 @@ class Ui_OnInkMainWindow(object):
         OnInkMainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(OnInkMainWindow)
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(3)
         self.bt_close.clicked.connect(OnInkMainWindow.close) # type: ignore
         self.bt_maximizar.clicked.connect(OnInkMainWindow.showMaximized) # type: ignore
         self.bt_maximizar.clicked.connect(self.bt_restaurar.show) # type: ignore

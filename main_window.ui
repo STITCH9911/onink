@@ -1084,7 +1084,7 @@ QTextEdit {
     }</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>3</number>
                </property>
                <widget class="QWidget" name="page_inicio"/>
                <widget class="QWidget" name="page_clientes">
@@ -1782,6 +1782,9 @@ QTextEdit {
                    </property>
                    <property name="text">
                     <string>Redes sociales del cliente</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
                    </property>
                   </widget>
                  </item>

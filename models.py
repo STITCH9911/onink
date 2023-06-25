@@ -4,6 +4,7 @@ from sqlalchemy.orm import Mapped, declarative_base, mapped_column, relationship
 from sqlalchemy.orm.base import Mapped
 from config import Session
 from PyQt6.QtCore import QDate
+from functools import reduce
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -247,65 +248,14 @@ class Clients(Base):
     social: Mapped[List['Socials']] = relationship('Socials', secondary=t_r_clients_socials, back_populates='client')
     pais: Mapped[Optional['Paises']] = relationship('Paises', back_populates='clients')
     
-    @staticmethod
-    def getByCriterion(**arg) -> Tuple['Clients']:
-        lista = [] #lista de resultados
-        switcher = {
-            "municipio_id": Clients.getByMunicipioId,
-            "provincia_id": Clients.getByProvinciaId,
-            "pais_id": Clients.getByPaisId,
-        }
-        for llave in arg:
-            if llave in switcher:
-                funcion = switcher.get(llave)
-                lista.extend(funcion(arg[llave]))
-        if "search" in arg:
-            if arg["search"] != "":
-                try:
-                    int(arg["search"]) #evalua si el argumento es un numero o no
-                    #si es numero usa estos filtros
-                    with Session() as session:
-                        q1 = session.query(Clients).filter(Clients.ci.like(f"%{arg['search']}%")).all() #filtro por ci
-                        q2 = session.query(Clients).filter(Clients.phone.like(f"%{arg['search']}%")).all() #filtro por telefono
-                        lista = q1 + q2 #agregar resultados a la lista
-                except ValueError:
-                    with Session() as session:
-                        q1 = session.query(Clients).filter(Clients.nombre_apellidos.like(f"%{arg['search']}%")).all() # filtro por nombre y apellidos
-                        q2 = session.query(Clients).join(t_r_clients_socials).filter(t_r_clients_socials.c.username.like(f"%{arg['search']}%")).all()
-                        lista = q1 + q2
-                with Session() as session:
-                    q = session.query(Clients).filter(Clients.direccion.like(f"%{arg['search']}%")).all() #filtro por direccion
-                    lista += q
-        lista = set(lista)
-        res = tuple(lista)
-        return res
-    
-    @staticmethod
-    def getByMunicipioId(id) -> Optional[List['Clients']]:
-        if id is not None:
-            with Session() as session:
-                q = session.query(Clients).filter_by(municipio_id=id).all()
-            return q
+    def gastos(self)->float:
+        if self.trabajos:
+            return reduce(lambda x,y: x + y, map(lambda x: x.price, self.trabajos))
         else:
-            return []
+            return 0
+        
 
-    @staticmethod
-    def getByProvinciaId(id) -> Optional[List['Clients']]:
-        if id is not None:
-            with Session() as session:
-                q = session.query(Clients).join(Municipios).join(Provincias).filter(Provincias.id == id).all()
-            return q
-        else:
-            return []
-    
-    @staticmethod
-    def getByPaisId(id):
-        if id is not None:
-            with Session() as session:
-                q = session.query(Clients).filter_by(pais_id=id).all()
-            return q
-        else:
-            return []
+
     
 
 class Trabajos(Base):

@@ -1,4 +1,7 @@
-from PyQt6.QtCore import QDate
+from PyQt6.QtCore import QDate, Qt
+from PyQt6.QtWidgets import QLabel
+from PyQt6.QtGui import QPixmap
+
 import os
 
 
@@ -30,3 +33,9 @@ def delete_file(name: str, folder: str = 'clients_pictures'):
     if file_exists(name,folder):
         file_path = os.path.join(folder,file_exists(name,folder))
         os.remove(file_path)
+
+#metodo para establecer la imagen por defecto
+def default_image(label: QLabel, default: str, dir: str):
+    file_name = os.path.join(dir,default)
+    pixmap = QPixmap(file_name)
+    label.setPixmap(pixmap.scaled(label.size(), aspectRatioMode=Qt.AspectRatioMode.KeepAspectRatio))

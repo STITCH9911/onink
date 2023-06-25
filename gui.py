@@ -9,7 +9,8 @@ from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QRegularExpressio
 from datetime import datetime
 from models import Clients, Provincias, Municipios, Paises, Socials, Turnos, t_r_clients_socials, t_r_trabajos_materiales, Trabajos
 from sqlalchemy import insert, update, delete
-from utils import file_exists, delete_file
+from showClient import ShowCLient
+from utils import file_exists, delete_file, default_image
 from strippedTable import StripedTable
 
 class MainWindow(QMainWindow,Ui_OnInkMainWindow):
@@ -19,6 +20,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.icono = QIcon()
         self.setWindowIcon(self.icono)
         self.strippedTable = None
+        self.qWidgetShowClient = ShowCLient(self.clients_list, self.clients_list)
+        self.stackedWidget.addWidget(self.qWidgetShowClient)
         # Inicializar listas
         with Session() as session:
             self.clientes, self.municipios, self.provincias, self.paises, self.socials = [], [], [], session.query(Paises).all(), [],
@@ -48,7 +51,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.cb_search_clientes_provincia.currentIndexChanged.connect(lambda: self.change_provincia(self.cb_search_clientes_provincia))
         self.bt_cliente_insertar_reestablecer.clicked.connect(self.reestablecer)
         self.bt_add_image_clients_insert.clicked.connect(lambda: self.select_image(label=self.lb_pic_insert_cliente))
-        self.bt_delete_image_clients_insert.clicked.connect(lambda: self.default_image(self.lb_pic_insert_cliente, "00000000000.png", "clients_pictures"))
+        self.bt_delete_image_clients_insert.clicked.connect(lambda: self.restart_image)
         self.bt_save_usernames.clicked.connect(self.save_usernames)
         self.le_search_clients.textChanged.connect(self.search)
         self.cb_search_clientes_municipio.currentIndexChanged.connect(lambda: self.change_municipio(self.cb_search_clientes_municipio))
@@ -59,6 +62,11 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
         
         self.setCorner(Qt.Corner.BottomRightCorner, Qt.DockWidgetArea.RightDockWidgetArea)
+
+    #reiniciar imagen
+    def restart_image(self):
+        default_image(self.lb_pic_insert_cliente, "00000000000.png", "clients_pictures")
+        self.send_image = False
 
     #Evento abrir ventana
     def showEvent(self, a0: QShowEvent) -> None:
@@ -152,7 +160,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             self.provincias = session.query(Provincias).all()
             self.municipios = session.query(Municipios).all()
             self.stackedWidget.setCurrentWidget(self.page_insertar_cliente)
-            self.default_image(self.lb_pic_insert_cliente, "00000000000.png", "clients_pictures")
+            default_image(self.lb_pic_insert_cliente, "00000000000.png", "clients_pictures")
+            self.send_image = False
             self.load_combobox()
 
     #metodo en el que se crea un cliente
@@ -272,7 +281,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             self.cb_municipio_insertar.setCurrentIndex(-1)
             self.cb_provincia_insertar.setCurrentIndex(-1)
             self.cb_pais_insertar.setCurrentIndex(-1)
-            self.default_image(label=self.lb_pic_insert_cliente, default="00000000000.png", dir="clients_pictures")
+            default_image(label=self.lb_pic_insert_cliente, default="00000000000.png", dir="clients_pictures")
+            self.send_image = False
             self.load_combobox()
             self.clear_le()
 
@@ -305,15 +315,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             if file_exists(name,dir):
                 delete_file(name, dir)
             shutil.copy(file_name, new_file_name)
-            self.default_image(label,"00000000000.png", 'clients_pictures')
-    
-    #metodo para establecer la imagen por defecto
-    def default_image(self,label: QLabel, default: str, dir: str):
-        
-        file_name = os.path.join(dir,default)
-        pixmap = QPixmap(file_name)
-        label.setPixmap(pixmap.scaled(label.size(), aspectRatioMode=Qt.AspectRatioMode.KeepAspectRatio))
-        self.send_image = False
+            default_image(label,"00000000000.png", 'clients_pictures')
+            self.send_image = False
 
     #metodo para agregar los campos para nombres de usuarios de redes sociales de un cliente
     def add_usernames_socials(self, **karg):
@@ -434,7 +437,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             file_name = file_exists(client.ci, 'clients_pictures')
             if not file_name:
                 file_name = "00000000000.png"
-            self.default_image(self.lb_pic_insert_cliente, file_name, 'clients_pictures')
+            default_image(self.lb_pic_insert_cliente, file_name, 'clients_pictures')
+            self.send_image = False
             
     #metodo para eliminar un cliente
     def delete_client(self, client: Clients):
@@ -479,7 +483,9 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                 edit = os.path.join(dir, 'edit-pencil.svg')
                 trash = os.path.join(dir, 'trash.svg')
                 social = os.path.join(dir, 'social-network.svg')
+                show = os.path.join(dir, 'eye.svg')
                 buttons = [
+                    {"Ver detalles": self.showClienteData, show: size},
                     {"Editar datos personales": self.edit_client_data, edit : size},
                     {"Editar redes sociales": self.edit_usernames_socials, social: size},
                     {"Eliminar cliente": self.delete_client, trash : size}
@@ -521,3 +527,6 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                 clients = clients.all()                    
             self.reload_table(clients)
                     
+    def showClienteData(self, client: Clients):
+        self.qWidgetShowClient.setClient(client)
+        self.stackedWidget.setCurrentWidget(self.qWidgetShowClient)
