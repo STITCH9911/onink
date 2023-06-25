@@ -32,7 +32,7 @@ class Materiales(Base):
     material = mapped_column(Text, nullable=False)
     costo = mapped_column(Float)
 
-    trabajo: Mapped[List['Trabajos']] = relationship('Trabajos', secondary=t_r_trabajos_materiales, back_populates='material')
+    trabajo: Mapped[List['Trabajos']] = relationship('Trabajos', secondary=t_r_trabajos_materiales, back_populates='material', cascade='all, delete')
 
     @staticmethod
     def getByCriterion(**arg) -> Tuple['Materiales']:
@@ -239,14 +239,13 @@ class Clients(Base):
     phone = mapped_column(Text)
     alcance = mapped_column(Text)
     municipio_id = mapped_column(ForeignKey('municipios.id', ondelete='SET NULL', onupdate='CASCADE'))
-    pais_id = mapped_column(ForeignKey('paises.id', ondelete='SET NULL', onupdate='CASCADE'))
+    pais_id = mapped_column(ForeignKey('paises.id', ondelete='SET NULL', onupdate='CASCADE'), server_default='1')
 
     municipio: Mapped[Optional['Municipios']] = relationship('Municipios', back_populates='clients')
-    trabajos: Mapped[List['Trabajos']] = relationship('Trabajos', uselist=True, back_populates='cliente')
+    trabajos: Mapped[List['Trabajos']] = relationship('Trabajos', uselist=True, back_populates='cliente', cascade='all, delete')
     turnos: Mapped[List['Turnos']] = relationship('Turnos', uselist=True, back_populates='cliente')
     social: Mapped[List['Socials']] = relationship('Socials', secondary=t_r_clients_socials, back_populates='client')
     pais: Mapped[Optional['Paises']] = relationship('Paises', back_populates='clients')
-
     
     @staticmethod
     def getByCriterion(**arg) -> Tuple['Clients']:
@@ -261,42 +260,52 @@ class Clients(Base):
                 funcion = switcher.get(llave)
                 lista.extend(funcion(arg[llave]))
         if "search" in arg:
-            try:
-                int(arg["search"]) #evalua si el argumento es un numero o no
-                #si es numero usa estos filtros
+            if arg["search"] != "":
+                try:
+                    int(arg["search"]) #evalua si el argumento es un numero o no
+                    #si es numero usa estos filtros
+                    with Session() as session:
+                        q1 = session.query(Clients).filter(Clients.ci.like(f"%{arg['search']}%")).all() #filtro por ci
+                        q2 = session.query(Clients).filter(Clients.phone.like(f"%{arg['search']}%")).all() #filtro por telefono
+                        lista = q1 + q2 #agregar resultados a la lista
+                except ValueError:
+                    with Session() as session:
+                        q1 = session.query(Clients).filter(Clients.nombre_apellidos.like(f"%{arg['search']}%")).all() # filtro por nombre y apellidos
+                        q2 = session.query(Clients).join(t_r_clients_socials).filter(t_r_clients_socials.c.username.like(f"%{arg['search']}%")).all()
+                        lista = q1 + q2
                 with Session() as session:
-                    q1 = session.query(Clients).filter(Clients.ci.like(f"%{arg['search']}%")).all() #filtro por ci
-                    q2 = session.query(Clients).filter(Clients.phone.like(f"%{arg['search']}%")).all() #filtro por telefono
-                    lista = q1 + q2 #agregar resultados a la lista
-            except ValueError:
-                with Session() as session:
-                    q1 = session.query(Clients).filter(Clients.nombre_apellidos.like(f"%{arg['search']}%")).all() # filtro por nombre y apellidos
-                    q2 = session.query(Clients).join(t_r_clients_socials).filter(t_r_clients_socials.c.username.like(f"%{arg['search']}%")).all()
-                    lista = q1 + q2
-            with Session() as session:
-                q = session.query(Clients).filter(Clients.direccion.like(f"%{arg['search']}%")).all() #filtro por direccion
-                lista += q
+                    q = session.query(Clients).filter(Clients.direccion.like(f"%{arg['search']}%")).all() #filtro por direccion
+                    lista += q
         lista = set(lista)
         res = tuple(lista)
         return res
     
     @staticmethod
     def getByMunicipioId(id) -> Optional[List['Clients']]:
-        with Session() as session:
-            q = session.query(Clients).filter_by(municipio_id=id).all()
-        return q
+        if id is not None:
+            with Session() as session:
+                q = session.query(Clients).filter_by(municipio_id=id).all()
+            return q
+        else:
+            return []
 
     @staticmethod
     def getByProvinciaId(id) -> Optional[List['Clients']]:
-        with Session() as session:
-            q = session.query(Clients).join(Municipios).join(Provincias).filter(Provincias.id == id).all()
-        return q
+        if id is not None:
+            with Session() as session:
+                q = session.query(Clients).join(Municipios).join(Provincias).filter(Provincias.id == id).all()
+            return q
+        else:
+            return []
     
     @staticmethod
     def getByPaisId(id):
-        with Session() as session:
-            q = session.query(Clients).filter_by(pais_id=id).all()
-        return q
+        if id is not None:
+            with Session() as session:
+                q = session.query(Clients).filter_by(pais_id=id).all()
+            return q
+        else:
+            return []
     
 
 class Trabajos(Base):
@@ -312,9 +321,9 @@ class Trabajos(Base):
     price = mapped_column(Float)
     fecha_pago = mapped_column(Date)
 
-    material: Mapped[List['Materiales']] = relationship('Materiales', secondary=t_r_trabajos_materiales, back_populates='trabajo')
-    cliente: Mapped['Clients'] = relationship('Clients', back_populates='trabajos')
-    tecnica: Mapped[Optional['Tecnicas']] = relationship('Tecnicas', back_populates='trabajos')
+    material: Mapped[List['Materiales']] = relationship('Materiales', secondary=t_r_trabajos_materiales, back_populates='trabajo', cascade='all, delete')
+    cliente: Mapped['Clients'] = relationship('Clients', back_populates='trabajos', cascade='all, delete')
+    tecnica: Mapped[Optional['Tecnicas']] = relationship('Tecnicas', back_populates='trabajos', cascade='all, delete')
     tipo_pago: Mapped[Optional['TiposPagos']] = relationship('TiposPagos', back_populates='trabajos')
     tipo_trabajo: Mapped['TipoTrabajos'] = relationship('TipoTrabajos', back_populates='trabajos')
     tonalidad: Mapped[Optional['Tonalidades']] = relationship('Tonalidades', back_populates='trabajos')
@@ -404,10 +413,10 @@ class Turnos(Base):
     tipo_pago_id = mapped_column(ForeignKey('tipos_pagos.id', ondelete='SET NULL', onupdate='SET NULL'))
     trabajo_id = mapped_column(ForeignKey('trabajos.id', ondelete='SET NULL', onupdate='SET NULL'))
 
-    cliente: Mapped['Clients'] = relationship('Clients', back_populates='turnos')
+    cliente: Mapped['Clients'] = relationship('Clients', back_populates='turnos', cascade='all, delete')
     tipo_pago: Mapped[Optional['TiposPagos']] = relationship('TiposPagos', back_populates='turnos')
     tipo_trabajo: Mapped['TipoTrabajos'] = relationship('TipoTrabajos', back_populates='turnos')
-    trabajo: Mapped[Optional['Trabajos']] = relationship('Trabajos', back_populates='turnos')
+    trabajo: Mapped[Optional['Trabajos']] = relationship('Trabajos', back_populates='turnos', cascade='all, delete')
 
     @staticmethod
     def getByCriterion(**arg) -> Tuple['Turnos']:

@@ -1,20 +1,65 @@
 from PyQt6.QtWidgets import QTableWidget, QTableWidgetItem, QWidget, QHBoxLayout, QPushButton, QMenu, QAbstractScrollArea, QHeaderView
-from PyQt6.QtGui import QAction, QIcon
+from PyQt6.QtGui import QAction, QIcon, QCursor, QFont
 from PyQt6.QtCore import Qt, QSize
+from PyQt6.QtCore import QCoreApplication
 import os
+
+_translate = QCoreApplication.translate
 style = """
 
 QTableWidget::item {
     color: white;
+    font-size: 12pt;
 }
 
 QTableWidget::item:alternate {
-    color: black;
+    color: white;
+    font-size: 12pt;
+    background-color: rgb(100,100,100)
 }
 QPushButton::menu-indicator { 
     padding: 0;
     image: none; qproperty-iconAlignment: 'center';
 }
+QPushButton:hover{
+background-color: rgb(128,128,128);
+border-radius: 20;
+}
+QScrollBar:vertical {
+	background-color: rgb(235, 235, 235);
+        width: 10px;
+        margin: 0px 0 0px 0;
+        border-radius: 5px;
+    }
+
+    QScrollBar::handle:vertical {
+	background-color: rgb(243, 156, 18);
+        min-height: 20px;
+        border-radius: 5px;
+    }
+
+    QScrollBar::add-line:vertical {
+        background-color: #F5F5F5;
+        height: 0px;
+        subcontrol-position: bottom;
+        subcontrol-origin: margin;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    QScrollBar::sub-line:vertical {
+        background-color: #F5F5F5;
+        height: 0px;
+        subcontrol-position: top;
+        subcontrol-origin: margin;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+        background-color: none;
+    }
+
 """
 
 
@@ -25,6 +70,7 @@ class StripedTable(QTableWidget):
         if data:
             self.setRowCount(len(data))
             self.setHorizontalHeaderLabels(['No.', *headers])
+            self.horizontalHeader().setFont(QFont('Oswald', 12))
             self.verticalHeader().setVisible(False)
             self.setAlternatingRowColors(True)
             self.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
@@ -42,19 +88,24 @@ class StripedTable(QTableWidget):
         self.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents)
         self.horizontalHeader().setStretchLastSection(True)
         self.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+        self.horizontalHeader().setSectionResizeMode(self.columnCount() - 1, QHeaderView.ResizeMode.ResizeToContents)
+        self.resizeRowsToContents()
         #self.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
 
     def populate_table(self, data, buttons, objects):
         for i, row in enumerate(data):
             first_item = QTableWidgetItem(str(i+1))
             first_item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+            first_item.setFont(QFont('Oswald', 12))
             self.setItem(i, 0,first_item)
+            first_item.setSizeHint(QSize(50,70))
             for j, item in enumerate(row):
                 table_item =  QTableWidgetItem(item)
                 table_item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+                table_item.setFont(QFont('Oswald', 12))
                 self.setItem(i, j + 1,table_item)
             self.setCellWidget(i, len(row) + 1, self.create_dropdown_button(buttons[i], objects[i]))
-            self.cellWidget(i, len(row) + 1).setStyleSheet(f"background-color:rgb({self.item(i,0).background().color().getRgb()})")
+            self.cellWidget(i, len(row) + 1).setStyleSheet(f"background-color:rgb({self.item(i,0).background().color().getRgb()});")
     def create_dropdown_button(self, button_data, obj):
         widget = QWidget()
         layout = QHBoxLayout(widget)
@@ -62,14 +113,21 @@ class StripedTable(QTableWidget):
         button_menu = QMenu()
         button_menu.setStyleSheet("QMenu::indicator { width:0px; }")
         button = QPushButton("")
-        button.setIcon(QIcon(os.path.join('images','menu-horizontal.svg')))
-        button.setIconSize(QSize(30,20))
-        button.setFlat(True)
+        button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        button.setIcon(QIcon(os.path.join('images','options2.svg')))
+        button.setToolTip(_translate("OnInkMainWindow", "<html><head/><body><p><span style=\" font-size:9pt; font-weight:600;\">Opciones</span></p></body></html>"))
+        button.setIconSize(QSize(20,20))
+        #button.setFlat(True)
         for btn in button_data:
-            for button_text, button_func in btn.items():
-                action = QAction(button_text, self)
-                action.triggered.connect(lambda checked, x=obj, func=button_func: func(x))
-                button_menu.addAction(action)  # Agregar la acción al menú
+            b, i = btn.items()
+            button_text, button_func = b
+            iconFileName, iconSize = i
+            action = QAction(button_text, self)
+            icon = QIcon()
+            icon.addFile(iconFileName, iconSize)
+            action.setIcon(icon)
+            action.triggered.connect(lambda checked, x=obj, func=button_func: func(x))
+            button_menu.addAction(action)  # Agregar la acción al menú
         button.setMenu(button_menu)
         button.setStyleSheet('padding: 0px; border: none;')
         layout.addWidget(button)

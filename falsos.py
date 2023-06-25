@@ -161,3 +161,7 @@ def execute_falsos():
     cr_del_wr_db(Base, engine)
     set_config("DATABASE", 'created', True)
     print("Base de datos creada correctamente.")
+
+
+if __name__ == "__main__":
+   pass

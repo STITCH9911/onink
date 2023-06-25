@@ -5,9 +5,9 @@ from PyQt6.QtGui import QDoubleValidator, QRegularExpressionValidator, QPixmap, 
 from config import Session, PICTURES_DIR
 from main_window_ui import Ui_OnInkMainWindow
 from PyQt6.QtWidgets import QMainWindow, QSizeGrip, QMessageBox, QFileDialog, QLabel, QLineEdit, QHBoxLayout, QComboBox, QVBoxLayout
-from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QRegularExpression
+from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QRegularExpression, QSize
 from datetime import datetime
-from models import Clients, Provincias, Municipios, Paises, Socials, t_r_clients_socials
+from models import Clients, Provincias, Municipios, Paises, Socials, Turnos, t_r_clients_socials, t_r_trabajos_materiales, Trabajos
 from sqlalchemy import insert, update, delete
 from utils import file_exists, delete_file
 from strippedTable import StripedTable
@@ -50,6 +50,10 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.bt_add_image_clients_insert.clicked.connect(lambda: self.select_image(label=self.lb_pic_insert_cliente))
         self.bt_delete_image_clients_insert.clicked.connect(lambda: self.default_image(self.lb_pic_insert_cliente, "00000000000.png", "clients_pictures"))
         self.bt_save_usernames.clicked.connect(self.save_usernames)
+        self.le_search_clients.textChanged.connect(self.search)
+        self.cb_search_clientes_municipio.currentIndexChanged.connect(lambda: self.change_municipio(self.cb_search_clientes_municipio))
+        self.cb_search_clientes_pais.currentIndexChanged.connect(lambda: self.change_pais(self.cb_search_clientes_pais))
+        self.bt_refresh_search_clients.clicked.connect(self.refresh)
         
         self.setWindowOpacity(1)
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
@@ -129,6 +133,16 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             self.le_search_clients.setText("")
             self.load_combobox()
     
+    #metodo para resfrescar
+    def refresh(self):
+        if self.stackedWidget.currentWidget() == self.page_clientes:
+            self.cb_search_clientes_provincia.setCurrentIndex(-1)
+            self.cb_search_clientes_municipio.setCurrentIndex(-1)
+            self.cb_search_clientes_municipio.setCurrentIndex(-1)
+            self.le_search_clients.setText("")
+            self.load_combobox()
+            self.search()
+
     #metodo para ir a pagina de crear cliente
     def create_client(self):
         self.createClient = True
@@ -202,12 +216,26 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             else:
                 self.municipios = session.query(Municipios).all()
             self.load_combobox()
+        self.search()
+
+    #metodo para filtrar por municipio
+    def change_municipio(self, combobox: QComboBox):
+        municipio_id = combobox.currentData()
+        if municipio_id:
+            self.search()
+
+    #metodo para filtrar por pais:
+    def change_pais(self, combobox:QComboBox):
+        pais_id = combobox.currentData()
+        if pais_id:
+            self.search()
 
     #metodo para cargar todos los datos a los combobox
     def load_combobox(self):
 
         if self.page_insertar_cliente == self.stackedWidget.currentWidget():
             self.cb_municipio_insertar.clear()
+            self.cb_pais_insertar.clear()
             for pais in self.paises:
                 self.cb_pais_insertar.addItem(pais.pais, pais.id)
             if self.cb_provincia_insertar.count() == 0:
@@ -224,6 +252,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
 
         if self.page_clientes == self.stackedWidget.currentWidget():
             self.cb_search_clientes_municipio.clear()
+            self.cb_search_clientes_pais.clear()
             for pais in self.paises:
                 self.cb_search_clientes_pais.addItem(pais.pais, pais.id)
             if self.cb_search_clientes_provincia.count() == 0:
@@ -283,8 +312,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         
         file_name = os.path.join(dir,default)
         pixmap = QPixmap(file_name)
-        label.setPixmap(pixmap)
-        label.setScaledContents(True)
+        label.setPixmap(pixmap.scaled(label.size(), aspectRatioMode=Qt.AspectRatioMode.KeepAspectRatio))
         self.send_image = False
 
     #metodo para agregar los campos para nombres de usuarios de redes sociales de un cliente
@@ -355,11 +383,11 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                     texto = line_edit.text()
                     q = session.query(t_r_clients_socials).filter_by(social_id=social.id, client_id=self.item_selected.id).first()
                     if q and texto:
-                        stmp = update(t_r_clients_socials).where(t_r_clients_socials.c.cliente_id == q.cliente_id, t_r_clients_socials.c.social_id == q.social_id).values(username=texto)
+                        stmp = update(t_r_clients_socials).where(t_r_clients_socials.c.client_id == q.client_id, t_r_clients_socials.c.social_id == q.social_id).values(username=texto)
                     elif texto and not q:
                         stmp = insert(t_r_clients_socials).values(username=texto, client_id=self.item_selected.id, social_id=social.id)
                     elif q and not texto:
-                        stmp = delete(t_r_clients_socials).where(t_r_clients_socials.c.cliente_id == q.cliente_id, t_r_clients_socials.c.social_id == q.social_id)
+                        stmp = delete(t_r_clients_socials).where(t_r_clients_socials.c.client_id == q.client_id, t_r_clients_socials.c.social_id == q.social_id)
                     session.execute(stmp)
             session.commit()
         QMessageBox.information(self, "Correcto", f"Ha actualizado los nombres de usuario para las redes sociales del cliente: {self.item_selected.nombre_apellidos}")
@@ -383,6 +411,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.createClient = False
         self.bt_cliente_insertar_reestablecer.hide()
         with Session() as session:
+            client = session.merge(client)
             self.item_selected = client
             self.le_ci_insertar.setText(client.ci)
             self.le_ci_insertar.setReadOnly(True)
@@ -407,6 +436,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     #metodo para eliminar un cliente
     def delete_client(self, client: Clients):
         with Session() as session:
+            client = session.query(Clients).get(client.id)
             msg_box = QMessageBox(self)
             msg_box.setWindowTitle("Eliminar registro")
             msg_box.setText(f"Está a punto de eliminar al cliente \"{client.nombre_apellidos}\". Este registro no podrá ser recuperado.\n¿Desea continuar?")
@@ -415,25 +445,76 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             msg_box.button(QMessageBox.StandardButton.No).setText("No")
             reply = msg_box.exec()
             if reply == QMessageBox.StandardButton.Yes:
+                stmp = delete(t_r_clients_socials).where(t_r_clients_socials.c.client_id == client.id)
+                session.execute(stmp)
+                q = session.query(Trabajos).join(Clients).filter(Clients.id == client.id).all()
+                for toDelete in q:
+                    stmp = delete(t_r_trabajos_materiales).where(t_r_trabajos_materiales.c.trabajo_id == toDelete.id)
+                    session.execute(stmp)
+                q = session.query(Turnos).filter_by(cliente_id= client.id).all()
+                for toDelete in q:
+                    session.delete(toDelete)
                 session.delete(client)
                 session.commit()
         self.clients_list()
 
     #obtener elementos para tabla de clientes
     def getClientsDataTable(self, clients: List['Clients']):
-        headers = ["CI", "Nombre y Apellidos", "País","Municipio", "Opciones"]
-        data = []
-        dropdown_buttons = []
-        for client in clients:
-            pais = "-"
-            if client.pais:
-                pais = client.pais.pais
+        with Session() as session:
 
-            data.append([client.ci, client.nombre_apellidos, pais, client.municipio.municipio])
-            buttons = [
-                {"Editar datos personales": self.edit_client_data},
-                {"Eliminar cliente": self.delete_client}
-            ]
-            dropdown_buttons.append(buttons)
+            headers = ["CI", "Nombre y Apellidos", "País","Municipio", "Opciones"]
+            data = []
+            dropdown_buttons = []
+            for client in clients:
+                client = session.merge(client)
+                pais = "-"
+                if client.pais:
+                    pais = client.pais.pais
+                data.append([client.ci, client.nombre_apellidos, pais, client.municipio.municipio])
+                size = QSize(20,20)
+                dir = 'images'
+                edit = os.path.join(dir, 'edit-pencil.svg')
+                trash = os.path.join(dir, 'trash.svg')
+                social = os.path.join(dir, 'social-network.svg')
+                buttons = [
+                    {"Editar datos personales": self.edit_client_data, edit : size},
+                    {"Editar redes sociales": self.add_usernames_socials, social: size},
+                    {"Eliminar cliente": self.delete_client, trash : size}
+                ]
+                dropdown_buttons.append(buttons)
 
-        return headers, data, dropdown_buttons, clients
+            return headers, data, dropdown_buttons, clients
+    
+    def reload_table(self, collection: list):
+        if self.page_clientes == self.stackedWidget.currentWidget():
+            headers, data, dropdowns_buttons, objects = self.getClientsDataTable(collection)
+            st = self.strippedTable
+            self.strippedTable.close()
+            layout = self.verticalLayout_page_clientes
+            layout.removeWidget(st)
+            self.strippedTable = StripedTable(headers, data, dropdowns_buttons, objects)
+            layout.addWidget(self.strippedTable)
+
+    def search(self):
+        if self.stackedWidget.currentWidget() == self.page_clientes:
+            with Session() as session:
+
+                text = self.le_search_clients.text()
+                pais_id = self.cb_search_clientes_pais.currentData()
+                provincia_id = self.cb_search_clientes_provincia.currentData()
+                municipio_id = self.cb_search_clientes_municipio.currentData()
+                clients = session.query(Clients).join(Municipios, Municipios.id == Clients.municipio_id).join(Provincias, Provincias.id == Municipios.provincia_id).join(Paises, Paises.id == Clients.pais_id)
+                if text != "" and not text.isdigit():
+                    clients = clients.filter(Clients.nombre_apellidos.like(f"%{text}%"))
+                elif text.isdigit():
+                    clients = clients.filter(Clients.ci.like(f"%{text}%"))
+                if pais_id:
+                    clients = clients.filter(Clients.pais_id == pais_id)
+                if provincia_id:
+                    clients = clients.filter(Municipios.provincia_id == provincia_id)
+                if municipio_id:
+                    clients = clients.filter(Clients.municipio_id == municipio_id)
+                
+                clients = clients.all()                    
+            self.reload_table(clients)
+                    
