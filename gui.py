@@ -363,6 +363,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                 line_edit = QLineEdit(self.page_add_social_usernames)
                 line_edit.setPlaceholderText(f"Nombre de usuario para {social.social}")
                 line_edit.setObjectName(f'le_{social.social}')
+                if social.social in karg:
+                    line_edit.setText(karg[social.social])
                 hlayout = QHBoxLayout(self.page_add_social_usernames)
                 hlayout.addWidget(label)
                 hlayout.addWidget(line_edit)
@@ -397,13 +399,14 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     #metodo para abrir la vista de los nombres de usuarios de redes sociales
     def edit_usernames_socials(self, client: Clients):
         with Session() as session:
+            client = session.merge(client)
             self.item_selected = client
             usernames = {}
             socials = client.social
             for social in socials:
                 username = session.query(t_r_clients_socials.c.username).filter_by(client_id = client.id, social_id=social.id).first()
                 if username:
-                    usernames[social.social] = username
+                    usernames[social.social] = username[0]
         self.add_usernames_socials(**usernames)
 
     #metodo para editar datos personales del cliente
@@ -478,7 +481,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                 social = os.path.join(dir, 'social-network.svg')
                 buttons = [
                     {"Editar datos personales": self.edit_client_data, edit : size},
-                    {"Editar redes sociales": self.add_usernames_socials, social: size},
+                    {"Editar redes sociales": self.edit_usernames_socials, social: size},
                     {"Eliminar cliente": self.delete_client, trash : size}
                 ]
                 dropdown_buttons.append(buttons)
