@@ -529,6 +529,9 @@ font-size: 12pt;</string>
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
+                   </property>
                    <property name="text">
                     <string>Clientes</string>
                    </property>
@@ -554,6 +557,9 @@ font-size: 12pt;</string>
                    </property>
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
                    </property>
                    <property name="text">
                     <string>Redes</string>
@@ -581,6 +587,9 @@ font-size: 12pt;</string>
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
+                   </property>
                    <property name="text">
                     <string>Trabajos</string>
                    </property>
@@ -606,6 +615,9 @@ font-size: 12pt;</string>
                    </property>
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
                    </property>
                    <property name="text">
                     <string>Países</string>
@@ -633,6 +645,9 @@ font-size: 12pt;</string>
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
+                   </property>
                    <property name="text">
                     <string>Provincias</string>
                    </property>
@@ -658,6 +673,9 @@ font-size: 12pt;</string>
                    </property>
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
                    </property>
                    <property name="text">
                     <string>Municipios</string>
@@ -685,6 +703,9 @@ font-size: 12pt;</string>
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
+                   </property>
                    <property name="text">
                     <string>Materiales</string>
                    </property>
@@ -710,6 +731,9 @@ font-size: 12pt;</string>
                    </property>
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
                    </property>
                    <property name="text">
                     <string>Técnicas</string>
@@ -737,6 +761,9 @@ font-size: 12pt;</string>
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
+                   </property>
                    <property name="text">
                     <string>Tonos</string>
                    </property>
@@ -762,6 +789,9 @@ font-size: 12pt;</string>
                    </property>
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
                    </property>
                    <property name="text">
                     <string>Pagos</string>
