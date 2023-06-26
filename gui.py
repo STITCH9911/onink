@@ -333,9 +333,9 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             layouts_to_remove = []
 
             # Iterar a través de los layouts existentes
-            for i in range(self.verticalLayout_usernames.count()):
+            for i in range(self.verticalLySocials.count()):
                 if i > 1:
-                    existing_layout = self.verticalLayout_usernames.itemAt(i).layout()
+                    existing_layout = self.verticalLySocials.itemAt(i).layout()
                     if existing_layout:
                         social_name = existing_layout.objectName().replace("layout_", "")
                         social = session.query(Socials).filter_by(social=social_name).first()
@@ -344,16 +344,16 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
 
             # Eliminar todos los layouts que se hayan encontrado para la eliminación
             for layout_to_remove in layouts_to_remove:
-                self.verticalLayout_usernames.removeItem(layout_to_remove)
+                self.verticalLySocials.removeItem(layout_to_remove)
                 layout_to_remove.deleteLater()
 
             # Agregar nuevos layouts para las redes sociales existentes en la base de datos
             for social in self.socials:
                 # Comprobar si ya existe un layout
                 found_layout = False
-                for i in range(self.verticalLayout_usernames.count()):
+                for i in range(self.verticalLySocials.count()):
                     if i > 1:
-                        existing_layout = self.verticalLayout_usernames.itemAt(i).layout()
+                        existing_layout = self.verticalLySocials.itemAt(i).layout()
                         if existing_layout and existing_layout.objectName() == f"layout_{social.social}":
                             found_layout = True
                             break
@@ -372,13 +372,13 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                 line_edit.setObjectName(f'le_{social.social}')
                 if social.social in karg:
                     line_edit.setText(karg[social.social])
-                hlayout = QHBoxLayout(self.page_add_social_usernames)
+                hlayout = QHBoxLayout()
                 hlayout.addWidget(label)
                 hlayout.addWidget(line_edit)
                 hlayout.setStretch(0,2)
                 hlayout.setStretch(1,7)
                 hlayout.setObjectName(f"layout_{social.social}")
-                self.verticalLayout_usernames.addLayout(hlayout)
+                self.verticalLySocials.addLayout(hlayout)
 
         self.stackedWidget.setCurrentWidget(self.page_add_social_usernames)
 

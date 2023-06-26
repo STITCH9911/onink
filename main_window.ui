@@ -493,7 +493,7 @@ QScrollBar:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>178</width>
+                  <width>171</width>
                   <height>1392</height>
                  </rect>
                 </property>
@@ -1199,7 +1199,7 @@ QTextEdit {
     }</string>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>3</number>
                </property>
                <widget class="QWidget" name="page_inicio"/>
                <widget class="QWidget" name="page_clientes">
@@ -1227,6 +1227,7 @@ QTextEdit {
                         <font>
                          <family>Oswald</family>
                          <pointsize>16</pointsize>
+                         <weight>75</weight>
                          <bold>true</bold>
                         </font>
                        </property>
@@ -1887,19 +1888,7 @@ QTextEdit {
                 </layout>
                </widget>
                <widget class="QWidget" name="page_add_social_usernames">
-                <layout class="QVBoxLayout" name="verticalLayout_usernames" stretch="1,1">
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
+                <layout class="QVBoxLayout" name="verticalLayout_usernames">
                  <item>
                   <widget class="QLabel" name="label_13">
                    <property name="maximumSize">
@@ -1912,6 +1901,7 @@ QTextEdit {
                     <font>
                      <family>Oswald</family>
                      <pointsize>16</pointsize>
+                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -1975,6 +1965,22 @@ QTextEdit {
                     </widget>
                    </item>
                   </layout>
+                 </item>
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLySocials"/>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_7">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>495</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                 </layout>
                </widget>
