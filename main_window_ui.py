@@ -17,7 +17,8 @@ class Ui_OnInkMainWindow(object):
         OnInkMainWindow.setStyleSheet("@font-face{\n"
 " font-family: \"Oswald\";\n"
 " src: url(\"/fonts/Oswald/Oswald-VariableFont_wght.ttf\");\n"
-"}")
+"}\n"
+"")
         self.centralwidget = QtWidgets.QWidget(parent=OnInkMainWindow)
         self.centralwidget.setStyleSheet("QLabel{\n"
 " font-family: \"Oswald\";\n"
@@ -29,7 +30,12 @@ class Ui_OnInkMainWindow(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.frame = QtWidgets.QFrame(parent=self.centralwidget)
         self.frame.setStyleSheet("background-color: rgb(44, 62, 80);\n"
-"font-family: \"Oswald\";")
+"font-family: \"Oswald\";\n"
+"\n"
+"QMenu{\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
         self.frame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame.setObjectName("frame")
@@ -53,6 +59,10 @@ class Ui_OnInkMainWindow(object):
 "    font-size:16pt;\n"
 "    font-weight: bold;\n"
 "\n"
+"}\n"
+"QMenu{\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    color: rgb(0, 0, 0);\n"
 "}")
         self.frame_superior.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.frame_superior.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
@@ -137,6 +147,19 @@ class Ui_OnInkMainWindow(object):
         self.horizontalLayout.addWidget(self.bt_close)
         self.verticalLayout_2.addWidget(self.frame_superior)
         self.frame_contenido = QtWidgets.QFrame(parent=self.frame)
+        self.frame_contenido.setStyleSheet("QMenu{\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    color: rgb(0, 0, 0);\n"
+"}\n"
+"QMenu::item:disabled{\n"
+"    \n"
+"    color: rgb(166, 166, 166);\n"
+"}\n"
+"QMenu::item:enabled:selected{\n"
+"    background-color: rgb(47, 28, 255);\n"
+"    \n"
+"    color: rgb(255, 255, 255);\n"
+"}")
         self.frame_contenido.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.frame_contenido.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame_contenido.setObjectName("frame_contenido")
@@ -223,7 +246,7 @@ class Ui_OnInkMainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.widget_menu_lateral = QtWidgets.QWidget()
-        self.widget_menu_lateral.setGeometry(QtCore.QRect(0, 0, 171, 1392))
+        self.widget_menu_lateral.setGeometry(QtCore.QRect(0, 0, 178, 1392))
         self.widget_menu_lateral.setObjectName("widget_menu_lateral")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.widget_menu_lateral)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
@@ -491,6 +514,12 @@ class Ui_OnInkMainWindow(object):
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem2)
         self.label_3 = QtWidgets.QLabel(parent=self.page_clientes)
+        font = QtGui.QFont()
+        font.setFamily("Oswald")
+        font.setPointSize(16)
+        font.setBold(True)
+        self.label_3.setFont(font)
+        self.label_3.setStyleSheet("font-size: 16pt;")
         self.label_3.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.horizontalLayout_3.addWidget(self.label_3)
@@ -582,6 +611,7 @@ class Ui_OnInkMainWindow(object):
         spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem7)
         self.label_4 = QtWidgets.QLabel(parent=self.page_insertar_cliente)
+        self.label_4.setStyleSheet("font-size: 16pt;")
         self.label_4.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_4.setObjectName("label_4")
         self.horizontalLayout_4.addWidget(self.label_4)
@@ -757,6 +787,12 @@ class Ui_OnInkMainWindow(object):
         self.verticalLayout_usernames.setObjectName("verticalLayout_usernames")
         self.label_13 = QtWidgets.QLabel(parent=self.page_add_social_usernames)
         self.label_13.setMaximumSize(QtCore.QSize(16777215, 60))
+        font = QtGui.QFont()
+        font.setFamily("Oswald")
+        font.setPointSize(16)
+        font.setBold(True)
+        self.label_13.setFont(font)
+        self.label_13.setStyleSheet("font-size: 16pt;")
         self.label_13.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_13.setObjectName("label_13")
         self.verticalLayout_usernames.addWidget(self.label_13)
@@ -787,7 +823,7 @@ class Ui_OnInkMainWindow(object):
         OnInkMainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(OnInkMainWindow)
-        self.stackedWidget.setCurrentIndex(3)
+        self.stackedWidget.setCurrentIndex(0)
         self.bt_close.clicked.connect(OnInkMainWindow.close) # type: ignore
         self.bt_maximizar.clicked.connect(OnInkMainWindow.showMaximized) # type: ignore
         self.bt_maximizar.clicked.connect(self.bt_restaurar.show) # type: ignore

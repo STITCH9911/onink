@@ -23,7 +23,8 @@
    <string notr="true">@font-face{
  font-family: &quot;Oswald&quot;;
  src: url(&quot;/fonts/Oswald/Oswald-VariableFont_wght.ttf&quot;);
-}</string>
+}
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
@@ -51,7 +52,12 @@
      <widget class="QFrame" name="frame">
       <property name="styleSheet">
        <string notr="true">background-color: rgb(44, 62, 80);
-font-family: &quot;Oswald&quot;;</string>
+font-family: &quot;Oswald&quot;;
+
+QMenu{
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+}</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -98,6 +104,10 @@ QLabel{
 	font-size:16pt;
 	font-weight: bold;
 
+}
+QMenu{
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
 }</string>
          </property>
          <property name="frameShape">
@@ -331,6 +341,21 @@ QPushButton:hover{
        </item>
        <item>
         <widget class="QFrame" name="frame_contenido">
+         <property name="styleSheet">
+          <string notr="true">QMenu{
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+}
+QMenu::item:disabled{
+	
+	color: rgb(166, 166, 166);
+}
+QMenu::item:enabled:selected{
+	background-color: rgb(47, 28, 255);
+	
+	color: rgb(255, 255, 255);
+}</string>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -468,7 +493,7 @@ QScrollBar:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>171</width>
+                  <width>178</width>
                   <height>1392</height>
                  </rect>
                 </property>
@@ -1084,7 +1109,7 @@ QTextEdit {
     }</string>
                </property>
                <property name="currentIndex">
-                <number>3</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="page_inicio"/>
                <widget class="QWidget" name="page_clientes">
@@ -1108,6 +1133,16 @@ QTextEdit {
                      </item>
                      <item>
                       <widget class="QLabel" name="label_3">
+                       <property name="font">
+                        <font>
+                         <family>Oswald</family>
+                         <pointsize>16</pointsize>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">font-size: 16pt;</string>
+                       </property>
                        <property name="text">
                         <string>Gestión de clientes</string>
                        </property>
@@ -1344,6 +1379,9 @@ QTextEdit {
                    </item>
                    <item>
                     <widget class="QLabel" name="label_4">
+                     <property name="styleSheet">
+                      <string notr="true">font-size: 16pt;</string>
+                     </property>
                      <property name="text">
                       <string>Insertar datos del cliente</string>
                      </property>
@@ -1779,6 +1817,16 @@ QTextEdit {
                      <width>16777215</width>
                      <height>60</height>
                     </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Oswald</family>
+                     <pointsize>16</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">font-size: 16pt;</string>
                    </property>
                    <property name="text">
                     <string>Redes sociales del cliente</string>

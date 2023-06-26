@@ -1,7 +1,7 @@
 import os, shutil
 from typing import List
 from PyQt6 import QtGui
-from PyQt6.QtGui import QDoubleValidator, QRegularExpressionValidator, QPixmap, QIcon, QShowEvent
+from PyQt6.QtGui import QDoubleValidator, QRegularExpressionValidator, QPixmap, QIcon, QShowEvent, QCursor
 from config import DEFAULT_PICTURE, Session, PICTURES_DIR
 from main_window_ui import Ui_OnInkMainWindow
 from PyQt6.QtWidgets import QMainWindow, QSizeGrip, QMessageBox, QFileDialog, QLabel, QLineEdit, QHBoxLayout, QComboBox, QVBoxLayout
@@ -37,7 +37,6 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.grip.resize(self.gripSize,self.gripSize)
         self.bt_menu.clicked.connect(self.mover_menu)
         self.frame_superior.mouseMoveEvent = self.mover_ventana
-
         self.bt_restaurar.hide()
         self.stackedWidget.setCurrentWidget(self.page_inicio)
 
@@ -483,7 +482,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                 if client.pais:
                     pais = client.pais.pais
                 data.append([client.ci, client.nombre_apellidos, pais, client.municipio.municipio])
-                size = QSize(20,20)
+                size = QSize(30,30)
                 dir = 'images'
                 edit = os.path.join(dir, 'edit-pencil.svg')
                 trash = os.path.join(dir, 'trash.svg')
@@ -491,9 +490,9 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                 show = os.path.join(dir, 'eye.svg')
                 buttons = [
                     {"Ver detalles": self.showClienteData, show: size},
-                    {"Editar datos personales": self.edit_client_data, edit : size},
-                    {"Editar redes sociales": self.edit_usernames_socials, social: size},
-                    {"Eliminar cliente": self.delete_client, trash : size}
+                    {"Editar datos": self.edit_client_data, edit : size},
+                    {"Redes sociales": self.edit_usernames_socials, social: size},
+                    {"Eliminar": self.delete_client, trash : size}
                 ]
                 dropdown_buttons.append(buttons)
 
