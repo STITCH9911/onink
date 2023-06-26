@@ -8,6 +8,7 @@ CONFIG_FILE_NAME = 'config.ini'
 user_profile_dir = os.environ['USERPROFILE']
 pictures_dir = os.path.join(user_profile_dir, 'Pictures')
 PICTURES_DIR = pictures_dir
+DEFAULT_PICTURE = "00000000000.png"
 def config_create():
     print("Creando archivo de configuración...")
     config["DATABASE"] = {'name': "database.db", 'created': False}

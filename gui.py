@@ -2,16 +2,17 @@ import os, shutil
 from typing import List
 from PyQt6 import QtGui
 from PyQt6.QtGui import QDoubleValidator, QRegularExpressionValidator, QPixmap, QIcon, QShowEvent
-from config import Session, PICTURES_DIR
+from config import DEFAULT_PICTURE, Session, PICTURES_DIR
 from main_window_ui import Ui_OnInkMainWindow
 from PyQt6.QtWidgets import QMainWindow, QSizeGrip, QMessageBox, QFileDialog, QLabel, QLineEdit, QHBoxLayout, QComboBox, QVBoxLayout
-from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QRegularExpression, QSize
+from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QRegularExpression, QSize, pyqtSlot
 from datetime import datetime
 from models import Clients, Provincias, Municipios, Paises, Socials, Turnos, t_r_clients_socials, t_r_trabajos_materiales, Trabajos
 from sqlalchemy import insert, update, delete
 from showClient import ShowCLient
-from utils import file_exists, delete_file, default_image
+from utils import cargando, file_exists, delete_file, default_image
 from strippedTable import StripedTable
+from ClientWorks import ClientWorks
 
 class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def __init__(self, app, parent=None) -> None:
@@ -20,8 +21,10 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.icono = QIcon()
         self.setWindowIcon(self.icono)
         self.strippedTable = None
-        self.qWidgetShowClient = ShowCLient(self.clients_list, self.clients_list)
+        self.qWidgetShowClient = ShowCLient()
         self.stackedWidget.addWidget(self.qWidgetShowClient)
+        self.CWorks = ClientWorks()
+        self.stackedWidget.addWidget(self.CWorks)
         # Inicializar listas
         with Session() as session:
             self.clientes, self.municipios, self.provincias, self.paises, self.socials = [], [], [], session.query(Paises).all(), [],
@@ -65,7 +68,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
 
     #reiniciar imagen
     def restart_image(self):
-        default_image(self.lb_pic_insert_cliente, "00000000000.png", "clients_pictures")
+        default_image(self.lb_pic_insert_cliente, DEFAULT_PICTURE, "clients_pictures")
         self.send_image = False
 
     #Evento abrir ventana
@@ -121,6 +124,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.animacion.start()
 
     #metodo para ir a pagina de listado de clientes
+    @cargando
+    @pyqtSlot()
     def clients_list(self):
         self.clear_le()
         with Session() as session:
@@ -160,7 +165,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             self.provincias = session.query(Provincias).all()
             self.municipios = session.query(Municipios).all()
             self.stackedWidget.setCurrentWidget(self.page_insertar_cliente)
-            default_image(self.lb_pic_insert_cliente, "00000000000.png", "clients_pictures")
+            default_image(self.lb_pic_insert_cliente, DEFAULT_PICTURE, "clients_pictures")
             self.send_image = False
             self.load_combobox()
 
@@ -281,7 +286,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             self.cb_municipio_insertar.setCurrentIndex(-1)
             self.cb_provincia_insertar.setCurrentIndex(-1)
             self.cb_pais_insertar.setCurrentIndex(-1)
-            default_image(label=self.lb_pic_insert_cliente, default="00000000000.png", dir="clients_pictures")
+            default_image(label=self.lb_pic_insert_cliente, default=DEFAULT_PICTURE, dir="clients_pictures")
             self.send_image = False
             self.load_combobox()
             self.clear_le()
@@ -315,7 +320,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             if file_exists(name,dir):
                 delete_file(name, dir)
             shutil.copy(file_name, new_file_name)
-            default_image(label,"00000000000.png", 'clients_pictures')
+            default_image(label,DEFAULT_PICTURE, 'clients_pictures')
             self.send_image = False
 
     #metodo para agregar los campos para nombres de usuarios de redes sociales de un cliente
@@ -436,7 +441,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             self.txtedt_notas_insertar.setPlainText(client.notes)
             file_name = file_exists(client.ci, 'clients_pictures')
             if not file_name:
-                file_name = "00000000000.png"
+                file_name = DEFAULT_PICTURE
             default_image(self.lb_pic_insert_cliente, file_name, 'clients_pictures')
             self.send_image = False
             
@@ -526,7 +531,16 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                 
                 clients = clients.all()                    
             self.reload_table(clients)
-                    
+    
+
+    @cargando
     def showClienteData(self, client: Clients):
+        self.qWidgetShowClient.setFunciones(self.clients_list, lambda: self.client_works(client))
         self.qWidgetShowClient.setClient(client)
         self.stackedWidget.setCurrentWidget(self.qWidgetShowClient)
+
+    @cargando
+    def client_works(self, client: Clients):
+        self.CWorks.setFunciones(self.clients_list, lambda: self.showClienteData(client))
+        self.CWorks.setClient(client)
+        self.stackedWidget.setCurrentWidget(self.CWorks)

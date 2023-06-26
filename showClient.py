@@ -1,26 +1,23 @@
 import typing
 from PyQt6 import QtCore
 from PyQt6.QtCore import Qt
-from config import Session
+from config import DEFAULT_PICTURE, Session
 from models import Clients
 from showClientView_ui import Ui_showClient
 from PyQt6.QtWidgets import QWidget
 from utils import file_exists, default_image
 
 class ShowCLient(QWidget, Ui_showClient):
-    def __init__(self, funcVolver = None, funcChange = None, cliente: Clients = None, parent: QWidget = None) -> None:
+    def __init__(self, parent: QWidget = None) -> None:
         super().__init__(parent)
         self.setupUi(self)
-        if cliente:
-            self.setClient(cliente)
-        self.bt_volver_show.clicked.connect(funcVolver)
-        self.bt_change_view_show.clicked.connect(funcChange)
+        
         
     
     def setPic(self):
         ci = file_exists(self.cliente.ci, 'clients_pictures')
         if not ci:
-            ci = "00000000000.png"
+            ci = DEFAULT_PICTURE
         default_image(self.lb_pic_client_show, ci, 'clients_pictures')
 
     def setClient(self, cliente: Clients):
@@ -35,3 +32,7 @@ class ShowCLient(QWidget, Ui_showClient):
             self.le_municipio_show.setText(self.cliente.municipio.municipio)
             self.txted_notas_show.setText(self.cliente.notes)
             self.txted_alcance_show.setText(self.cliente.alcance)
+
+    def setFunciones(self,funcVolver, funcChangePage):
+        self.bt_volver_show.clicked.connect(funcVolver)
+        self.bt_change_view_show.clicked.connect(funcChangePage)

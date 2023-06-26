@@ -1,6 +1,8 @@
-from PyQt6.QtCore import QDate, Qt
-from PyQt6.QtWidgets import QLabel
+from PyQt6.QtCore import QDate, Qt, QTimer
+from PyQt6.QtWidgets import QLabel, QProgressDialog
 from PyQt6.QtGui import QPixmap
+import functools
+from time import sleep
 
 import os
 
@@ -39,3 +41,39 @@ def default_image(label: QLabel, default: str, dir: str):
     file_name = os.path.join(dir,default)
     pixmap = QPixmap(file_name)
     label.setPixmap(pixmap.scaled(label.size(), aspectRatioMode=Qt.AspectRatioMode.KeepAspectRatio))
+
+
+def cargando(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        # crear el temporizador
+        timer = QTimer()
+        timer.setInterval(2000)  # 2 segundos
+
+        # crear la ventana emergente con el gif de carga
+        dialog = QProgressDialog(flags=Qt.WindowType.FramelessWindowHint)
+        dialog.setLabel(QLabel("Cargando..."))
+        dialog.setCancelButtonText(None)
+        dialog.setWindowModality(Qt.WindowModality.ApplicationModal)
+
+        # función que se ejecuta si el temporizador se activa
+        def show_dialog():
+            print("Cargando...")
+            dialog.show()
+
+        # conectar el temporizador y la función que se ejecuta si se activa
+        timer.timeout.connect(show_dialog)
+
+        # iniciar el temporizador
+        timer.start()
+        # ejecutar la función
+        result = func(*args, **kwargs)
+
+        # detener el temporizador y cerrar la ventana emergente
+        timer.stop()
+        dialog.close()
+
+        # devolver el resultado de la función
+        return result
+
+    return wrapper
