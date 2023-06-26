@@ -255,9 +255,6 @@ class Clients(Base):
             return 0
         
 
-
-    
-
 class Trabajos(Base):
     __tablename__ = 'trabajos'
 

@@ -556,7 +556,17 @@ font-size: 12pt;</string>
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
                    <property name="text">
-                    <string>Redes Sociales</string>
+                    <string>Redes</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>images/social-network.svg</normaloff>images/social-network.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>35</width>
+                     <height>35</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -572,7 +582,17 @@ font-size: 12pt;</string>
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
                    <property name="text">
-                    <string>Redes Sociales</string>
+                    <string>Trabajos</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>images/services-portfolio.svg</normaloff>images/services-portfolio.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>35</width>
+                     <height>35</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -588,7 +608,17 @@ font-size: 12pt;</string>
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
                    <property name="text">
-                    <string>Redes Sociales</string>
+                    <string>Países</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>images/country-2.svg</normaloff>images/country-2.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>35</width>
+                     <height>35</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -604,7 +634,17 @@ font-size: 12pt;</string>
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
                    <property name="text">
-                    <string>Redes Sociales</string>
+                    <string>Provincias</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>images/flag-1.svg</normaloff>images/flag-1.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -620,7 +660,17 @@ font-size: 12pt;</string>
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
                    <property name="text">
-                    <string>Redes Sociales</string>
+                    <string>Municipios</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>images/location.svg</normaloff>images/location.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>35</width>
+                     <height>35</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -636,7 +686,17 @@ font-size: 12pt;</string>
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
                    <property name="text">
-                    <string>Redes Sociales</string>
+                    <string>Materiales</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>images/materials.svg</normaloff>images/materials.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>35</width>
+                     <height>35</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -652,7 +712,17 @@ font-size: 12pt;</string>
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
                    <property name="text">
-                    <string>Redes Sociales</string>
+                    <string>Técnicas</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>images/solution.svg</normaloff>images/solution.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>35</width>
+                     <height>35</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -668,7 +738,17 @@ font-size: 12pt;</string>
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
                    <property name="text">
-                    <string>Redes Sociales</string>
+                    <string>Tonos</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>images/palette.svg</normaloff>images/palette.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>35</width>
+                     <height>35</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -684,7 +764,17 @@ font-size: 12pt;</string>
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
                    <property name="text">
-                    <string>Redes Sociales</string>
+                    <string>Pagos</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>images/credit-card.svg</normaloff>images/credit-card.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>35</width>
+                     <height>35</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
