@@ -488,10 +488,12 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                 trash = os.path.join(dir, 'trash.svg')
                 social = os.path.join(dir, 'social-network.svg')
                 show = os.path.join(dir, 'eye.svg')
+                service = os.path.join(dir, 'services-portfolio.svg')
                 buttons = [
                     {"Ver detalles": self.showClienteData, show: size},
                     {"Editar datos": self.edit_client_data, edit : size},
                     {"Redes sociales": self.edit_usernames_socials, social: size},
+                    {"Servicios": self.client_works, service: size},
                     {"Eliminar": self.delete_client, trash : size}
                 ]
                 dropdown_buttons.append(buttons)
