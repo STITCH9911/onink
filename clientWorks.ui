@@ -20,6 +20,9 @@
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <item>
         <widget class="QPushButton" name="bt_back">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
          <property name="text">
           <string>Volver</string>
          </property>
@@ -179,8 +182,21 @@
          <height>0</height>
         </size>
        </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="text">
         <string>Cambiar a datos personales</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>images/change (2).svg</normaloff>images/change (2).svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
        </property>
       </widget>
      </item>

@@ -365,6 +365,16 @@
        <property name="text">
         <string>Cambiar a datos de trabajos</string>
        </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>images/change (2).svg</normaloff>images/change (2).svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
       </widget>
      </item>
     </layout>
