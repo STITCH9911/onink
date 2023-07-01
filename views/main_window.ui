@@ -548,7 +548,7 @@ font-size: 12pt;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_28">
+                  <widget class="QPushButton" name="bt_menu_sociales">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -562,7 +562,7 @@ font-size: 12pt;</string>
                     <enum>Qt::RightToLeft</enum>
                    </property>
                    <property name="text">
-                    <string>Redes</string>
+                    <string>Redes </string>
                    </property>
                    <property name="icon">
                     <iconset>
@@ -577,7 +577,7 @@ font-size: 12pt;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_27">
+                  <widget class="QPushButton" name="bt_menu_trabajos">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -591,7 +591,7 @@ font-size: 12pt;</string>
                     <enum>Qt::RightToLeft</enum>
                    </property>
                    <property name="text">
-                    <string>Trabajos</string>
+                    <string>Trabajos </string>
                    </property>
                    <property name="icon">
                     <iconset>
@@ -606,7 +606,7 @@ font-size: 12pt;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_26">
+                  <widget class="QPushButton" name="bt_menu_paises">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -620,7 +620,7 @@ font-size: 12pt;</string>
                     <enum>Qt::RightToLeft</enum>
                    </property>
                    <property name="text">
-                    <string>Países</string>
+                    <string>Países </string>
                    </property>
                    <property name="icon">
                     <iconset>
@@ -635,7 +635,7 @@ font-size: 12pt;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_25">
+                  <widget class="QPushButton" name="bt_menu_provincias">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -649,7 +649,7 @@ font-size: 12pt;</string>
                     <enum>Qt::RightToLeft</enum>
                    </property>
                    <property name="text">
-                    <string>Provincias</string>
+                    <string>Provincias </string>
                    </property>
                    <property name="icon">
                     <iconset>
@@ -664,7 +664,7 @@ font-size: 12pt;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_24">
+                  <widget class="QPushButton" name="bt_menu_municipios">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -678,7 +678,7 @@ font-size: 12pt;</string>
                     <enum>Qt::RightToLeft</enum>
                    </property>
                    <property name="text">
-                    <string>Municipios</string>
+                    <string>Municipios </string>
                    </property>
                    <property name="icon">
                     <iconset>
@@ -693,7 +693,7 @@ font-size: 12pt;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_23">
+                  <widget class="QPushButton" name="bt_menu_materiales">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -707,7 +707,7 @@ font-size: 12pt;</string>
                     <enum>Qt::RightToLeft</enum>
                    </property>
                    <property name="text">
-                    <string>Materiales</string>
+                    <string>Materiales </string>
                    </property>
                    <property name="icon">
                     <iconset>
@@ -722,7 +722,7 @@ font-size: 12pt;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_22">
+                  <widget class="QPushButton" name="bt_menu_tecnicas">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -736,7 +736,7 @@ font-size: 12pt;</string>
                     <enum>Qt::RightToLeft</enum>
                    </property>
                    <property name="text">
-                    <string>Técnicas</string>
+                    <string>Técnicas </string>
                    </property>
                    <property name="icon">
                     <iconset>
@@ -751,7 +751,7 @@ font-size: 12pt;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_21">
+                  <widget class="QPushButton" name="bt_menu_tonos">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -765,7 +765,7 @@ font-size: 12pt;</string>
                     <enum>Qt::RightToLeft</enum>
                    </property>
                    <property name="text">
-                    <string>Tonos</string>
+                    <string>Tonos </string>
                    </property>
                    <property name="icon">
                     <iconset>
@@ -780,7 +780,7 @@ font-size: 12pt;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_20">
+                  <widget class="QPushButton" name="bt_menu_pagos">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -794,7 +794,7 @@ font-size: 12pt;</string>
                     <enum>Qt::RightToLeft</enum>
                    </property>
                    <property name="text">
-                    <string>Pagos</string>
+                    <string>Pagos </string>
                    </property>
                    <property name="icon">
                     <iconset>
@@ -1201,7 +1201,7 @@ QComboBox {
     }
 
     QComboBox::down-arrow {
-        image: url(&quot;images/dropdownbtn.png&quot;);
+        image: url(&quot;views/images/dropdownbtn.png&quot;);
         width: 20px;
         height: 20px;
     }
@@ -1229,7 +1229,7 @@ QTextEdit {
     }</string>
                </property>
                <property name="currentIndex">
-                <number>3</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="page_inicio"/>
                <widget class="QWidget" name="page_clientes">

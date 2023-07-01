@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'd:\Programacion\Proyectos\Python\OnInk\onink\clientWorks.ui'
+# Form implementation generated from reading ui file 'd:\Programacion\Proyectos\Python\OnInk\onink\views\clientWorks.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -22,7 +22,7 @@ class Ui_ClientWorks(object):
         self.bt_back = QtWidgets.QPushButton(parent=ClientWorks)
         self.bt_back.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\images/back-arrow.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\views\\images/back-arrow.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.bt_back.setIcon(icon)
         self.bt_back.setIconSize(QtCore.QSize(32, 32))
         self.bt_back.setObjectName("bt_back")
@@ -88,7 +88,7 @@ class Ui_ClientWorks(object):
         self.bt_change_page.setMinimumSize(QtCore.QSize(0, 0))
         self.bt_change_page.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\images/change (2).svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon1.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\views\\images/change (2).svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.bt_change_page.setIcon(icon1)
         self.bt_change_page.setIconSize(QtCore.QSize(32, 32))
         self.bt_change_page.setObjectName("bt_change_page")

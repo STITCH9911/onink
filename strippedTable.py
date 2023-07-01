@@ -114,7 +114,7 @@ class StripedTable(QTableWidget):
         button_menu.setStyleSheet("QMenu::indicator { width:0px; } QMenu{ font-size: 12pt;}")
         button = QPushButton("")
         button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        button.setIcon(QIcon(os.path.join('images','options2.svg')))
+        button.setIcon(QIcon(os.path.join('views/images','options2.svg')))
         button.setToolTip(_translate("OnInkMainWindow", "<html><head/><body><p><span style=\" font-size:9pt; font-weight:600;\">Opciones</span></p></body></html>"))
         button.setIconSize(QSize(20,20))
         #button.setFlat(True)

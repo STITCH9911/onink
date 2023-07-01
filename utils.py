@@ -43,7 +43,7 @@ def default_image(label: QLabel, default: str, dir: str):
     label.setPixmap(pixmap.scaled(label.size(), aspectRatioMode=Qt.AspectRatioMode.KeepAspectRatio))
 
 
-def cargando(func):
+""" def cargando(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         # crear el temporizador
@@ -76,4 +76,4 @@ def cargando(func):
         # devolver el resultado de la función
         return result
 
-    return wrapper
+    return wrapper """

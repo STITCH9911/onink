@@ -1,18 +1,18 @@
 import os, shutil
 from typing import List
-from PyQt6 import QtGui
-from PyQt6.QtGui import QDoubleValidator, QRegularExpressionValidator, QPixmap, QIcon, QShowEvent, QCursor
+from PyQt6.QtGui import QDoubleValidator, QRegularExpressionValidator, QPixmap, QIcon, QShowEvent
 from config import DEFAULT_PICTURE, Session, PICTURES_DIR
-from main_window_ui import Ui_OnInkMainWindow
-from PyQt6.QtWidgets import QMainWindow, QSizeGrip, QMessageBox, QFileDialog, QLabel, QLineEdit, QHBoxLayout, QComboBox, QVBoxLayout
+from views.main_window_ui import Ui_OnInkMainWindow
+from PyQt6.QtWidgets import QMainWindow, QSizeGrip, QMessageBox, QFileDialog, QLabel, QLineEdit, QHBoxLayout, QComboBox
 from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QRegularExpression, QSize, pyqtSlot
 from datetime import datetime
 from models import Clients, Provincias, Municipios, Paises, Socials, Turnos, t_r_clients_socials, t_r_trabajos_materiales, Trabajos
 from sqlalchemy import insert, update, delete
 from showClient import ShowCLient
-from utils import cargando, file_exists, delete_file, default_image
+from utils import file_exists, delete_file, default_image
 from strippedTable import StripedTable
 from ClientWorks import ClientWorks
+from viewsPaises import PaisesWidget, PaisesWidgetCreate
 
 class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def __init__(self, app, parent=None) -> None:
@@ -22,9 +22,14 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.setWindowIcon(self.icono)
         self.strippedTable = None
         self.qWidgetShowClient = ShowCLient()
-        self.stackedWidget.addWidget(self.qWidgetShowClient)
         self.CWorks = ClientWorks()
+        self.WPaises = PaisesWidget(self.stackedWidget)
+        self.stackedWidget.addWidget(self.WPaises)
+        self.CreatePaisesWidget = PaisesWidgetCreate(self.stackedWidget)
+        self.stackedWidget.addWidget(self.qWidgetShowClient)
         self.stackedWidget.addWidget(self.CWorks)
+        self.stackedWidget.addWidget(self.CreatePaisesWidget)
+
         # Inicializar listas
         with Session() as session:
             self.clientes, self.municipios, self.provincias, self.paises, self.socials = [], [], [], session.query(Paises).all(), [],
@@ -59,7 +64,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.cb_search_clientes_municipio.currentIndexChanged.connect(lambda: self.change_municipio(self.cb_search_clientes_municipio))
         self.cb_search_clientes_pais.currentIndexChanged.connect(lambda: self.change_pais(self.cb_search_clientes_pais))
         self.bt_refresh_search_clients.clicked.connect(self.refresh)
-        
+        self.bt_menu_paises.clicked.connect(self.paisesIndex)
         self.setWindowOpacity(1)
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
         
@@ -123,7 +128,6 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.animacion.start()
 
     #metodo para ir a pagina de listado de clientes
-    @cargando
     @pyqtSlot()
     def clients_list(self):
         self.clear_le()
@@ -483,7 +487,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                     pais = client.pais.pais
                 data.append([client.ci, client.nombre_apellidos, pais, client.municipio.municipio])
                 size = QSize(30,30)
-                dir = 'images'
+                dir = 'views/images'
                 edit = os.path.join(dir, 'edit-pencil.svg')
                 trash = os.path.join(dir, 'trash.svg')
                 social = os.path.join(dir, 'social-network.svg')
@@ -533,15 +537,21 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                 clients = clients.all()                    
             self.reload_table(clients)
     
-
-    @cargando
     def showClienteData(self, client: Clients):
         self.qWidgetShowClient.setFunciones(self.clients_list, lambda: self.client_works(client))
         self.qWidgetShowClient.setClient(client)
         self.stackedWidget.setCurrentWidget(self.qWidgetShowClient)
 
-    @cargando
     def client_works(self, client: Clients):
         self.CWorks.setFunciones(self.clients_list, lambda: self.showClienteData(client))
         self.CWorks.setClient(client)
         self.stackedWidget.setCurrentWidget(self.CWorks)
+
+    def paisesIndex(self):
+        self.WPaises.set_functions(self.editPais)
+        self.WPaises.search()
+        self.stackedWidget.setCurrentWidget(self.WPaises)
+
+    def editPais(self,obj):
+        self.CreatePaisesWidget.setPais(obj)
+        self.stackedWidget.setCurrentWidget(self.CreatePaisesWidget)

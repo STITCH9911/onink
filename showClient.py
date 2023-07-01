@@ -3,7 +3,7 @@ from PyQt6 import QtCore
 from PyQt6.QtCore import Qt
 from config import DEFAULT_PICTURE, Session
 from models import Clients
-from showClientView_ui import Ui_showClient
+from views.showClientView_ui import Ui_showClient
 from PyQt6.QtWidgets import QWidget
 from utils import file_exists, default_image
 

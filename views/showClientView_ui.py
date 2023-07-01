@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'd:\Programacion\Proyectos\Python\OnInk\onink\showClientView.ui'
+# Form implementation generated from reading ui file 'd:\Programacion\Proyectos\Python\OnInk\onink\views\showClientView.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -20,7 +20,7 @@ class Ui_showClient(object):
         self.bt_volver_show = QtWidgets.QPushButton(parent=showClient)
         self.bt_volver_show.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\images/back-arrow.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\views\\images/back-arrow.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.bt_volver_show.setIcon(icon)
         self.bt_volver_show.setIconSize(QtCore.QSize(32, 32))
         self.bt_volver_show.setObjectName("bt_volver_show")
@@ -167,7 +167,7 @@ class Ui_showClient(object):
         self.bt_change_view_show = QtWidgets.QPushButton(parent=showClient)
         self.bt_change_view_show.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\images/change (2).svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon1.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\views\\images/change (2).svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.bt_change_view_show.setIcon(icon1)
         self.bt_change_view_show.setIconSize(QtCore.QSize(32, 32))
         self.bt_change_view_show.setObjectName("bt_change_view_show")

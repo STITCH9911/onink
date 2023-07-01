@@ -1,6 +1,6 @@
 from typing import List, Tuple
 from PyQt6 import QtCore
-from clientWorks_ui import Ui_ClientWorks
+from views.clientWorks_ui import Ui_ClientWorks
 from PyQt6.QtWidgets import QWidget
 from config import DEFAULT_PICTURE, Session
 
