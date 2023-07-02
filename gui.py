@@ -16,6 +16,7 @@ from strippedTable import StripedTable
 from ClientWorks import ClientWorks
 from viewsPaises import PaisesWidget, PaisesWidgetCreate
 from provinciasControllers import ProvinciasIndex, ProvinciasForm
+from tonoControllers import TonosIndex, TonoForm
 
 class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def __init__(self, app, parent=None) -> None:
@@ -36,6 +37,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.ProvinciasForm = ProvinciasForm(self.stackedWidget)
         self.MunicipiosIndex = MunicipiosIndex(self.stackedWidget)
         self.MunicipiosForm = MunicipiosForm(self.stackedWidget)
+        self.TonoIndex = TonosIndex(self.stackedWidget)
+        self.TonoForm = TonoForm(self.stackedWidget)
 
         #add widgets a stackedWidget
         self.stackedWidget.addWidget(self.WPaises)
@@ -48,6 +51,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.stackedWidget.addWidget(self.ProvinciasIndex)
         self.stackedWidget.addWidget(self.MunicipiosIndex)
         self.stackedWidget.addWidget(self.MunicipiosForm)
+        self.stackedWidget.addWidget(self.TonoIndex)
+        self.stackedWidget.addWidget(self.TonoForm)
 
         # Inicializar listas
         with Session() as session:
@@ -71,6 +76,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.bt_menu_sociales.clicked.connect(self.socialIndex)
         self.bt_menu_provincias.clicked.connect(self.provincias_index)
         self.bt_menu_municipios.clicked.connect(self.municipios_index)
+        self.bt_menu_tonos.clicked.connect(self.tonos_index)
 
 
         #Señales de CRUD Clientes
@@ -581,3 +587,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.MunicipiosIndex.load_cb()
         self.MunicipiosIndex.search()
         self.stackedWidget.setCurrentWidget(self.MunicipiosIndex)
+
+    def tonos_index(self):
+        self.TonoIndex.search()
+        self.stackedWidget.setCurrentWidget(self.TonoIndex)
