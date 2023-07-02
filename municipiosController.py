@@ -41,7 +41,6 @@ class MunicipiosIndex(QWidget, Ui_MunicipiosIndex):
         sw = self.parentWidget()
         w = sw.findChild(QWidget, 'MunicipiosForm')
         w.setObjeto(obj)
-        w.load_cb()
         sw.setCurrentWidget(w)
     
     def create(self):
@@ -118,7 +117,7 @@ class MunicipiosForm(QWidget,Ui_MunicipiosForm):
         self.municipio.returnPressed.connect(self.save)
 
     def save(self):
-        if self.municipio.text() == "" or self.cb_provincia.currentIndex == -1:
+        if self.municipio.text() == "" or self.cb_provincia.currentIndex() == -1:
             QMessageBox.warning(self, "Advertencia", "Para llevar a cabo la acción debe llenar los campos correctamente", QMessageBox.StandardButton.Ok)
             return 
 
@@ -131,6 +130,7 @@ class MunicipiosForm(QWidget,Ui_MunicipiosForm):
             else:
                 obj = Municipios(municipio = self.municipio.text(),provincia_id=self.cb_provincia.currentData())
                 session.add(obj)
+            
             try:
                 session.commit()
                 self.mostrar_widget()
@@ -139,7 +139,7 @@ class MunicipiosForm(QWidget,Ui_MunicipiosForm):
                 self.obj = None
                 QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
             except IntegrityError:
-                QMessageBox.critical(self, "Error", "Ya existe esta provincia.", QMessageBox.StandardButton.Ok)
+                QMessageBox.critical(self, "Error", "Ya existe este municipio.", QMessageBox.StandardButton.Ok)
             
 
     def mostrar_widget(self):
@@ -158,9 +158,11 @@ class MunicipiosForm(QWidget,Ui_MunicipiosForm):
         self.cb_provincia.setCurrentIndex(-1)
         
     def setObjeto(self,obj):
+        self.load_cb()
         self.obj = obj
         self.municipio.setText(obj.municipio)
-        self.cb_provincia.setCurrentIndex(self.cb_provincia.findData(obj.provincia_id))
+        index = self.cb_provincia.findData(obj.provincia_id)
+        self.cb_provincia.setCurrentIndex(index)
 
     def load_cb(self):
         with Session() as session:
