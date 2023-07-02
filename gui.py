@@ -14,6 +14,7 @@ from utils import file_exists, delete_file, default_image
 from strippedTable import StripedTable
 from ClientWorks import ClientWorks
 from viewsPaises import PaisesWidget, PaisesWidgetCreate
+from provinciasControllers import ProvinciasIndex, ProvinciasForm
 
 class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def __init__(self, app, parent=None) -> None:
@@ -30,6 +31,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.CreatePaisesWidget = PaisesWidgetCreate(self.stackedWidget)
         self.SocialWidgetForm = SocialsWidgetCreate(self.stackedWidget)
         self.IndexSocial = SocialsIndex(self.stackedWidget)
+        self.ProvinciasIndex = ProvinciasIndex(self.stackedWidget)
+        self.ProvinciasForm = ProvinciasForm(self.stackedWidget)
 
         #add widgets a stackedWidget
         self.stackedWidget.addWidget(self.WPaises)
@@ -38,6 +41,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.stackedWidget.addWidget(self.CreatePaisesWidget)
         self.stackedWidget.addWidget(self.SocialWidgetForm)
         self.stackedWidget.addWidget(self.IndexSocial)
+        self.stackedWidget.addWidget(self.ProvinciasForm)
+        self.stackedWidget.addWidget(self.ProvinciasIndex)
 
         # Inicializar listas
         with Session() as session:
@@ -59,6 +64,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.bt_menu_clientes.clicked.connect(self.clients_list)
         self.bt_menu_paises.clicked.connect(self.paisesIndex)
         self.bt_menu_sociales.clicked.connect(self.socialIndex)
+        self.bt_menu_provincias.clicked.connect(self.provincias_index)
 
         #Señales de CRUD Clientes
         self.createClient = True
@@ -552,3 +558,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def socialIndex(self):
         self.IndexSocial.search()
         self.stackedWidget.setCurrentWidget(self.IndexSocial)
+
+    def provincias_index(self):
+        self.ProvinciasIndex.search()
+        self.stackedWidget.setCurrentWidget(self.ProvinciasIndex)

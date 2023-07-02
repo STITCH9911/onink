@@ -3,16 +3,16 @@ from PyQt6 import QtCore
 from sqlalchemy import delete
 from sqlalchemy.exc import IntegrityError
 from config import Session
-from models import Socials, t_r_clients_socials
+from models import Provincias
 from strippedTable import StripedTable
-from views.socials_ui import Ui_SocialsIndex
-from views.createSocial_ui import Ui_socialCreate
+from views.provincias_ui import Ui_ProvinciaIndex
+from views.provinciaForm_ui import Ui_provinciasForm
 from PyQt6.QtWidgets import QWidget, QMessageBox
 from PyQt6.QtCore import QSize
 import os
 
 
-class SocialsIndex(QWidget, Ui_SocialsIndex):
+class ProvinciasIndex(QWidget, Ui_ProvinciaIndex):
     def __init__(self, parent: QWidget | None = ...) -> None:
         super().__init__(parent)
         self.setupUi(self)
@@ -23,17 +23,17 @@ class SocialsIndex(QWidget, Ui_SocialsIndex):
 
     def editFunc(self,obj):
         sw = self.parentWidget()
-        w = sw.findChild(QWidget, 'socialCreate')
-        w.setSocials(obj)
+        w = sw.findChild(QWidget, 'provinciasForm')
+        w.setObjeto(obj)
         sw.setCurrentWidget(w)
     
     def create(self):
         sw = self.parentWidget()
-        w = sw.findChild(QWidget, "socialCreate")
+        w = sw.findChild(QWidget, "provinciasForm")
         sw.setCurrentWidget(w)
     
-    def setSocials(self, socials):
-        headers, data, dropdown_buttons, objects = self.getDataTable(socials)
+    def setProvincias(self, provincias):
+        headers, data, dropdown_buttons, objects = self.getDataTable(provincias)
         if self.table is not None:
             self.layout_tabla.removeWidget(self.table)
             self.table.clearContents()        
@@ -44,21 +44,21 @@ class SocialsIndex(QWidget, Ui_SocialsIndex):
         le = self.le_search.text()
         with Session() as session:
             if le != "":
-                socials = session.query(Socials).filter(Socials.social.like(f"%{le}%")).all()
+                provincias = session.query(Provincias).filter(Provincias.provincia.like(f"%{le}%")).all()
             else:
-                socials = session.query(Socials).all()
-        self.setSocials(socials)
+                provincias = session.query(Provincias).all()
+        self.setProvincias(provincias)
 
-    def getDataTable(self, socials: List['Socials'])-> Tuple:
+    def getDataTable(self, provincias: List['Provincias'])-> Tuple:
         with Session() as session:
-            headers = ["Red social", "Opciones"]
+            headers = ["Provincia", 'Cant. de Municipios', "Opciones"]
             data = []
             
             dropdown_buttons = []
             
-            for p in socials:
+            for p in provincias:
                 p = session.merge(p)
-                data.append([p.social])
+                data.append([p.provincia, str(len(p.municipios))])
                 dir = "views/images"
                 size = QSize(30,30)
                 edit = os.path.join(dir, 'edit-pencil.svg')
@@ -69,16 +69,14 @@ class SocialsIndex(QWidget, Ui_SocialsIndex):
                 ]
                 dropdown_buttons.append(buttons)
                 
-        return headers, data, dropdown_buttons, socials
+        return headers, data, dropdown_buttons, provincias
     
     def delete(self, obj):
         with Session() as session:
             obj = session.merge(obj)
-            reply = QMessageBox.question(self, "Advertencia", "Está a punto de eliminar una red social, si continúa no se podrá recuperar la información. ¿Desea continuar?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            reply = QMessageBox.question(self, "Advertencia", "Está a punto de eliminar una red provincia, si continúa no se podrá recuperar la información. ¿Desea continuar?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
             if reply == QMessageBox.StandardButton.Yes:
-                stmp =  delete(t_r_clients_socials).where(t_r_clients_socials.c.social_id == obj.id)
-                session.execute(stmp)
                 session.delete(obj)
                 session.commit()
                 QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
@@ -88,7 +86,7 @@ class SocialsIndex(QWidget, Ui_SocialsIndex):
 
 
 
-class SocialsWidgetCreate(QWidget,Ui_socialCreate):
+class ProvinciasForm(QWidget,Ui_provinciasForm):
 
     def __init__(self,parent: QWidget | None = ...) -> None:
         super().__init__(parent)
@@ -96,46 +94,45 @@ class SocialsWidgetCreate(QWidget,Ui_socialCreate):
         self.bt_save.clicked.connect(self.save)
         self.obj = None
         self.bt_back.clicked.connect(self.mostrar_widget)
-        self.social.returnPressed.connect(self.save)
+        self.provincia.returnPressed.connect(self.save)
 
     def save(self):
-        if self.social.text() == "":
-            QMessageBox.warning(self, "Advertencia", "Para agregar un elemento nuevo debe llenar los campos correctamente", QMessageBox.StandardButton.Ok)
-            return
-        
+        if self.provincia.text() == "":
+            QMessageBox.warning(self, "Advertencia", "Para llevar a cabo la acción debe llenar los campos correctamente", QMessageBox.StandardButton.Ok)
+            return 
+
         with  Session() as session:
             if self.obj:
                 self.obj = session.merge(self.obj)
-                self.obj.social = self.social.text()
+                self.obj.provincia = self.provincia.text()
                 session.add(self.obj)
-            elif not self.social.text() == "":
-                obj = Socials(social=self.social.text())
+            else:
+                obj = Provincias(provincia=self.provincia.text())
                 session.add(obj)
-                
                             
             try:
                 session.commit()
                 self.mostrar_widget()
-                self.social.clear()
+                self.provincia.clear()
                 self.obj = None
                 QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
             except IntegrityError:
-                QMessageBox.critical(self, "Error", "Ya existe esta red social.", QMessageBox.StandardButton.Ok)
+                QMessageBox.critical(self, "Error", "Ya existe esta provincia.", QMessageBox.StandardButton.Ok)
             
 
     def mostrar_widget(self):
         stackedWidget = self.parentWidget()
-        w = stackedWidget.findChild(QWidget, "SocialsIndex")
+        w = stackedWidget.findChild(QWidget, "ProvinciaIndex")
         self.recargar_datos_sociales()
         stackedWidget.setCurrentWidget(w)
-        self.social.clear()
+        self.provincia.clear()
 
     def recargar_datos_sociales(self):
         sw = self.parentWidget()
-        w = sw.findChild(QWidget, "SocialsIndex")
+        w = sw.findChild(QWidget, "ProvinciaIndex")
         w.search()
-        self.social.clear()
+        self.provincia.clear()
         
-    def setSocials(self,obj):
+    def setObjeto(self,obj):
         self.obj = obj
-        self.social.setText(obj.social)
+        self.provincia.setText(obj.provincia)

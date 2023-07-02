@@ -65,7 +65,7 @@ class Provincias(Base):
     id = mapped_column(Integer, primary_key=True)
     provincia = mapped_column(Text, nullable=False)
 
-    municipios: Mapped[List['Municipios']] = relationship('Municipios', uselist=True, back_populates='provincia')
+    municipios: Mapped[List['Municipios']] = relationship('Municipios', uselist=True, back_populates='provincia', cascade='all, delete')
 
     @staticmethod
     def getByCriterion(**arg) -> Tuple['Provincias']:
@@ -209,8 +209,8 @@ class Municipios(Base):
     municipio = mapped_column(Text, nullable=False)
     provincia_id = mapped_column(ForeignKey('provincias.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
 
-    provincia: Mapped['Provincias'] = relationship('Provincias', back_populates='municipios')
-    clients: Mapped[List['Clients']] = relationship('Clients', uselist=True, back_populates='municipio')
+    provincia: Mapped['Provincias'] = relationship('Provincias', back_populates='municipios', cascade='all, delete')
+    clients: Mapped[List['Clients']] = relationship('Clients', uselist=True, back_populates='municipio', cascade='all, delete')
 
     @staticmethod
     def getByCriterion(**arg):
@@ -242,7 +242,7 @@ class Clients(Base):
     municipio_id = mapped_column(ForeignKey('municipios.id', ondelete='SET NULL', onupdate='CASCADE'))
     pais_id = mapped_column(ForeignKey('paises.id', ondelete='SET NULL', onupdate='CASCADE'), server_default='1')
 
-    municipio: Mapped[Optional['Municipios']] = relationship('Municipios', back_populates='clients')
+    municipio: Mapped[Optional['Municipios']] = relationship('Municipios', back_populates='clients', cascade='all, delete')
     trabajos: Mapped[List['Trabajos']] = relationship('Trabajos', uselist=True, back_populates='cliente', cascade='all, delete')
     turnos: Mapped[List['Turnos']] = relationship('Turnos', uselist=True, back_populates='cliente')
     social: Mapped[List['Socials']] = relationship('Socials', secondary=t_r_clients_socials, back_populates='client')
