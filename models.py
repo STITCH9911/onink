@@ -33,7 +33,7 @@ class Materiales(Base):
     material = mapped_column(Text, nullable=False)
     costo = mapped_column(Float)
 
-    trabajo: Mapped[List['Trabajos']] = relationship('Trabajos', secondary=t_r_trabajos_materiales, back_populates='material', cascade='all, delete')
+    trabajo: Mapped[List['Trabajos']] = relationship('Trabajos', secondary=t_r_trabajos_materiales, back_populates='material')
 
     @staticmethod
     def getByCriterion(**arg) -> Tuple['Materiales']:
@@ -65,7 +65,7 @@ class Provincias(Base):
     id = mapped_column(Integer, primary_key=True)
     provincia = mapped_column(Text, nullable=False)
 
-    municipios: Mapped[List['Municipios']] = relationship('Municipios', uselist=True, back_populates='provincia', cascade='all, delete')
+    municipios: Mapped[List['Municipios']] = relationship('Municipios', uselist=True, back_populates='provincia', cascade='delete, delete-orphan')
 
     @staticmethod
     def getByCriterion(**arg) -> Tuple['Provincias']:
@@ -134,8 +134,8 @@ class TipoTrabajos(Base):
     id = mapped_column(Integer, primary_key=True)
     tipo = mapped_column(Text, nullable=False)
 
-    trabajos: Mapped[List['Trabajos']] = relationship('Trabajos', uselist=True, back_populates='tipo_trabajo')
-    turnos: Mapped[List['Turnos']] = relationship('Turnos', uselist=True, back_populates='tipo_trabajo')
+    trabajos: Mapped[List['Trabajos']] = relationship('Trabajos', uselist=True, back_populates='tipo_trabajo', cascade='delete, delete-orphan')
+    turnos: Mapped[List['Turnos']] = relationship('Turnos', uselist=True, back_populates='tipo_trabajo' , cascade='delete, delete-orphan')
 
     @staticmethod
     def getByCriterion(**arg) -> Tuple['TipoTrabajos']:
@@ -209,8 +209,8 @@ class Municipios(Base):
     municipio = mapped_column(Text, nullable=False)
     provincia_id = mapped_column(ForeignKey('provincias.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
 
-    provincia: Mapped['Provincias'] = relationship('Provincias', back_populates='municipios', cascade='all, delete')
-    clients: Mapped[List['Clients']] = relationship('Clients', uselist=True, back_populates='municipio', cascade='all, delete')
+    provincia: Mapped['Provincias'] = relationship('Provincias', back_populates='municipios', )
+    clients: Mapped[List['Clients']] = relationship('Clients', uselist=True, back_populates='municipio',cascade='delete, delete-orphan')
 
     @staticmethod
     def getByCriterion(**arg):
@@ -242,9 +242,9 @@ class Clients(Base):
     municipio_id = mapped_column(ForeignKey('municipios.id', ondelete='SET NULL', onupdate='CASCADE'))
     pais_id = mapped_column(ForeignKey('paises.id', ondelete='SET NULL', onupdate='CASCADE'), server_default='1')
 
-    municipio: Mapped[Optional['Municipios']] = relationship('Municipios', back_populates='clients', cascade='all, delete')
-    trabajos: Mapped[List['Trabajos']] = relationship('Trabajos', uselist=True, back_populates='cliente', cascade='all, delete')
-    turnos: Mapped[List['Turnos']] = relationship('Turnos', uselist=True, back_populates='cliente')
+    municipio: Mapped[Optional['Municipios']] = relationship('Municipios', back_populates='clients')
+    trabajos: Mapped[List['Trabajos']] = relationship('Trabajos', uselist=True, back_populates='cliente',  cascade='delete, delete-orphan')
+    turnos: Mapped[List['Turnos']] = relationship('Turnos', uselist=True, back_populates='cliente', cascade='delete, delete-orphan')
     social: Mapped[List['Socials']] = relationship('Socials', secondary=t_r_clients_socials, back_populates='client')
     pais: Mapped[Optional['Paises']] = relationship('Paises', back_populates='clients')
     
@@ -268,9 +268,9 @@ class Trabajos(Base):
     price = mapped_column(Float)
     fecha_pago = mapped_column(Date)
 
-    material: Mapped[List['Materiales']] = relationship('Materiales', secondary=t_r_trabajos_materiales, back_populates='trabajo', cascade='all, delete')
-    cliente: Mapped['Clients'] = relationship('Clients', back_populates='trabajos', cascade='all, delete')
-    tecnica: Mapped[Optional['Tecnicas']] = relationship('Tecnicas', back_populates='trabajos', cascade='all, delete')
+    material: Mapped[List['Materiales']] = relationship('Materiales', secondary=t_r_trabajos_materiales, back_populates='trabajo')
+    cliente: Mapped['Clients'] = relationship('Clients', back_populates='trabajos')
+    tecnica: Mapped[Optional['Tecnicas']] = relationship('Tecnicas', back_populates='trabajos')
     tipo_pago: Mapped[Optional['TiposPagos']] = relationship('TiposPagos', back_populates='trabajos')
     tipo_trabajo: Mapped['TipoTrabajos'] = relationship('TipoTrabajos', back_populates='trabajos')
     tonalidad: Mapped[Optional['Tonalidades']] = relationship('Tonalidades', back_populates='trabajos')
@@ -360,10 +360,10 @@ class Turnos(Base):
     tipo_pago_id = mapped_column(ForeignKey('tipos_pagos.id', ondelete='SET NULL', onupdate='SET NULL'))
     trabajo_id = mapped_column(ForeignKey('trabajos.id', ondelete='SET NULL', onupdate='SET NULL'))
 
-    cliente: Mapped['Clients'] = relationship('Clients', back_populates='turnos', cascade='all, delete')
+    cliente: Mapped['Clients'] = relationship('Clients', back_populates='turnos')
     tipo_pago: Mapped[Optional['TiposPagos']] = relationship('TiposPagos', back_populates='turnos')
     tipo_trabajo: Mapped['TipoTrabajos'] = relationship('TipoTrabajos', back_populates='turnos')
-    trabajo: Mapped[Optional['Trabajos']] = relationship('Trabajos', back_populates='turnos', cascade='all, delete')
+    trabajo: Mapped[Optional['Trabajos']] = relationship('Trabajos', back_populates='turnos')
 
     @staticmethod
     def getByCriterion(**arg) -> Tuple['Turnos']:

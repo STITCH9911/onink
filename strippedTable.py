@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QTableWidget, QTableWidgetItem, QWidget, QHBoxLayout, QPushButton, QMenu, QAbstractScrollArea, QHeaderView
-from PyQt6.QtGui import QAction, QIcon, QCursor, QFont
+from PyQt6.QtGui import QAction, QIcon, QCursor, QFont, QColor
 from PyQt6.QtCore import Qt, QSize
 from PyQt6.QtCore import QCoreApplication
 import os
@@ -15,7 +15,7 @@ QTableWidget::item {
 QTableWidget::item:alternate {
     color: white;
     font-size: 12pt;
-    background-color: rgb(100,100,100)
+    
 }
 QPushButton::menu-indicator { 
     padding: 0;
@@ -61,7 +61,8 @@ QScrollBar:vertical {
     }
 
 """
-
+COLOR_PAR = QColor(100,100,100)
+COLOR_IMPAR = QColor(60,60,60)
 
 class StripedTable(QTableWidget):
     def __init__(self, headers, data, buttons, objects, parent=None):
@@ -98,13 +99,21 @@ class StripedTable(QTableWidget):
             first_item.setFont(QFont('Oswald', 12))
             self.setItem(i, 0,first_item)
             first_item.setSizeHint(QSize(50,70))
+            if i % 2 == 0:
+                self.item(i,0).setBackground(COLOR_PAR)
+            else:
+                self.item(i,0).setBackground(COLOR_IMPAR)
             for j, item in enumerate(row):
                 table_item =  QTableWidgetItem(item)
                 table_item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
                 table_item.setFont(QFont('Oswald', 12))
                 self.setItem(i, j + 1,table_item)
+                if i % 2 == 0:
+                    self.item(i,j + 1).setBackground(COLOR_PAR)
+                else:
+                    self.item(i,j + 1).setBackground(COLOR_IMPAR)
             self.setCellWidget(i, len(row) + 1, self.create_dropdown_button(buttons[i], objects[i]))
-            self.cellWidget(i, len(row) + 1).setStyleSheet(f"background-color:rgb({self.item(i,0).background().color().getRgb()});")
+            self.cellWidget(i, len(row) + 1).setStyleSheet(f"background-color:rgba{self.item(i,0).background().color().getRgb()};")
     def create_dropdown_button(self, button_data, obj):
         widget = QWidget()
         layout = QHBoxLayout(widget)

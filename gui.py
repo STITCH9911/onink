@@ -2,6 +2,7 @@ import os, shutil
 from typing import List
 from PyQt6.QtGui import QDoubleValidator, QRegularExpressionValidator, QPixmap, QIcon, QShowEvent
 from config import DEFAULT_PICTURE, Session, PICTURES_DIR
+from municipiosController import MunicipiosForm, MunicipiosIndex
 from socialsIndex import SocialsIndex, SocialsWidgetCreate
 from views.main_window_ui import Ui_OnInkMainWindow
 from PyQt6.QtWidgets import QMainWindow, QSizeGrip, QMessageBox, QFileDialog, QLabel, QLineEdit, QHBoxLayout, QComboBox
@@ -33,6 +34,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.IndexSocial = SocialsIndex(self.stackedWidget)
         self.ProvinciasIndex = ProvinciasIndex(self.stackedWidget)
         self.ProvinciasForm = ProvinciasForm(self.stackedWidget)
+        self.MunicipiosIndex = MunicipiosIndex(self.stackedWidget)
+        self.MunicipiosForm = MunicipiosForm(self.stackedWidget)
 
         #add widgets a stackedWidget
         self.stackedWidget.addWidget(self.WPaises)
@@ -43,6 +46,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.stackedWidget.addWidget(self.IndexSocial)
         self.stackedWidget.addWidget(self.ProvinciasForm)
         self.stackedWidget.addWidget(self.ProvinciasIndex)
+        self.stackedWidget.addWidget(self.MunicipiosIndex)
+        self.stackedWidget.addWidget(self.MunicipiosForm)
 
         # Inicializar listas
         with Session() as session:
@@ -65,6 +70,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.bt_menu_paises.clicked.connect(self.paisesIndex)
         self.bt_menu_sociales.clicked.connect(self.socialIndex)
         self.bt_menu_provincias.clicked.connect(self.provincias_index)
+        self.bt_menu_municipios.clicked.connect(self.municipios_index)
+
 
         #Señales de CRUD Clientes
         self.createClient = True
@@ -154,6 +161,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             self.clientes = session.query(Clients).all()
             self.provincias = session.query(Provincias).all()
             self.municipios = session.query(Municipios).all()
+            self.paises = session.query(Paises).all()
             headers, data, dropdowns_buttons, clients = self.getClientsDataTable(self.clientes)
             self.stackedWidget.setCurrentWidget(self.page_clientes)
             # Borrar la tabla existente y crear una nueva tabla con los nuevos datos
@@ -186,9 +194,11 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         with Session() as session:
             self.provincias = session.query(Provincias).all()
             self.municipios = session.query(Municipios).all()
+            self.paises = session.query(Paises).all()
             self.stackedWidget.setCurrentWidget(self.page_insertar_cliente)
             default_image(self.lb_pic_insert_cliente, DEFAULT_PICTURE, "clients_pictures")
             self.send_image = False
+            self.cb_pais_insertar.clear()
             self.load_combobox()
 
     #metodo en el que se crea un cliente
@@ -271,10 +281,12 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
 
         if self.page_insertar_cliente == self.stackedWidget.currentWidget():
             self.cb_municipio_insertar.clear()
-            self.cb_pais_insertar.clear()
-            for pais in self.paises:
-                self.cb_pais_insertar.addItem(pais.pais, pais.id)
-            if self.cb_provincia_insertar.count() == 0:
+            if len(self.paises) != self.cb_pais_insertar.count():
+                self.cb_pais_insertar.clear()
+                for pais in self.paises:
+                    self.cb_pais_insertar.addItem(pais.pais, pais.id)
+            if self.cb_provincia_insertar.count() != len(self.provincias):
+                self.cb_provincia_insertar.clear()
                 for prov in self.provincias:
                     self.cb_provincia_insertar.addItem(prov.provincia, prov.id)
             if len(self.municipios) == 0:
@@ -291,7 +303,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             self.cb_search_clientes_pais.clear()
             for pais in self.paises:
                 self.cb_search_clientes_pais.addItem(pais.pais, pais.id)
-            if self.cb_search_clientes_provincia.count() == 0:
+            if self.cb_search_clientes_provincia.count() != len(self.provincias):
+                self.cb_search_clientes_provincia.clear()
                 for prov in self.provincias:
                     self.cb_search_clientes_provincia.addItem(prov.provincia, prov.id)
             self.cb_search_clientes_municipio.setCurrentIndex(-1)
@@ -562,3 +575,9 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def provincias_index(self):
         self.ProvinciasIndex.search()
         self.stackedWidget.setCurrentWidget(self.ProvinciasIndex)
+
+
+    def municipios_index(self):
+        self.MunicipiosIndex.load_cb()
+        self.MunicipiosIndex.search()
+        self.stackedWidget.setCurrentWidget(self.MunicipiosIndex)

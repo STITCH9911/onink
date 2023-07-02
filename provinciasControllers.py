@@ -74,7 +74,7 @@ class ProvinciasIndex(QWidget, Ui_ProvinciaIndex):
     def delete(self, obj):
         with Session() as session:
             obj = session.merge(obj)
-            reply = QMessageBox.question(self, "Advertencia", "Está a punto de eliminar una red provincia, si continúa no se podrá recuperar la información. ¿Desea continuar?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            reply = QMessageBox.question(self, "Advertencia", "Está a punto de eliminar una provincia, si continúa no se podrá recuperar la información. ¿Desea continuar?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
             if reply == QMessageBox.StandardButton.Yes:
                 session.delete(obj)
