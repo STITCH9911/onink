@@ -2,6 +2,7 @@ import os, shutil
 from typing import List
 from PyQt6.QtGui import QDoubleValidator, QRegularExpressionValidator, QPixmap, QIcon, QShowEvent
 from config import DEFAULT_PICTURE, Session, PICTURES_DIR
+from materialesControllers import MaterialForm, MaterialIndex
 from municipiosController import MunicipiosForm, MunicipiosIndex
 from socialsIndex import SocialsIndex, SocialsWidgetCreate
 from strippedTable import StripedTable
@@ -48,6 +49,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.pago_form = PagosForm(self.stackedWidget)
         self.tecnica_page = TecnicaIndex(self.stackedWidget)
         self.tecnica_form = TecnicaForm(self.stackedWidget)
+        self.material_page = MaterialIndex(self.stackedWidget)
+        self.material_form = MaterialForm(self.stackedWidget)
 
         #add widgets a stackedWidget
         self.stackedWidget.addWidget(self.WPaises)
@@ -66,6 +69,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.stackedWidget.addWidget(self.pago_form)
         self.stackedWidget.addWidget(self.tecnica_page)
         self.stackedWidget.addWidget(self.tecnica_form)
+        self.stackedWidget.addWidget(self.material_page)
+        self.stackedWidget.addWidget(self.material_form)
 
         # Inicializar listas
         with Session() as session:
@@ -97,6 +102,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.bt_menu_tonos.clicked.connect(self.tonos_index)
         self.bt_menu_pagos.clicked.connect(self.pagos_index)
         self.bt_menu_tecnicas.clicked.connect(self.tecnicas_index)
+        self.bt_menu_materiales.clicked.connect(self.materiales_index)
 
 
         #Señales de CRUD Clientes
@@ -632,3 +638,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def tecnicas_index(self):
         self.tecnica_page.search()
         self.stackedWidget.setCurrentWidget(self.tecnica_page)
+
+    def materiales_index(self):
+        self.material_page.search()
+        self.stackedWidget.setCurrentWidget(self.material_page)
