@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ProvinciaIndex</class>
- <widget class="QWidget" name="ProvinciaIndex">
+ <class>SocialsIndex</class>
+ <widget class="QWidget" name="SocialsIndex">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -19,7 +19,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Provincias</string>
+        <string>Redes Sociales</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

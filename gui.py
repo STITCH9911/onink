@@ -2,6 +2,7 @@ import os, shutil
 from typing import List
 from PyQt6.QtGui import QDoubleValidator, QRegularExpressionValidator, QPixmap, QIcon, QShowEvent
 from config import DEFAULT_PICTURE, Session, PICTURES_DIR
+from socialsIndex import SocialsIndex, SocialsWidgetCreate
 from views.main_window_ui import Ui_OnInkMainWindow
 from PyQt6.QtWidgets import QMainWindow, QSizeGrip, QMessageBox, QFileDialog, QLabel, QLineEdit, QHBoxLayout, QComboBox
 from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QRegularExpression, QSize, pyqtSlot
@@ -20,19 +21,28 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.setupUi(self)
         self.icono = QIcon()
         self.setWindowIcon(self.icono)
+
+        #widgets
         self.strippedTable = None
         self.qWidgetShowClient = ShowCLient()
         self.CWorks = ClientWorks()
         self.WPaises = PaisesWidget(self.stackedWidget)
-        self.stackedWidget.addWidget(self.WPaises)
         self.CreatePaisesWidget = PaisesWidgetCreate(self.stackedWidget)
+        self.SocialWidgetForm = SocialsWidgetCreate(self.stackedWidget)
+        self.IndexSocial = SocialsIndex(self.stackedWidget)
+
+        #add widgets a stackedWidget
+        self.stackedWidget.addWidget(self.WPaises)
         self.stackedWidget.addWidget(self.qWidgetShowClient)
         self.stackedWidget.addWidget(self.CWorks)
         self.stackedWidget.addWidget(self.CreatePaisesWidget)
+        self.stackedWidget.addWidget(self.SocialWidgetForm)
+        self.stackedWidget.addWidget(self.IndexSocial)
 
         # Inicializar listas
         with Session() as session:
             self.clientes, self.municipios, self.provincias, self.paises, self.socials = [], [], [], session.query(Paises).all(), [],
+        
         # inicializar Item para editar
         self.item_selected = None
         self.file_name = None
@@ -40,13 +50,17 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.gripSize = 10
         self.grip = QSizeGrip(self)
         self.grip.resize(self.gripSize,self.gripSize)
-        self.bt_menu.clicked.connect(self.mover_menu)
         self.frame_superior.mouseMoveEvent = self.mover_ventana
         self.bt_restaurar.hide()
         self.stackedWidget.setCurrentWidget(self.page_inicio)
 
-        #Señales de CRUD Clientes
+        #btMenus
+        self.bt_menu.clicked.connect(self.mover_menu)
         self.bt_menu_clientes.clicked.connect(self.clients_list)
+        self.bt_menu_paises.clicked.connect(self.paisesIndex)
+        self.bt_menu_sociales.clicked.connect(self.socialIndex)
+
+        #Señales de CRUD Clientes
         self.createClient = True
         self.bt_volver_cliente_c.clicked.connect(self.clients_list)
         self.bt_store_cliente.clicked.connect(self.clients_store)
@@ -64,10 +78,9 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.cb_search_clientes_municipio.currentIndexChanged.connect(lambda: self.change_municipio(self.cb_search_clientes_municipio))
         self.cb_search_clientes_pais.currentIndexChanged.connect(lambda: self.change_pais(self.cb_search_clientes_pais))
         self.bt_refresh_search_clients.clicked.connect(self.refresh)
-        self.bt_menu_paises.clicked.connect(self.paisesIndex)
+        
         self.setWindowOpacity(1)
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
-        
         self.setCorner(Qt.Corner.BottomRightCorner, Qt.DockWidgetArea.RightDockWidgetArea)
 
     #reiniciar imagen
@@ -326,49 +339,27 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             default_image(label,DEFAULT_PICTURE, 'clients_pictures')
             self.send_image = False
 
+    #metodo para aeliminar ocntenido de un layout
+    def eliminar_contenido(self, contenedor):
+        while contenedor.count():
+            item = contenedor.takeAt(0)
+            widget = item.widget()
+            if widget is not None:
+                widget.setParent(None)
+            else:
+                sublayout = item.layout()
+                if sublayout is not None:
+                    self.eliminar_contenido(sublayout)
+                contenedor.removeItem(item)
     #metodo para agregar los campos para nombres de usuarios de redes sociales de un cliente
     def add_usernames_socials(self, **karg):
         with Session() as session:
             client_name = f"Cliente: {self.item_selected.nombre_apellidos}"
             self.lb_cliente_name.setText(client_name)
             self.socials = session.query(Socials).all()
-
-            # Crear una lista para almacenar los layouts que se eliminarán
-            layouts_to_remove = []
-
-            # Iterar a través de los layouts existentes
-            for i in range(self.verticalLySocials.count()):
-                if i > 1:
-                    existing_layout = self.verticalLySocials.itemAt(i).layout()
-                    if existing_layout:
-                        social_name = existing_layout.objectName().replace("layout_", "")
-                        social = session.query(Socials).filter_by(social=social_name).first()
-                        if not social: # Si la red social ya no existe en la base de datos
-                            layouts_to_remove.append(existing_layout)
-
-            # Eliminar todos los layouts que se hayan encontrado para la eliminación
-            for layout_to_remove in layouts_to_remove:
-                self.verticalLySocials.removeItem(layout_to_remove)
-                layout_to_remove.deleteLater()
-
-            # Agregar nuevos layouts para las redes sociales existentes en la base de datos
+            self.eliminar_contenido(self.verticalLySocials)
             for social in self.socials:
-                # Comprobar si ya existe un layout
-                found_layout = False
-                for i in range(self.verticalLySocials.count()):
-                    if i > 1:
-                        existing_layout = self.verticalLySocials.itemAt(i).layout()
-                        if existing_layout and existing_layout.objectName() == f"layout_{social.social}":
-                            found_layout = True
-                            break
-                if found_layout:
-                    le = existing_layout.itemAt(1).widget()
-                    if social.social in karg:
-                        le.setText(karg[social.social])
-                    else:
-                        le.setText("")
-                    continue  # Saltar a la proxima iteracion si este layout existe
-                
+
                 label = QLabel(self.page_add_social_usernames)
                 label.setText(social.social+": ")
                 line_edit = QLineEdit(self.page_add_social_usernames)
@@ -381,7 +372,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                 hlayout.addWidget(line_edit)
                 hlayout.setStretch(0,2)
                 hlayout.setStretch(1,7)
-                hlayout.setObjectName(f"layout_{social.social}")
+                hlayout.setObjectName(f"layout_{social.social.replace(' ','_')}")
                 self.verticalLySocials.addLayout(hlayout)
 
         self.stackedWidget.setCurrentWidget(self.page_add_social_usernames)
@@ -392,15 +383,17 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             self.socials = session.query(Socials).all()
             for social in self.socials:
                 line_edit = self.page_add_social_usernames.findChild(QLineEdit, f"le_{social.social}")
+                q = session.query(t_r_clients_socials).filter_by(social_id=social.id, client_id=self.item_selected.id).first()
                 if line_edit.text() != "":
                     texto = line_edit.text()
-                    q = session.query(t_r_clients_socials).filter_by(social_id=social.id, client_id=self.item_selected.id).first()
                     if q and texto:
                         stmp = update(t_r_clients_socials).where(t_r_clients_socials.c.client_id == q.client_id, t_r_clients_socials.c.social_id == q.social_id).values(username=texto)
+                        session.execute(stmp)
                     elif texto and not q:
                         stmp = insert(t_r_clients_socials).values(username=texto, client_id=self.item_selected.id, social_id=social.id)
-                    elif q and not texto:
-                        stmp = delete(t_r_clients_socials).where(t_r_clients_socials.c.client_id == q.client_id, t_r_clients_socials.c.social_id == q.social_id)
+                        session.execute(stmp)
+                elif q and not line_edit.text():
+                    stmp = delete(t_r_clients_socials).where(t_r_clients_socials.c.client_id == q.client_id, t_r_clients_socials.c.social_id == q.social_id)
                     session.execute(stmp)
             session.commit()
         QMessageBox.information(self, "Correcto", f"Ha actualizado los nombres de usuario para las redes sociales del cliente: {self.item_selected.nombre_apellidos}")
@@ -555,3 +548,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def editPais(self,obj):
         self.CreatePaisesWidget.setPais(obj)
         self.stackedWidget.setCurrentWidget(self.CreatePaisesWidget)
+
+    def socialIndex(self):
+        self.IndexSocial.search()
+        self.stackedWidget.setCurrentWidget(self.IndexSocial)

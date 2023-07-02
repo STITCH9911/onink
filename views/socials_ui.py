@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'd:\Programacion\Proyectos\Python\OnInk\onink\views\provincias.ui'
+# Form implementation generated from reading ui file 'd:\Programacion\Proyectos\Python\OnInk\onink\views\socials.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -9,31 +9,31 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
-class Ui_ProvinciaIndex(object):
-    def setupUi(self, ProvinciaIndex):
-        ProvinciaIndex.setObjectName("ProvinciaIndex")
-        ProvinciaIndex.resize(400, 300)
-        self.verticalLayout = QtWidgets.QVBoxLayout(ProvinciaIndex)
+class Ui_SocialsIndex(object):
+    def setupUi(self, SocialsIndex):
+        SocialsIndex.setObjectName("SocialsIndex")
+        SocialsIndex.resize(400, 300)
+        self.verticalLayout = QtWidgets.QVBoxLayout(SocialsIndex)
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.label = QtWidgets.QLabel(parent=ProvinciaIndex)
+        self.label = QtWidgets.QLabel(parent=SocialsIndex)
         self.label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.label_2 = QtWidgets.QLabel(parent=ProvinciaIndex)
+        self.label_2 = QtWidgets.QLabel(parent=SocialsIndex)
         self.label_2.setObjectName("label_2")
         self.horizontalLayout_2.addWidget(self.label_2)
-        self.le_search = QtWidgets.QLineEdit(parent=ProvinciaIndex)
+        self.le_search = QtWidgets.QLineEdit(parent=SocialsIndex)
         self.le_search.setText("")
         self.le_search.setObjectName("le_search")
         self.horizontalLayout_2.addWidget(self.le_search)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem)
-        self.bt_create = QtWidgets.QPushButton(parent=ProvinciaIndex)
+        self.bt_create = QtWidgets.QPushButton(parent=SocialsIndex)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\views\\images/icons8-plus-24.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.bt_create.setIcon(icon)
@@ -48,13 +48,13 @@ class Ui_ProvinciaIndex(object):
         self.verticalLayout.setStretch(1, 1)
         self.verticalLayout.setStretch(2, 6)
 
-        self.retranslateUi(ProvinciaIndex)
-        QtCore.QMetaObject.connectSlotsByName(ProvinciaIndex)
+        self.retranslateUi(SocialsIndex)
+        QtCore.QMetaObject.connectSlotsByName(SocialsIndex)
 
-    def retranslateUi(self, ProvinciaIndex):
+    def retranslateUi(self, SocialsIndex):
         _translate = QtCore.QCoreApplication.translate
-        ProvinciaIndex.setWindowTitle(_translate("ProvinciaIndex", "Form"))
-        self.label.setText(_translate("ProvinciaIndex", "Provincias"))
-        self.label_2.setText(_translate("ProvinciaIndex", "Buscar:"))
-        self.le_search.setPlaceholderText(_translate("ProvinciaIndex", "Buscar..."))
-        self.bt_create.setText(_translate("ProvinciaIndex", "Nuevo"))
+        SocialsIndex.setWindowTitle(_translate("SocialsIndex", "Form"))
+        self.label.setText(_translate("SocialsIndex", "Redes Sociales"))
+        self.label_2.setText(_translate("SocialsIndex", "Buscar:"))
+        self.le_search.setPlaceholderText(_translate("SocialsIndex", "Buscar..."))
+        self.bt_create.setText(_translate("SocialsIndex", "Nuevo"))

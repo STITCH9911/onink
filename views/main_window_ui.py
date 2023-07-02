@@ -873,7 +873,7 @@ class Ui_OnInkMainWindow(object):
         OnInkMainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(OnInkMainWindow)
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(3)
         self.bt_close.clicked.connect(OnInkMainWindow.close) # type: ignore
         self.bt_maximizar.clicked.connect(OnInkMainWindow.showMaximized) # type: ignore
         self.bt_maximizar.clicked.connect(self.bt_restaurar.show) # type: ignore

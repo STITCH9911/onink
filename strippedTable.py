@@ -73,7 +73,6 @@ class StripedTable(QTableWidget):
             self.horizontalHeader().setFont(QFont('Oswald', 12))
             self.verticalHeader().setVisible(False)
             self.setAlternatingRowColors(True)
-            self.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
             self.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
             self.populate_table(data, buttons, objects)
         else:
@@ -90,7 +89,7 @@ class StripedTable(QTableWidget):
         self.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
         self.horizontalHeader().setSectionResizeMode(self.columnCount() - 1, QHeaderView.ResizeMode.ResizeToContents)
         self.resizeRowsToContents()
-        #self.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
+        self.setSelectionMode(QTableWidget.SelectionMode.NoSelection)
 
     def populate_table(self, data, buttons, objects):
         for i, row in enumerate(data):

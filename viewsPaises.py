@@ -82,6 +82,7 @@ class PaisesWidget(QWidget, Ui_PaisWidget):
             if reply == QMessageBox.StandardButton.Yes:
                 session.delete(obj)
                 session.commit()
+                QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
         
         self.search()
             
@@ -97,11 +98,15 @@ class PaisesWidgetCreate(QWidget,Ui_create_pais):
         self.bt_save.clicked.connect(self.save)
         self.obj = None
         self.bt_back.clicked.connect(self.mostrar_widget)
+        self.pais.returnPressed.connect(self.save)
 
     def set_functions(self, backFunc):
         self.bt_back.clicked.connect(backFunc)
 
     def save(self):
+        if self.pais.text() == "":
+            QMessageBox.critical(self, "Error", "No pueden existir campos vacíos.", QMessageBox.StandardButton.Ok)
+            return
         with  Session() as session:
             if self.obj:
                 self.obj = session.merge(self.obj)
@@ -116,6 +121,7 @@ class PaisesWidgetCreate(QWidget,Ui_create_pais):
                 self.mostrar_widget()
                 self.pais.clear()
                 self.obj = None
+                QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
             except IntegrityError:
                 QMessageBox.critical(self, "Error", "Ya existe este país.", QMessageBox.StandardButton.Ok)
             

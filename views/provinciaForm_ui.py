@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'd:\Programacion\Proyectos\Python\OnInk\onink\views\createPaises.ui'
+# Form implementation generated from reading ui file 'd:\Programacion\Proyectos\Python\OnInk\onink\views\provinciaForm.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -9,16 +9,15 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
-class Ui_create_pais(object):
-    def setupUi(self, create_pais):
-        create_pais.setObjectName("create_pais")
-        create_pais.resize(494, 424)
-        create_pais.setStyleSheet("")
-        self.verticalLayout = QtWidgets.QVBoxLayout(create_pais)
+class Ui_provinciasForm(object):
+    def setupUi(self, provinciasForm):
+        provinciasForm.setObjectName("provinciasForm")
+        provinciasForm.resize(660, 512)
+        self.verticalLayout = QtWidgets.QVBoxLayout(provinciasForm)
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.bt_back = QtWidgets.QPushButton(parent=create_pais)
+        self.bt_back = QtWidgets.QPushButton(parent=provinciasForm)
         self.bt_back.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\views\\images/back-arrow.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
@@ -29,36 +28,32 @@ class Ui_create_pais(object):
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.verticalLayout.addLayout(self.horizontalLayout)
-        self.bt_title = QtWidgets.QPushButton(parent=create_pais)
-        self.bt_title.setMinimumSize(QtCore.QSize(0, 0))
-        self.bt_title.setLayoutDirection(QtCore.Qt.LayoutDirection.RightToLeft)
-        self.bt_title.setStyleSheet("background-color: rgba(255, 255, 255, 0);\n"
-"border: none;")
-        self.bt_title.setText("")
+        self.pushButton = QtWidgets.QPushButton(parent=provinciasForm)
+        self.pushButton.setStyleSheet("border: none;\n"
+"background-color: rgba(255, 255, 255, 0);")
+        self.pushButton.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\views\\images/country - white.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.bt_title.setIcon(icon1)
-        self.bt_title.setIconSize(QtCore.QSize(100, 100))
-        self.bt_title.setObjectName("bt_title")
-        self.verticalLayout.addWidget(self.bt_title)
+        icon1.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\views\\images/flag-1 white.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.pushButton.setIcon(icon1)
+        self.pushButton.setIconSize(QtCore.QSize(100, 100))
+        self.pushButton.setObjectName("pushButton")
+        self.verticalLayout.addWidget(self.pushButton)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.label_2 = QtWidgets.QLabel(parent=create_pais)
-        self.label_2.setObjectName("label_2")
-        self.horizontalLayout_2.addWidget(self.label_2)
-        self.pais = QtWidgets.QLineEdit(parent=create_pais)
-        self.pais.setObjectName("pais")
-        self.horizontalLayout_2.addWidget(self.pais)
-        self.horizontalLayout_2.setStretch(0, 1)
-        self.horizontalLayout_2.setStretch(1, 8)
+        self.label = QtWidgets.QLabel(parent=provinciasForm)
+        self.label.setObjectName("label")
+        self.horizontalLayout_2.addWidget(self.label)
+        self.provincia = QtWidgets.QLineEdit(parent=provinciasForm)
+        self.provincia.setObjectName("provincia")
+        self.horizontalLayout_2.addWidget(self.provincia)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 259, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
         self.verticalLayout.addItem(spacerItem1)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem2)
-        self.bt_save = QtWidgets.QPushButton(parent=create_pais)
+        self.bt_save = QtWidgets.QPushButton(parent=provinciasForm)
         self.bt_save.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\views\\images/save.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
@@ -68,13 +63,13 @@ class Ui_create_pais(object):
         self.horizontalLayout_3.addWidget(self.bt_save)
         self.verticalLayout.addLayout(self.horizontalLayout_3)
 
-        self.retranslateUi(create_pais)
-        QtCore.QMetaObject.connectSlotsByName(create_pais)
+        self.retranslateUi(provinciasForm)
+        QtCore.QMetaObject.connectSlotsByName(provinciasForm)
 
-    def retranslateUi(self, create_pais):
+    def retranslateUi(self, provinciasForm):
         _translate = QtCore.QCoreApplication.translate
-        create_pais.setWindowTitle(_translate("create_pais", "Form"))
-        self.bt_back.setText(_translate("create_pais", "Volver"))
-        self.label_2.setText(_translate("create_pais", "País: "))
-        self.pais.setPlaceholderText(_translate("create_pais", "País"))
-        self.bt_save.setText(_translate("create_pais", "Guardar"))
+        provinciasForm.setWindowTitle(_translate("provinciasForm", "Form"))
+        self.bt_back.setText(_translate("provinciasForm", "Volver"))
+        self.label.setText(_translate("provinciasForm", "Provincia: "))
+        self.provincia.setPlaceholderText(_translate("provinciasForm", "Nombre de la provincia"))
+        self.bt_save.setText(_translate("provinciasForm", "Guardar"))
