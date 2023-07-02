@@ -4,19 +4,20 @@ from PyQt6.QtGui import QDoubleValidator, QRegularExpressionValidator, QPixmap, 
 from config import DEFAULT_PICTURE, Session, PICTURES_DIR
 from municipiosController import MunicipiosForm, MunicipiosIndex
 from socialsIndex import SocialsIndex, SocialsWidgetCreate
+from strippedTable import StripedTable
+from ClientWorks import ClientWorks
+from showClient import ShowCLient
+from viewsPaises import PaisesWidget, PaisesWidgetCreate
+from provinciasControllers import ProvinciasIndex, ProvinciasForm
+from tonoControllers import TonosIndex, TonoForm
+from pagosControllers import PagoIndex, PagosForm
 from views.main_window_ui import Ui_OnInkMainWindow
 from PyQt6.QtWidgets import QMainWindow, QSizeGrip, QMessageBox, QFileDialog, QLabel, QLineEdit, QHBoxLayout, QComboBox
 from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QRegularExpression, QSize, pyqtSlot
 from datetime import datetime
 from models import Clients, Provincias, Municipios, Paises, Socials, Turnos, t_r_clients_socials, t_r_trabajos_materiales, Trabajos
 from sqlalchemy import insert, update, delete
-from showClient import ShowCLient
 from utils import file_exists, delete_file, default_image
-from strippedTable import StripedTable
-from ClientWorks import ClientWorks
-from viewsPaises import PaisesWidget, PaisesWidgetCreate
-from provinciasControllers import ProvinciasIndex, ProvinciasForm
-from tonoControllers import TonosIndex, TonoForm
 
 class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def __init__(self, app, parent=None) -> None:
@@ -24,6 +25,9 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.setupUi(self)
         self.icono = QIcon()
         self.setWindowIcon(self.icono)
+
+        #establecer widgetInicial
+        self.stackedWidget.setCurrentWidget(self.page_inicio)
 
         #widgets
         self.strippedTable = None
@@ -39,6 +43,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.MunicipiosForm = MunicipiosForm(self.stackedWidget)
         self.TonoIndex = TonosIndex(self.stackedWidget)
         self.TonoForm = TonoForm(self.stackedWidget)
+        self.pago_page = PagoIndex(self.stackedWidget)
+        self.pago_form = PagosForm(self.stackedWidget)
 
         #add widgets a stackedWidget
         self.stackedWidget.addWidget(self.WPaises)
@@ -53,6 +59,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.stackedWidget.addWidget(self.MunicipiosForm)
         self.stackedWidget.addWidget(self.TonoIndex)
         self.stackedWidget.addWidget(self.TonoForm)
+        self.stackedWidget.addWidget(self.pago_page)
+        self.stackedWidget.addWidget(self.pago_form)
 
         # Inicializar listas
         with Session() as session:
@@ -60,14 +68,19 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         
         # inicializar Item para editar
         self.item_selected = None
+
+        #datos de las imagenes
         self.file_name = None
         self.send_image = False
+
+        #Boton de resize window
         self.gripSize = 10
         self.grip = QSizeGrip(self)
         self.grip.resize(self.gripSize,self.gripSize)
+
+        #acciones del frame superior
         self.frame_superior.mouseMoveEvent = self.mover_ventana
         self.bt_restaurar.hide()
-        self.stackedWidget.setCurrentWidget(self.page_inicio)
 
         #btMenus
         self.bt_menu.clicked.connect(self.mover_menu)
@@ -77,6 +90,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.bt_menu_provincias.clicked.connect(self.provincias_index)
         self.bt_menu_municipios.clicked.connect(self.municipios_index)
         self.bt_menu_tonos.clicked.connect(self.tonos_index)
+        self.bt_menu_pagos.clicked.connect(self.pagos_index)
 
 
         #Señales de CRUD Clientes
@@ -98,6 +112,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.cb_search_clientes_pais.currentIndexChanged.connect(lambda: self.change_pais(self.cb_search_clientes_pais))
         self.bt_refresh_search_clients.clicked.connect(self.refresh)
         
+        #config de la ventana
         self.setWindowOpacity(1)
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
         self.setCorner(Qt.Corner.BottomRightCorner, Qt.DockWidgetArea.RightDockWidgetArea)
@@ -376,6 +391,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                 if sublayout is not None:
                     self.eliminar_contenido(sublayout)
                 contenedor.removeItem(item)
+    
     #metodo para agregar los campos para nombres de usuarios de redes sociales de un cliente
     def add_usernames_socials(self, **karg):
         with Session() as session:
@@ -522,6 +538,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
 
             return headers, data, dropdown_buttons, clients
     
+    #metodo para recargar tabla
     def reload_table(self, collection: list):
         if self.page_clientes == self.stackedWidget.currentWidget():
             headers, data, dropdowns_buttons, objects = self.getClientsDataTable(collection)
@@ -532,6 +549,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             self.strippedTable = StripedTable(headers, data, dropdowns_buttons, objects)
             layout.addWidget(self.strippedTable)
 
+    #metodo para realizar la busqueda de elementos en la tabla
     def search(self):
         if self.stackedWidget.currentWidget() == self.page_clientes:
             with Session() as session:
@@ -555,39 +573,51 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                 clients = clients.all()                    
             self.reload_table(clients)
     
+    #metodo para visualizar datos del cliente
     def showClienteData(self, client: Clients):
         self.qWidgetShowClient.setFunciones(self.clients_list, lambda: self.client_works(client))
         self.qWidgetShowClient.setClient(client)
         self.stackedWidget.setCurrentWidget(self.qWidgetShowClient)
 
+    #metodo para ver los trabajos de un cliente
     def client_works(self, client: Clients):
         self.CWorks.setFunciones(self.clients_list, lambda: self.showClienteData(client))
         self.CWorks.setClient(client)
         self.stackedWidget.setCurrentWidget(self.CWorks)
 
+    #metodo para ver la lista de paises
     def paisesIndex(self):
         self.WPaises.set_functions(self.editPais)
         self.WPaises.search()
         self.stackedWidget.setCurrentWidget(self.WPaises)
 
+    #metodo para ver editar pais
     def editPais(self,obj):
         self.CreatePaisesWidget.setPais(obj)
         self.stackedWidget.setCurrentWidget(self.CreatePaisesWidget)
 
+    #metodo para ver lista de redes sociales
     def socialIndex(self):
         self.IndexSocial.search()
         self.stackedWidget.setCurrentWidget(self.IndexSocial)
 
+    #metodo para ver listad de provincias
     def provincias_index(self):
         self.ProvinciasIndex.search()
         self.stackedWidget.setCurrentWidget(self.ProvinciasIndex)
 
-
+    #metodo para ver lista de municipios
     def municipios_index(self):
         self.MunicipiosIndex.load_cb()
         self.MunicipiosIndex.search()
         self.stackedWidget.setCurrentWidget(self.MunicipiosIndex)
 
+    #metodo para ver la lista de tonos
     def tonos_index(self):
         self.TonoIndex.search()
         self.stackedWidget.setCurrentWidget(self.TonoIndex)
+
+    #metodo para ver la lista de pagos
+    def pagos_index(self):
+        self.pago_page.search()
+        self.stackedWidget.setCurrentWidget(self.pago_page)
