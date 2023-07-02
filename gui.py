@@ -7,6 +7,7 @@ from socialsIndex import SocialsIndex, SocialsWidgetCreate
 from strippedTable import StripedTable
 from ClientWorks import ClientWorks
 from showClient import ShowCLient
+from tecnicasControllers import TecnicaForm, TecnicaIndex
 from viewsPaises import PaisesWidget, PaisesWidgetCreate
 from provinciasControllers import ProvinciasIndex, ProvinciasForm
 from tonoControllers import TonosIndex, TonoForm
@@ -45,6 +46,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.TonoForm = TonoForm(self.stackedWidget)
         self.pago_page = PagoIndex(self.stackedWidget)
         self.pago_form = PagosForm(self.stackedWidget)
+        self.tecnica_page = TecnicaIndex(self.stackedWidget)
+        self.tecnica_form = TecnicaForm(self.stackedWidget)
 
         #add widgets a stackedWidget
         self.stackedWidget.addWidget(self.WPaises)
@@ -61,6 +64,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.stackedWidget.addWidget(self.TonoForm)
         self.stackedWidget.addWidget(self.pago_page)
         self.stackedWidget.addWidget(self.pago_form)
+        self.stackedWidget.addWidget(self.tecnica_page)
+        self.stackedWidget.addWidget(self.tecnica_form)
 
         # Inicializar listas
         with Session() as session:
@@ -91,6 +96,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.bt_menu_municipios.clicked.connect(self.municipios_index)
         self.bt_menu_tonos.clicked.connect(self.tonos_index)
         self.bt_menu_pagos.clicked.connect(self.pagos_index)
+        self.bt_menu_tecnicas.clicked.connect(self.tecnicas_index)
 
 
         #Señales de CRUD Clientes
@@ -621,3 +627,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def pagos_index(self):
         self.pago_page.search()
         self.stackedWidget.setCurrentWidget(self.pago_page)
+
+    #metodo para ver listado de tecnicas
+    def tecnicas_index(self):
+        self.tecnica_page.search()
+        self.stackedWidget.setCurrentWidget(self.tecnica_page)
