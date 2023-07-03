@@ -13,12 +13,15 @@ from viewsPaises import PaisesWidget, PaisesWidgetCreate
 from provinciasControllers import ProvinciasIndex, ProvinciasForm
 from tonoControllers import TonosIndex, TonoForm
 from pagosControllers import PagoIndex, PagosForm
+from trabajosController import TrabajosIndex
+from tiposTrabajosControllers import TiposTrabajosIndex, TiposTrabajosForm
 from views.main_window_ui import Ui_OnInkMainWindow
 from PyQt6.QtWidgets import QMainWindow, QSizeGrip, QMessageBox, QFileDialog, QLabel, QLineEdit, QHBoxLayout, QComboBox
 from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QRegularExpression, QSize, pyqtSlot
 from datetime import datetime
 from models import Clients, Provincias, Municipios, Paises, Socials, Turnos, t_r_clients_socials, t_r_trabajos_materiales, Trabajos
 from sqlalchemy import insert, update, delete
+from sqlalchemy.exc import IntegrityError
 from utils import file_exists, delete_file, default_image
 
 class MainWindow(QMainWindow,Ui_OnInkMainWindow):
@@ -51,6 +54,9 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.tecnica_form = TecnicaForm(self.stackedWidget)
         self.material_page = MaterialIndex(self.stackedWidget)
         self.material_form = MaterialForm(self.stackedWidget)
+        self.TrabajosIndex = TrabajosIndex(self.stackedWidget)
+        self.TiposTrabajosIndex = TiposTrabajosIndex(self.stackedWidget)
+        self.TiposTrabajosForm = TiposTrabajosForm(self.stackedWidget)
 
         #add widgets a stackedWidget
         self.stackedWidget.addWidget(self.WPaises)
@@ -71,6 +77,9 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.stackedWidget.addWidget(self.tecnica_form)
         self.stackedWidget.addWidget(self.material_page)
         self.stackedWidget.addWidget(self.material_form)
+        self.stackedWidget.addWidget(self.TrabajosIndex)
+        self.stackedWidget.addWidget(self.TiposTrabajosIndex)
+        self.stackedWidget.addWidget(self.TiposTrabajosForm)
 
         # Inicializar listas
         with Session() as session:
@@ -103,6 +112,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.bt_menu_pagos.clicked.connect(self.pagos_index)
         self.bt_menu_tecnicas.clicked.connect(self.tecnicas_index)
         self.bt_menu_materiales.clicked.connect(self.materiales_index)
+        self.bt_menu_trabajos.clicked.connect(self.trabajos_index)
 
 
         #Señales de CRUD Clientes
@@ -238,10 +248,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def clients_store(self):
         with Session() as session:
             ci_list = session.query(Clients.ci).all()
-            if self.le_ci_insertar.text() == "" or self.le_telefono_insertar.text() == "" or self.le_nombre_apellidos_insertar.text() == "" or self.cb_municipio_insertar.currentIndex() == -1 or self.cb_pais_insertar.currentIndex == -1:
-                QMessageBox.critical(self,"Error", "Existen campos vacíos que debe llenar")
-            elif (self.le_ci_insertar.text(),) in ci_list and self.createClient:
-                QMessageBox.critical(self,"Error", "Existen un cliente con este número de identidad")
+            if self.le_ci_insertar.text() == "" or self.le_telefono_insertar.text() == "" or self.le_nombre_apellidos_insertar.text() == "" or (self.cb_municipio_insertar.currentIndex() == -1 and self.cb_pais_insertar.currentIndex == -1):
+                QMessageBox.critical(self,"Error", "Existen campos vacíos que debe llenar")                
             elif not len(self.le_ci_insertar.text()) == 11:
                 QMessageBox.critical(self,"Error", "El número de identidad debe de tener 11 dígitos")
             else:
@@ -266,7 +274,13 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                     cliente.alcance = alcance
                 self.save_image(dir="clients_pictures", label=self.lb_pic_insert_cliente, name=ci)
                 session.add(cliente)
-                session.commit()
+                try:
+                    session.commit()
+                except IntegrityError:
+                    QMessageBox.critical(self,"Error", "Existen un cliente con este número de identidad")
+                    session.rollback()
+                    return
+                
                 msg_box = QMessageBox()
                 msg_box.setWindowTitle("Redes Sociales")
                 msg_box.setText("¿Desea administrar las redes sociales para el nuevo cliente?. Esta acción puede realizarse en otro momento.")
@@ -639,6 +653,11 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.tecnica_page.search()
         self.stackedWidget.setCurrentWidget(self.tecnica_page)
 
+    #metodo para ver listado de materiales
     def materiales_index(self):
         self.material_page.search()
         self.stackedWidget.setCurrentWidget(self.material_page)
+
+    #metodo para ver listado de trabajos
+    def trabajos_index(self):
+        self.stackedWidget.setCurrentWidget(self.TrabajosIndex)
