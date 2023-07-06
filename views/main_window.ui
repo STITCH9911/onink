@@ -354,7 +354,33 @@ QMenu::item:enabled:selected{
 	background-color: rgb(47, 28, 255);
 	
 	color: rgb(255, 255, 255);
-}</string>
+}
+
+ QDateEdit {
+        border: 2px solid gray;
+        border-radius: 5px;
+        padding: 2px;
+        background-color: white;
+    }
+    QDateEdit::drop-down {
+        subcontrol-origin: padding;
+        subcontrol-position: top right;
+        width: 20px;
+        border-left-width: 0px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        background-image: url(&quot;views/images/dropdownbtn.png&quot;);
+        background-position: center right;
+        background-repeat: no-repeat;
+        margin-right: 2px;
+		image:  url(&quot;views/images/dropdownbtn.png&quot;);
+		width: 20px;
+	    height: 20px;
+    }
+    QDateEdit::down-arrow {
+        image: none;
+    }
+</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -493,7 +519,7 @@ QScrollBar:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>171</width>
+                  <width>178</width>
                   <height>1346</height>
                  </rect>
                 </property>

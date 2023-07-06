@@ -1,5 +1,5 @@
 from faker import Faker
-from models import Materiales, Provincias, Socials, Tecnicas, TipoTrabajos, TiposPagos, Tonalidades, Municipios, Clients, Trabajos, Turnos, t_r_clients_socials, Base
+from models import Materiales, Provincias, Socials, Tecnicas, TipoTrabajos, TiposPagos, Tonalidades, Municipios, Clients, Trabajos, Turnos, Paises, t_r_clients_socials, Base
 from sqlalchemy import insert
 import random
 from datetime import date
@@ -7,7 +7,7 @@ from config import set_config, Session, engine
 
 fake  = Faker()
 def crear():
-    materiales, provincias, socials, tecnicas, tipo_trabajos, tipo_pagos, tonalidades, municipios, clientes, trabajos, turnos = [], [], [], [], [], [], [], [], [], [], []
+    materiales, provincias, socials, tecnicas, tipo_trabajos, tipo_pagos, tonalidades, municipios, clientes, trabajos, turnos, paises = [], [], [], [], [], [], [], [], [], [], [], []
 
     material = fake.words(unique=True, nb=5)
     costos = [fake.random_number(digits=2) for _ in range(5)]
@@ -24,7 +24,12 @@ def crear():
     creados = [fake.date_time() for _ in range(5)]
     telefonos = [fake.phone_number() for _ in range(5)]
     alcances = [fake.paragraph() for _ in range(5)]
-
+    pais = ['Cuba', 'USA', 'Canada', 'Venezuela', 'Argentina']
+    
+    for i in range(4):
+        p = pais[i]
+        obj = Paises(pais=p)
+        paises.append(obj)
 
     for i in range(5):
         m = material[i]
@@ -111,6 +116,7 @@ def crear():
             session.add_all(clientes)
             session.add_all(trabajos)
             session.add_all(turnos)
+            session.add_all(paises)
             session.commit()
 
 

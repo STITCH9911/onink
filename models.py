@@ -35,27 +35,6 @@ class Materiales(Base):
 
     trabajo: Mapped[List['Trabajos']] = relationship('Trabajos', secondary=t_r_trabajos_materiales, back_populates='material')
 
-    @staticmethod
-    def getByCriterion(**arg) -> Tuple['Materiales']:
-        lista = []
-
-        if "search" in arg:
-            try:
-                float(arg["search"])
-                with Session() as session:
-                    q = session.query(Materiales).filter(Materiales.costo.like(f"%{arg['search']}%")).all()
-                    lista += q
-            except ValueError:
-                pass
-            finally:
-                with Session() as session:
-                    q = session.query(Materiales).filter(Materiales.material.like(f"%{arg['search']}%")).all()
-                    lista += q
-
-        res = set(lista)
-        return tuple(res)
-
-
 class Provincias(Base):
     __tablename__ = 'provincias'
     __table_args__ = (
@@ -66,17 +45,6 @@ class Provincias(Base):
     provincia = mapped_column(Text, nullable=False)
 
     municipios: Mapped[List['Municipios']] = relationship('Municipios', uselist=True, back_populates='provincia', cascade='delete, delete-orphan')
-
-    @staticmethod
-    def getByCriterion(**arg) -> Tuple['Provincias']:
-        lista = []
-
-        if "search" in arg:
-           with Session() as session:
-               q = session.query(Provincias).filter(Provincias.provincia.like(f"%{arg['search']}%")).all()
-               lista += q
-        res = set(lista)
-        return tuple(res)
 
 class Socials(Base):
     __tablename__ = 'socials'
@@ -89,18 +57,6 @@ class Socials(Base):
 
     client: Mapped[List['Clients']] = relationship('Clients', secondary=t_r_clients_socials, back_populates='social')
 
-    @staticmethod
-    def getByCriterion(**arg) -> Tuple['Socials']:
-        lista = []
-
-        if "search" in arg:
-            with Session() as session:
-                q = session.query(Socials).filter(Socials.social.like(f"%{arg['search']}%")).all()
-                lista += q
-                    
-        res = set(lista)
-        return tuple(res)
-
 class Tecnicas(Base):
     __tablename__ = 'tecnicas'
     __table_args__ = (
@@ -111,19 +67,6 @@ class Tecnicas(Base):
     tecnica = mapped_column(Text, nullable=False)
 
     trabajos: Mapped[List['Trabajos']] = relationship('Trabajos', uselist=True, back_populates='tecnica')
-
-    @staticmethod
-    def getByCriterion(**arg) -> Tuple['Tecnicas']:
-        lista = []
-
-        if "search" in arg:
-            with Session() as session:
-                q = session.query(Tecnicas).filter(Tecnicas.tecnica.like(f"%{arg['search']}%")).all()
-                lista += q
-
-        res = set(lista)
-        return tuple(res)
-
 
 class TipoTrabajos(Base):
     __tablename__ = 'tipo_trabajos'
@@ -137,19 +80,6 @@ class TipoTrabajos(Base):
     trabajos: Mapped[List['Trabajos']] = relationship('Trabajos', uselist=True, back_populates='tipo_trabajo', cascade='delete, delete-orphan')
     turnos: Mapped[List['Turnos']] = relationship('Turnos', uselist=True, back_populates='tipo_trabajo' , cascade='delete, delete-orphan')
 
-    @staticmethod
-    def getByCriterion(**arg) -> Tuple['TipoTrabajos']:
-         lista = []
-
-         if "search" in arg:
-            with Session() as session:
-                q = session.query(TipoTrabajos).filter(TipoTrabajos.tipo.like(f"%{arg['search']}%")).all()
-                lista += q
-
-         res = set(lista)
-         return tuple(res)
-
-
 class TiposPagos(Base):
     __tablename__ = 'tipos_pagos'
     __table_args__ = (
@@ -162,19 +92,6 @@ class TiposPagos(Base):
     trabajos: Mapped[List['Trabajos']] = relationship('Trabajos', uselist=True, back_populates='tipo_pago')
     turnos: Mapped[List['Turnos']] = relationship('Turnos', uselist=True, back_populates='tipo_pago')
 
-    @staticmethod
-    def getByCriterion(**arg):
-        lista = []
-
-        if "search" in arg:
-            with Session() as session:
-                q = session.query(TiposPagos).filter(TiposPagos.tipo.like(f"%{arg['search']}%")).all()
-                lista += q
-
-        res = set(lista)
-        return tuple(res)
-
-
 class Tonalidades(Base):
     __tablename__ = 'tonalidades'
     __table_args__ = (
@@ -185,19 +102,6 @@ class Tonalidades(Base):
     tono = mapped_column(Text, nullable=False)
 
     trabajos: Mapped[List['Trabajos']] = relationship('Trabajos', uselist=True, back_populates='tonalidad')
-
-    @staticmethod
-    def getByCriterion(**arg) -> Tuple['Tonalidades']:
-        lista = []
-
-        if "search" in arg:
-            with Session() as session:
-                q = session.query(Tonalidades).filter(Tonalidades.tono.like(f"%{arg['search']}%")).all()
-                lista += q
-
-        res = set(lista)
-        return tuple(res)
-
 
 class Municipios(Base):
     __tablename__ = 'municipios'
@@ -211,19 +115,6 @@ class Municipios(Base):
 
     provincia: Mapped['Provincias'] = relationship('Provincias', back_populates='municipios', )
     clients: Mapped[List['Clients']] = relationship('Clients', uselist=True, back_populates='municipio',cascade='delete, delete-orphan')
-
-    @staticmethod
-    def getByCriterion(**arg):
-        lista = []
-
-        if "search" in arg:
-            with Session() as session:
-                q = session.query(Municipios).filter(Municipios.municipio.like(f"%{arg['search']}%")).all()
-                lista += q
-
-        r = set(lista)
-        return tuple(r)
-
 
 class Clients(Base):
     __tablename__ = 'clients'
@@ -254,7 +145,6 @@ class Clients(Base):
         else:
             return 0
         
-
 class Trabajos(Base):
     __tablename__ = 'trabajos'
 
@@ -276,77 +166,6 @@ class Trabajos(Base):
     tonalidad: Mapped[Optional['Tonalidades']] = relationship('Tonalidades', back_populates='trabajos')
     turnos: Mapped[List['Turnos']] = relationship('Turnos', uselist=True, back_populates='trabajo')
 
-    @staticmethod
-    def getByCriterion(**arg) -> Tuple['Trabajos']:
-        lista = []
-        switcher = {
-            'cliente_id': Trabajos.getByCliente,
-            'tipo_trabajo_id': Trabajos.getByTipoTrabajo,
-            'tipo_pago_id': Trabajos.getByTipoPago,
-            'tonalidad_id': Trabajos.getByTonalidad,
-            'tecnica_id' : Trabajos.getByTecnica
-        }
-        for llave in arg:
-            if llave in switcher:
-                funcion = switcher[llave]
-                lista += funcion(arg[llave])
-
-        if 'search' in arg:
-            fecha = arg['search']
-            if isinstance(fecha, QDate):
-                fecha = fecha.toString("yyyy-mm-dd")
-                with Session() as session:
-                    q = session.query(Trabajos).filter(or_(Trabajos.created_at.like(f"%{fecha}%"), Trabajos.fecha_pago == fecha)).all()
-                    lista += q
-        res = set(lista)
-        return tuple(res)
-    
-    @staticmethod
-    def getByCliente(id) -> Tuple['Trabajos']:
-        lista = []
-        with Session() as session:
-            q = session.query(Trabajos).filter_by(cliente_id = id).all()
-            lista += q
-        res = set(lista)
-        return tuple(res)
-    
-    @staticmethod
-    def getByTipoTrabajo(id) -> Tuple['Trabajos']:
-        lista = []
-        with Session() as session:
-            q = session.query(Trabajos).filter_by(tipo_trabajo_id = id).all()
-            lista += q
-        res = set(lista)
-        return tuple(res)
-    
-    @staticmethod
-    def getByTipoPago(id) -> Tuple['Trabajos']:
-        lista = []
-        with Session() as session:
-            q = session.query(Trabajos).filter_by(tipo_pago_id = id).all()
-            lista += q
-        res = set(lista)
-        return tuple(res)
-    
-    @staticmethod
-    def getByTonalidad(id) -> Tuple['Trabajos']:
-        lista = []
-        with Session() as session:
-            q = session.query(Trabajos).filter_by(tonalidad_id = id).all()
-            lista += q
-        res = set(lista)
-        return tuple(res)
-
-    @staticmethod
-    def getByTecnica(id) -> Tuple['Trabajos']:
-        lista = []
-        with Session() as session:
-            q = session.query(Trabajos).filter_by(tecnica_id = id).all()
-            lista += q
-        res = set(lista)
-        return tuple(res)
-
-
 class Turnos(Base):
     __tablename__ = 'turnos'
 
@@ -365,79 +184,6 @@ class Turnos(Base):
     tipo_trabajo: Mapped['TipoTrabajos'] = relationship('TipoTrabajos', back_populates='turnos')
     trabajo: Mapped[Optional['Trabajos']] = relationship('Trabajos', back_populates='turnos')
 
-    @staticmethod
-    def getByCriterion(**arg) -> Tuple['Turnos']:
-        lista = []
-
-        switcher = {
-            'cliente_id': Turnos.getByCliente,
-            'tipo_trabajo_id': Turnos.getByTipoTrabajo,
-            'tipo_pago_id': Turnos.getByTipoPago,
-            'trabajo_id': Turnos.getByTrabajo,
-        }
-
-        for llave in arg:
-            if llave in switcher:
-                funcion = switcher[arg[llave]]
-                q = funcion(arg[llave])
-                lista += q
-        
-        if 'search' in arg:
-            with Session() as session:
-                search = arg['search']
-                try:
-                    float(search)
-                    q = session.query(Turnos).filter(Turnos.deposito.like(f"%{search}%")).all()
-                    lista += q
-                except ValueError:
-                    if isinstance(search, QDate):
-                        fecha = search.toString("yyyy-mm-dd")
-                        q = session.query(Turnos).filter(or_(Turnos.created_at.like(f"%{fecha}%"), Turnos.deposito_fecha == fecha, Turnos.fecha.like(f"%{fecha}%"))).all()
-                        lista += q
-
-        res = set(lista)
-        return tuple(res)
-    
-    @staticmethod
-    def getByCliente(id) -> Tuple['Turnos']:
-        lista = []
-        with Session() as session:
-            q = session.query(Turnos).filter_by(cliente_id=id).all()
-            lista += q
-        
-        res = set(lista)
-        return tuple(res)
-    
-    @staticmethod
-    def getByTipoTrabajo(id) -> Tuple['Turnos']:
-        lista = []
-        with Session() as session:
-            q = session.query(Turnos).filter_by(tipo_trabajo_id=id).all()
-            lista += q
-        
-        res = set(lista)
-        return tuple(res)
-    
-    @staticmethod
-    def getByTipoPago(id) -> Tuple['Turnos']:
-        lista = []
-        with Session() as session:
-            q = session.query(Turnos).filter_by(tipo_pago_id=id).all()
-            lista += q
-        
-        res = set(lista)
-        return tuple(res)
-    @staticmethod
-    def getByTrabajo(id) -> Tuple['Turnos']:
-        lista = []
-        with Session() as session:
-            q = session.query(Turnos).filter_by(trabajo_id=id).all()
-            lista += q
-        
-        res = set(lista)
-        return tuple(res)
-
-
 class Paises(Base):
     __tablename__ = 'paises'
 
@@ -445,15 +191,3 @@ class Paises(Base):
     pais = mapped_column(Text, nullable=False)
 
     clients: Mapped[List['Clients']] = relationship('Clients', uselist=True, back_populates='pais')
-
-    @staticmethod
-    def getByCriterion(**arg):
-        lista = []
-
-        if "search" in arg:
-            with Session() as session:
-                q = session.query(Paises).filter(Paises.pais.like(f"%{arg['search']}%")).all()
-                lista += q
-
-        r = set(lista)
-        return tuple(r)

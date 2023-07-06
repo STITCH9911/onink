@@ -159,7 +159,33 @@ class Ui_OnInkMainWindow(object):
 "    background-color: rgb(47, 28, 255);\n"
 "    \n"
 "    color: rgb(255, 255, 255);\n"
-"}")
+"}\n"
+"\n"
+" QDateEdit {\n"
+"        border: 2px solid gray;\n"
+"        border-radius: 5px;\n"
+"        padding: 2px;\n"
+"        background-color: white;\n"
+"    }\n"
+"    QDateEdit::drop-down {\n"
+"        subcontrol-origin: padding;\n"
+"        subcontrol-position: top right;\n"
+"        width: 20px;\n"
+"        border-left-width: 0px;\n"
+"        border-top-right-radius: 5px;\n"
+"        border-bottom-right-radius: 5px;\n"
+"        background-image: url(\"views/images/dropdownbtn.png\");\n"
+"        background-position: center right;\n"
+"        background-repeat: no-repeat;\n"
+"        margin-right: 2px;\n"
+"        image:  url(\"views/images/dropdownbtn.png\");\n"
+"        width: 20px;\n"
+"        height: 20px;\n"
+"    }\n"
+"    QDateEdit::down-arrow {\n"
+"        image: none;\n"
+"    }\n"
+"")
         self.frame_contenido.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.frame_contenido.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame_contenido.setObjectName("frame_contenido")
@@ -246,7 +272,7 @@ class Ui_OnInkMainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.widget_menu_lateral = QtWidgets.QWidget()
-        self.widget_menu_lateral.setGeometry(QtCore.QRect(0, 0, 171, 1346))
+        self.widget_menu_lateral.setGeometry(QtCore.QRect(0, 0, 178, 1346))
         self.widget_menu_lateral.setObjectName("widget_menu_lateral")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.widget_menu_lateral)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
