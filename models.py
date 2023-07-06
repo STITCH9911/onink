@@ -1,9 +1,7 @@
-from typing import List, Optional, Tuple
-from sqlalchemy import Column, Date, DateTime, Float, ForeignKey, Integer, Table, Text, UniqueConstraint, text, or_
+from typing import List, Optional
+from sqlalchemy import Column, Date, DateTime, Float, ForeignKey, Integer, Table, Text, UniqueConstraint, text
 from sqlalchemy.orm import Mapped, declarative_base, mapped_column, relationship
 from sqlalchemy.orm.base import Mapped
-from config import Session
-from PyQt6.QtCore import QDate
 from functools import reduce
 
 Base = declarative_base()
