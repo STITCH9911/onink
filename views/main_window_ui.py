@@ -29,9 +29,10 @@ class Ui_OnInkMainWindow(object):
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.frame = QtWidgets.QFrame(parent=self.centralwidget)
-        self.frame.setStyleSheet("background-color: rgb(44, 62, 80);\n"
+        self.frame.setStyleSheet("QFrame{\n"
+"background-color: rgb(44, 62, 80);\n"
+"}\n"
 "font-family: \"Oswald\";\n"
-"\n"
 "QMenu{\n"
 "    background-color: rgb(255, 255, 255);\n"
 "    color: rgb(0, 0, 0);\n"
@@ -161,31 +162,9 @@ class Ui_OnInkMainWindow(object):
 "    color: rgb(255, 255, 255);\n"
 "}\n"
 "\n"
-" QDateEdit {\n"
-"        border: 2px solid gray;\n"
-"        border-radius: 5px;\n"
-"        padding: 2px;\n"
-"        background-color: white;\n"
-"    }\n"
-"    QDateEdit::drop-down {\n"
-"        subcontrol-origin: padding;\n"
-"        subcontrol-position: top right;\n"
-"        width: 20px;\n"
-"        border-left-width: 0px;\n"
-"        border-top-right-radius: 5px;\n"
-"        border-bottom-right-radius: 5px;\n"
-"        background-image: url(\"views/images/dropdownbtn.png\");\n"
-"        background-position: center right;\n"
-"        background-repeat: no-repeat;\n"
-"        margin-right: 2px;\n"
-"        image:  url(\"views/images/dropdownbtn.png\");\n"
-"        width: 20px;\n"
-"        height: 20px;\n"
-"    }\n"
-"    QDateEdit::down-arrow {\n"
-"        image: none;\n"
-"    }\n"
-"")
+"\n"
+"\n"
+" ")
         self.frame_contenido.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.frame_contenido.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame_contenido.setObjectName("frame_contenido")
@@ -477,6 +456,8 @@ class Ui_OnInkMainWindow(object):
         self.verticalLayout_3.addWidget(self.scrollArea)
         self.horizontalLayout_2.addWidget(self.frame_control)
         self.frame_paginas = QtWidgets.QFrame(parent=self.frame_contenido)
+        self.frame_paginas.setStyleSheet("\n"
+"")
         self.frame_paginas.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.frame_paginas.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame_paginas.setObjectName("frame_paginas")

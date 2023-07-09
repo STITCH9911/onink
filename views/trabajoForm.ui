@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>trabajoForm</class>
+ <widget class="QWidget" name="trabajoForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>653</width>
+    <height>535</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_7">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="bt_back">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Volver</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>images/back-arrow.svg</normaloff>images/back-arrow.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="6,3">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Cliente</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="5,5">
+         <item>
+          <widget class="QLineEdit" name="search_client">
+           <property name="placeholderText">
+            <string>Buscar cliente...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cb_client">
+           <property name="placeholderText">
+            <string>Cliente</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Trabajo</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="cb_t_trabajo">
+         <property name="placeholderText">
+          <string>Trabajo</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_16">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Tono</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="5,5">
+         <item>
+          <widget class="QLineEdit" name="search_tono">
+           <property name="placeholderText">
+            <string>Buscar tono...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cb_tono"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Técnica</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="5,5">
+         <item>
+          <widget class="QLineEdit" name="search_tecnica">
+           <property name="placeholderText">
+            <string>Buscar técnica...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cb_tecnica"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,8">
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Precio: </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="precio">
+       <property name="placeholderText">
+        <string>Precio</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_6">
+     <item>
+      <widget class="QLabel" name="label_13">
+       <property name="text">
+        <string>Fecha del trabajo</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_14">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="1,8">
+         <item>
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>Día: </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="w_day">
+           <property name="placeholderText">
+            <string>Seleccione</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,8">
+         <item>
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>Mes: </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="w_month">
+           <property name="placeholderText">
+            <string>Seleccione</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="1,8">
+         <item>
+          <widget class="QLabel" name="label_12">
+           <property name="text">
+            <string>Año: </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="w_year">
+           <property name="placeholderText">
+            <string>Seleccione</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_5">
+     <item>
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>Fecha de pago</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_10">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,8">
+         <item>
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>Día: </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="p_day">
+           <property name="placeholderText">
+            <string>Seleccione</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,8">
+         <item>
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Mes: </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="p_month">
+           <property name="placeholderText">
+            <string>Seleccione</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,8">
+         <item>
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>Año: </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="p_year">
+           <property name="placeholderText">
+            <string>Seleccione</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QPushButton" name="bt_refresh">
+       <property name="text">
+        <string>Reestablecer</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>images/refresh.svg</normaloff>images/refresh.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="bt_save">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Guardar</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>images/save.svg</normaloff>images/save.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

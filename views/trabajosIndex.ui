@@ -132,57 +132,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,0">
-     <item>
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Fecha de trabajo: </string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QDateEdit" name="date_work">
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="specialValueText">
-        <string/>
-       </property>
-       <property name="displayFormat">
-        <string>dd/MM/yyyy</string>
-       </property>
-       <property name="calendarPopup">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Fecha de pago: </string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QDateEdit" name="date_payment">
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="displayFormat">
-        <string>dd/MM/yyyy</string>
-       </property>
-       <property name="calendarPopup">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <layout class="QHBoxLayout" name="filterDatesLayout" stretch=""/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="layout_tabla"/>

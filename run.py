@@ -1,4 +1,3 @@
-import os
 from config import get_config, CONFIG_FILE_NAME
 from main import main
 

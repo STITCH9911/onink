@@ -51,9 +51,10 @@
     <item>
      <widget class="QFrame" name="frame">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(44, 62, 80);
+       <string notr="true">QFrame{
+background-color: rgb(44, 62, 80);
+}
 font-family: &quot;Oswald&quot;;
-
 QMenu{
 	background-color: rgb(255, 255, 255);
 	color: rgb(0, 0, 0);
@@ -356,31 +357,9 @@ QMenu::item:enabled:selected{
 	color: rgb(255, 255, 255);
 }
 
- QDateEdit {
-        border: 2px solid gray;
-        border-radius: 5px;
-        padding: 2px;
-        background-color: white;
-    }
-    QDateEdit::drop-down {
-        subcontrol-origin: padding;
-        subcontrol-position: top right;
-        width: 20px;
-        border-left-width: 0px;
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-        background-image: url(&quot;views/images/dropdownbtn.png&quot;);
-        background-position: center right;
-        background-repeat: no-repeat;
-        margin-right: 2px;
-		image:  url(&quot;views/images/dropdownbtn.png&quot;);
-		width: 20px;
-	    height: 20px;
-    }
-    QDateEdit::down-arrow {
-        image: none;
-    }
-</string>
+
+
+ </string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -1131,6 +1110,10 @@ font-size: 12pt;</string>
           </item>
           <item>
            <widget class="QFrame" name="frame_paginas">
+            <property name="styleSheet">
+             <string notr="true">
+</string>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
