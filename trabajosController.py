@@ -4,9 +4,10 @@ from strippedTable import StripedTable
 from views.trabajosIndex_ui import Ui_trabajosIndex
 from views.trabajoForm_ui import Ui_trabajoForm
 from PyQt6.QtWidgets import QWidget, QMessageBox, QComboBox
-from PyQt6.QtCore import QSize, QDate
+from PyQt6.QtCore import QSize, QDate, QLocale
+from PyQt6.QtGui import QDoubleValidator
 from models import Trabajos, Clients, TipoTrabajos, TiposPagos, Tonalidades, Tecnicas
-import os
+import os, re
 from sqlalchemy import or_
 from sqlalchemy.exc import IntegrityError
 
@@ -61,12 +62,12 @@ class TrabajosIndex(QWidget, Ui_trabajosIndex):
 
     def create(self):
         sw = self.parentWidget()
-        w = sw.findChild(QWidget, 'trabajosForm')
+        w = sw.findChild(QWidget, 'trabajoForm')
         sw.setCurrentWidget(w)
 
     def edit(self, obj):
         sw = self.parentWidget()
-        w = sw.findChild(QWidget, 'trabajosForm')
+        w = sw.findChild(QWidget, 'trabajoForm')
         w.setObjeto(obj)
         sw.setCurrentWidget(w)
 
@@ -106,58 +107,159 @@ class TrabajosIndex(QWidget, Ui_trabajosIndex):
         return headers, data, dropdown_buttons, items
     
 
-    class TrabajoForm(QWidget,Ui_trabajoForm):
+class TrabajoForm(QWidget,Ui_trabajoForm):
 
         def __init__(self,parent: QWidget | None = ..., **kwargs) -> None:
             super().__init__(parent)
+            locale = QLocale(QLocale.Language.Spanish)
             self.setupUi(self)
             fecha = QDate.currentDate()
+            self.fecha_actual = fecha
             self.bt_save.clicked.connect(self.save)
             self.obj = None
             self.bt_back.clicked.connect(self.mostrar_widget)
+            self.cb_client.setPlaceholderText("Sin Resultados")
+            self.cb_t_trabajo.setPlaceholderText("Seleccione")
+            self.cb_tecnica.setPlaceholderText("Sin Resultados")
+            self.cb_tono.setPlaceholderText("Sin Resultados")
+            self.search_client.textChanged.connect(self.s_client)
+            self.search_tecnica.textChanged.connect(self.s_tecnica)
+            self.search_tono.textChanged.connect(self.s_tono)
+            self.precio.setValidator(QDoubleValidator())
+            self.precio.textChanged.connect(self.validate_precio)
+            self.bt_refresh.clicked.connect(self.refresh)
+            with Session() as session:
+                trabajos = session.query(TipoTrabajos).all()
+
+            for w in trabajos:
+                self.cb_t_trabajo.addItem(w.tipo, w.id)
+
             for anio in range(2000, fecha.year()+1):
                 self.w_year.addItem(str(anio), anio)
-                self.p_year.addItem(str(anio), anio)
             self.w_year.setCurrentIndex(self.w_year.findData(fecha.year()))
 
             for mes in range(1, 13):
-                d = QDate(fecha.year(),mes,1)
-                nombre_mes = d.toString("MMMM")
-                self.w_month.addItem(nombre_mes, mes)
-                self.p_month.addItem(nombre_mes, mes)
+                nombre_mes = locale.monthName(mes)
+                self.w_month.addItem(nombre_mes.capitalize(), mes)
             self.w_month.setCurrentIndex(self.w_month.findData(fecha.month()))
 
-            self.actualizar_dias_mes(fecha.month(), fecha.year())
+            self.actualizar_dias_mes(self.w_day, fecha.month(), fecha.year())
             self.w_day.setCurrentIndex(self.w_day.findData(fecha.day()))
-
             self.w_month.currentIndexChanged.connect(self.actualizar_dias_w)
-            self.p_month.currentIndexChanged.connect(self.actualizar_dias_p)
             
 
+        def actualizar_dias_mes(self, cb_day: QComboBox, month: int, year: int):
+            days = QDate.daysInMonth(QDate(year, month, 1))
+            data = cb_day.currentData()
+            cb_day.clear()
+            for i in range(1,days+1):
+                cb_day.addItem(str(i),i)
+            
+            if data:
+                if data < days+1:
+                    cb_day.setCurrentIndex(cb_day.findData(data))
+                else:
+                    cb_day.setCurrentIndex(-1)
+
+        def actualizar_dias_w(self):
+            self.actualizar_dias_mes(self.w_day, self.w_month.currentData(), self.w_year.currentData())
+
+
+        def s_client(self):
+            t = self.search_client.text()
+            with Session() as session:
+                self.cb_client.clear()
+                if t == "":
+                    self.cb_client.setPlaceholderText("Sin Resultados")
+                else:
+                    q = session.query(Clients).filter(Clients.nombre_apellidos.like(f"%{t}%")).all()
+                    if len(q) > 0:
+                        self.cb_client.setPlaceholderText("Seleccione")
+                        for item in q:
+                            self.cb_client.addItem(item.nombre_apellidos, item.id)
+                    else:
+                        self.cb_client.setPlaceholderText("Sin Resultados")
+
+        def s_tecnica(self):
+            t = self.search_tecnica.text()
+            with Session() as session:
+                self.cb_tecnica.clear()
+                if t == "":
+                    self.cb_tecnica.setPlaceholderText("Sin Resultados")
+                else:
+                    q = session.query(Tecnicas).filter(Tecnicas.tecnica.like(f"%{t}%")).all()
+                    if len(q) > 0:
+                        self.cb_tecnica.setPlaceholderText("Seleccione")
+                        for item in q:
+                            self.cb_tecnica.addItem(item.tecnica, item.id)
+                    else:
+                        self.cb_tecnica.setPlaceholderText("Sin Resultados")
+
+        def s_tono(self):
+            t = self.search_tono.text()
+            with Session() as session:
+                self.cb_tono.clear()
+                if t == "":
+                    self.cb_tono.setPlaceholderText("Sin Resultados")
+                else:
+                    q = session.query(Tonalidades).filter(Tonalidades.tono.like(f"%{t}%")).all()
+                    if len(q) > 0:
+                        self.cb_tono.setPlaceholderText("Seleccione")
+                        for item in q:
+                            self.cb_tono.addItem(item.tono, item.id)
+                    else:
+                        self.cb_tono.setPlaceholderText("Sin Resultados")
+
+        def validate_precio(self, text):
+            regex = re.compile(r"^(\d*\.?\d*)$")
+            match = regex.search(text)
+            if not match:
+                self.precio.setText(text[:-1])
 
         def save(self):
-            if self.lineEdit.text() == "":
-                QMessageBox.warning(self, "Advertencia", "Para llevar a cabo la acción debe llenar los campos correctamente", QMessageBox.StandardButton.Ok)
-                return 
+            cliente_id = self.cb_client.currentData()
+            trabajo_id = self.cb_t_trabajo.currentData()
+            tono_id = self.cb_tono.currentData()
+            tecnica_id = self.cb_tecnica.currentData()
+            precio =  self.precio.text()
+            w_day = self.w_day.currentData()
+            w_month = self.w_month.currentData()
+            w_year = self.w_year.currentData()
+            fecha_w = QDate(w_year,w_month, w_day)
 
+            if not cliente_id or not trabajo_id or precio == "":
+                QMessageBox.warning(self.parentWidget(), "Advertencia", "Para llevar a cabo la acción debe llenar los campos correctamente", QMessageBox.StandardButton.Ok)
+                return 
+            
             with  Session() as session:
                 if self.obj:
                     self.obj = session.merge(self.obj)
-                    self.obj.tecnica = self.lineEdit.text()
+                    self.obj.cliente_id = cliente_id
+                    self.obj.tipo_trabajo_id = trabajo_id
+                    self.obj.tonalidad_id = tono_id
+                    self.obj.tecnica_id = tecnica_id
+                    self.obj.price = precio
+                    self.obj.created_at = fecha_w
                     session.add(self.obj)
                 else:
-                    obj = Tecnicas(tecnica=self.lineEdit.text())
+                    obj = Trabajos(cliente_id=cliente_id, tipo_trabajo_id=trabajo_id, tonalidad_id=tono_id, tecnica_id=tecnica_id, price=precio, created_at=fecha_w.toPyDate())
                     session.add(obj)
                                 
                 try:
                     session.commit()
                     self.mostrar_widget()
-                    self.lineEdit.clear()
+                    self.refresh()
                     self.obj = None
                     QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
                 except IntegrityError:
                     QMessageBox.critical(self, "Error", "Ya existe este tipo de pago.", QMessageBox.StandardButton.Ok)
                 
+        def refresh(self):
+            self.cb_client.clear()
+            self.cb_t_trabajo.clear()
+            self.cb_tecnica.clear()
+            self.cb_tono.clear()
+
 
         def mostrar_widget(self):
             stackedWidget = self.parentWidget()

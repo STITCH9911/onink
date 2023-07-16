@@ -13,7 +13,7 @@ from viewsPaises import PaisesWidget, PaisesWidgetCreate
 from provinciasControllers import ProvinciasIndex, ProvinciasForm
 from tonoControllers import TonosIndex, TonoForm
 from pagosControllers import PagoIndex, PagosForm
-from trabajosController import TrabajosIndex
+from trabajosController import TrabajosIndex, TrabajoForm
 from tiposTrabajosControllers import TiposTrabajosIndex, TiposTrabajosForm
 from views.main_window_ui import Ui_OnInkMainWindow
 from PyQt6.QtWidgets import QMainWindow, QSizeGrip, QMessageBox, QFileDialog, QLabel, QLineEdit, QHBoxLayout, QComboBox
@@ -55,6 +55,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.material_page = MaterialIndex(self.stackedWidget)
         self.material_form = MaterialForm(self.stackedWidget)
         self.TrabajosIndex = TrabajosIndex(self.stackedWidget)
+        self.TrabajosForm = TrabajoForm(self.stackedWidget)
         self.TiposTrabajosIndex = TiposTrabajosIndex(self.stackedWidget)
         self.TiposTrabajosForm = TiposTrabajosForm(self.stackedWidget)
 
@@ -78,6 +79,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.stackedWidget.addWidget(self.material_page)
         self.stackedWidget.addWidget(self.material_form)
         self.stackedWidget.addWidget(self.TrabajosIndex)
+        self.stackedWidget.addWidget(self.TrabajosForm)
         self.stackedWidget.addWidget(self.TiposTrabajosIndex)
         self.stackedWidget.addWidget(self.TiposTrabajosForm)
 
