@@ -112,8 +112,9 @@ class StripedTable(QTableWidget):
                     self.item(i,j + 1).setBackground(COLOR_PAR)
                 else:
                     self.item(i,j + 1).setBackground(COLOR_IMPAR)
-            self.setCellWidget(i, len(row) + 1, self.create_dropdown_button(buttons[i], objects[i]))
-            self.cellWidget(i, len(row) + 1).setStyleSheet(f"background-color:rgba{self.item(i,0).background().color().getRgb()};")
+            if len(buttons) > 0:
+                self.setCellWidget(i, len(row) + 1, self.create_dropdown_button(buttons[i], objects[i]))
+                self.cellWidget(i, len(row) + 1).setStyleSheet(f"background-color:rgba{self.item(i,0).background().color().getRgb()};")
     def create_dropdown_button(self, button_data, obj):
         widget = QWidget()
         layout = QHBoxLayout(widget)
