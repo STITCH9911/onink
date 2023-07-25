@@ -1,15 +1,19 @@
 from typing import List, Tuple
+
+from PyQt6 import QtGui
 from config import Session
+from payment import Payment
 from strippedTable import StripedTable
 from views.trabajosIndex_ui import Ui_trabajosIndex
 from views.trabajoForm_ui import Ui_trabajoForm
 from PyQt6.QtWidgets import QWidget, QMessageBox, QComboBox
-from PyQt6.QtCore import QSize, QDate, QLocale
+from PyQt6.QtCore import QSize, QDate, QLocale, QDateTime, QTime
 from PyQt6.QtGui import QDoubleValidator
 from models import Trabajos, Clients, TipoTrabajos, TiposPagos, Tonalidades, Tecnicas
 import os, re
 from sqlalchemy import or_
 from sqlalchemy.exc import IntegrityError
+from datetime import datetime
 
 
 class TrabajosIndex(QWidget, Ui_trabajosIndex):
@@ -21,18 +25,8 @@ class TrabajosIndex(QWidget, Ui_trabajosIndex):
         self.bt_tipos.clicked.connect(self.tipos_index)
         self.le_search.textChanged.connect(self.search)
         self.bt_create.clicked.connect(self.create)
-        """self.l_fechaW = QLabel()
-        self.l_fechaW.setText("Fecha de trabajo: ")
-        self.l_fechaP = QLabel()
-        self.l_fechaP.setText("Fecha de pago: ")
-         self.date_w = NullableDateEdit()
-        self.date_p = NullableDateEdit()
-        self.date_p.setDate(QDate(0,0,0))
-        self.filterDatesLayout.addWidget(self.l_fechaW, 1)
-        self.filterDatesLayout.addWidget(self.date_w, 4)
-        self.filterDatesLayout.addWidget(self.l_fechaP, 1)
-        self.filterDatesLayout.addWidget(self.date_p, 4) """
         self.search()
+        self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
     def tipos_index(self):
         sw = self.parentWidget()
@@ -51,18 +45,19 @@ class TrabajosIndex(QWidget, Ui_trabajosIndex):
     def search(self):
         le = self.le_search.text()
         with Session() as session:
-            q = session.query(Trabajos).select_from(Trabajos).join(Clients).join(TipoTrabajos).join(TiposPagos).join(Tonalidades).join(Tecnicas)
+            q = session.query(Trabajos)
             if le != "":
                 if le.isdigit():
                     q = q.filter(Trabajos.price.like(f"%{le}%"))
                 else:
-                    q = q.where(or_(Clients.nombre_apellidos.like(f"%{le}%"),TipoTrabajos.tipo.like(f"%{le}%"),TiposPagos.tipo.like(f"%{le}%"),Tonalidades.tono.like(f"%{le}%"),Tecnicas.tecnica.like(f"%{le}%")))
+                    q = q.select_from(Trabajos).join(Clients).join(TipoTrabajos).join(TiposPagos).join(Tonalidades).join(Tecnicas).where(or_(Clients.nombre_apellidos.like(f"%{le}%"),TipoTrabajos.tipo.like(f"%{le}%"),TiposPagos.tipo.like(f"%{le}%"),Tonalidades.tono.like(f"%{le}%"),Tecnicas.tecnica.like(f"%{le}%")))
             q = q.all()
         self.setItemsTable(q)
 
     def create(self):
         sw = self.parentWidget()
         w = sw.findChild(QWidget, 'trabajoForm')
+        w.refresh()
         sw.setCurrentWidget(w)
 
     def edit(self, obj):
@@ -74,12 +69,12 @@ class TrabajosIndex(QWidget, Ui_trabajosIndex):
     def delete(self, obj):
         with Session() as session:
             obj = session.merge(obj)
-            reply = QMessageBox.question(self, "Advertencia", "Está a punto de eliminar un trabajo, si continúa no se podrá recuperar la información. ¿Desea continuar?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            reply = QMessageBox.question(self.mainWindowWidget, "Advertencia", "Está a punto de eliminar un trabajo, si continúa no se podrá recuperar la información. ¿Desea continuar?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
             if reply == QMessageBox.StandardButton.Yes:
                 session.delete(obj)
                 session.commit()
-                QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
+                QMessageBox.information(self.mainWindowWidget, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
 
         self.search()
         
@@ -92,8 +87,10 @@ class TrabajosIndex(QWidget, Ui_trabajosIndex):
             for i in items:
                 i = session.merge(i)
                 fecha_trabajo = i.created_at.strftime('%d-%m-%Y')
-                fecha_pago = f"{i.fecha_pago.strftime('%d-%m-%Y')} (Vía: {i.tipo_pago.tipo})" if i.fecha_pago else "Sin pagar"
-                data.append([i.cliente.nombre_apellidos, i.tipo_trabajo.tipo, fecha_trabajo , str(i.price), fecha_pago, i.tonalidad.tono, i.tecnica.tecnica])
+                fecha_pago = f"{i.fecha_pago.strftime('%d-%m-%Y')} (Vía: {i.tipo_pago.tipo})" if i.tipo_pago_id is not None else "Sin pagar"
+                tono = f"{i.tonalidad.tono}" if i.tonalidad_id is not None else "--"
+                tecnica = f"{i.tecnica.tecnica}" if i.tecnica_id is not None else "--"
+                data.append([i.cliente.nombre_apellidos, i.tipo_trabajo.tipo, fecha_trabajo , str(i.price), fecha_pago, tono, tecnica])
                 dir = "views/images"
                 size = QSize(30,30)
                 edit = os.path.join(dir, 'edit-pencil.svg')
@@ -146,6 +143,7 @@ class TrabajoForm(QWidget,Ui_trabajoForm):
             self.actualizar_dias_mes(self.w_day, fecha.month(), fecha.year())
             self.w_day.setCurrentIndex(self.w_day.findData(fecha.day()))
             self.w_month.currentIndexChanged.connect(self.actualizar_dias_w)
+            self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
             
 
         def actualizar_dias_mes(self, cb_day: QComboBox, month: int, year: int):
@@ -225,10 +223,10 @@ class TrabajoForm(QWidget,Ui_trabajoForm):
             w_day = self.w_day.currentData()
             w_month = self.w_month.currentData()
             w_year = self.w_year.currentData()
-            fecha_w = QDate(w_year,w_month, w_day)
+            fecha_w = QDateTime(QDate(w_year,w_month, w_day), QTime()).toPyDateTime()
 
             if not cliente_id or not trabajo_id or precio == "":
-                QMessageBox.warning(self.parentWidget(), "Advertencia", "Para llevar a cabo la acción debe llenar los campos correctamente", QMessageBox.StandardButton.Ok)
+                QMessageBox.warning(self.mainWindowWidget, "Advertencia", "Para llevar a cabo la acción debe llenar los campos correctamente", QMessageBox.StandardButton.Ok)
                 return 
             
             with  Session() as session:
@@ -240,40 +238,84 @@ class TrabajoForm(QWidget,Ui_trabajoForm):
                     self.obj.tecnica_id = tecnica_id
                     self.obj.price = precio
                     self.obj.created_at = fecha_w
-                    session.add(self.obj)
                 else:
-                    obj = Trabajos(cliente_id=cliente_id, tipo_trabajo_id=trabajo_id, tonalidad_id=tono_id, tecnica_id=tecnica_id, price=precio, created_at=fecha_w.toPyDate())
-                    session.add(obj)
-                                
-                try:
-                    session.commit()
-                    self.mostrar_widget()
-                    self.refresh()
-                    self.obj = None
-                    QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
-                except IntegrityError:
-                    QMessageBox.critical(self, "Error", "Ya existe este tipo de pago.", QMessageBox.StandardButton.Ok)
+                    self.obj = Trabajos(cliente_id=cliente_id, tipo_trabajo_id=trabajo_id, tonalidad_id=tono_id, tecnica_id=tecnica_id, price=precio, created_at=fecha_w)
+
+                session.add(self.obj)
+                if self.obj.tipo_pago_id is not None:
+                    titulo = "Datos del pago"
+                    texto = "¿Desea editar datos del pago de este trabajo?"
+                else:
+                    titulo = "Realizar pago"
+                    texto = "¿Desea ejecutar ahora el pago del trabajo?"
+                """ try: """
+                session.commit()
+                reply = QMessageBox.question(self.mainWindowWidget, titulo, texto, QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+                if reply == QMessageBox.StandardButton.Yes:
+                    payment = Payment(trabajo=self.obj,parent=self, mainwindow=self.mainWindowWidget)
+                    payment.exec()
+                self.mostrar_widget()
+                self.refresh()
+                self.obj = None
+                QMessageBox.information(self.mainWindowWidget, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
+                """ except:
+                    QMessageBox.critical(self.mainWindowWidget, "Error", "Ha ocurrido un error. Comuníquese con el proveedor de su aplicación", QMessageBox.StandardButton.Ok) """
                 
         def refresh(self):
+            self.search_client.clear()
+            self.search_tecnica.clear()
+            self.search_tono.clear()
             self.cb_client.clear()
-            self.cb_t_trabajo.clear()
-            self.cb_tecnica.clear()
-            self.cb_tono.clear()
+            self.cb_t_trabajo.setCurrentIndex(-1)
+            self.cb_tecnica.setCurrentIndex(-1)
+            self.cb_tono.setCurrentIndex(-1)
+            fecha = QDate.currentDate()
+            self.w_year.setCurrentIndex(self.w_year.findData(fecha.year()))
+            self.w_month.setCurrentIndex(self.w_month.findData(fecha.month()))
+            self.w_day.setCurrentIndex(self.w_day.findData(fecha.day()))
 
 
         def mostrar_widget(self):
             stackedWidget = self.parentWidget()
-            w = stackedWidget.findChild(QWidget, "tecnicaIndex")
+            w = stackedWidget.findChild(QWidget, "trabajosIndex")
             self.reload_data()
             stackedWidget.setCurrentWidget(w)
-            self.lineEdit.clear()
+            self.bt_refresh.show()
+            self.refresh()
 
         def reload_data(self):
             sw = self.parentWidget()
-            w = sw.findChild(QWidget, "tecnicaIndex")
+            w = sw.findChild(QWidget, "trabajosIndex")
             w.search()
-            self.lineEdit.clear()
+            self.refresh()
             
-        def setObjeto(self,obj):
-            self.obj = obj
-            self.lineEdit.setText(obj.tecnica)
+        def setObjeto(self,obj: Trabajos):
+            with Session() as session:
+                self.obj = obj
+                self.bt_refresh.hide()
+                obj = session.merge(obj)
+                n_ape = obj.cliente.nombre_apellidos[:3]
+                tec_id = -1
+                ton_id = -1
+                if obj.tecnica_id is not None:
+                    tec = obj.tecnica.tecnica[:3]
+                    tec_id =  obj.tecnica_id
+                else:
+                    tec = ""
+                if obj.tonalidad_id is not None:
+                    ton = obj.tonalidad.tono[:3]
+                    ton_id =  obj.tonalidad_id
+                else:
+                    ton = ""
+                self.search_client.setText(n_ape)
+                self.search_tecnica.setText(tec)
+                self.search_tono.setText(ton)
+                self.cb_client.setCurrentIndex(self.cb_client.findData(obj.cliente_id))
+                self.cb_tecnica.setCurrentIndex(self.cb_tecnica.findData(tec_id))
+                self.cb_tono.setCurrentIndex(self.cb_tono.findData(ton_id))
+                self.cb_t_trabajo.setCurrentIndex(self.cb_t_trabajo.findData(obj.tipo_trabajo_id))
+                self.precio.setText(str(obj.price))
+                d = QDateTime(obj.created_at)
+                self.w_year.setCurrentIndex(self.w_year.findData(d.date().year()))
+                self.w_month.setCurrentIndex(self.w_month.findData(d.date().month()))
+                self.w_day.setCurrentIndex(self.w_day.findData(d.date().day()))
