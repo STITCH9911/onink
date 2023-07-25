@@ -19,6 +19,7 @@ class MaterialIndex(QWidget, Ui_materialesIndex):
         self.table = None
         self.bt_create.clicked.connect(self.create)
         self.search()
+        self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
     def editFunc(self,obj):
         sw = self.parentWidget()
@@ -75,12 +76,12 @@ class MaterialIndex(QWidget, Ui_materialesIndex):
     def delete(self, obj):
         with Session() as session:
             obj = session.merge(obj)
-            reply = QMessageBox.question(self, "Advertencia", "Está a punto de eliminar un material, si continúa no se podrá recuperar la información. ¿Desea continuar?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            reply = QMessageBox.question(self.mainWindowWidget, "Advertencia", "Está a punto de eliminar un material, si continúa no se podrá recuperar la información. ¿Desea continuar?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
             if reply == QMessageBox.StandardButton.Yes:
                 session.delete(obj)
                 session.commit()
-                QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
+                QMessageBox.information(self.mainWindowWidget, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
 
         self.search()
         
@@ -96,6 +97,7 @@ class MaterialForm(QWidget,Ui_materialesForm):
         self.lineEdit.returnPressed.connect(self.save)
         self.costo.setValidator(QDoubleValidator())
         self.costo.textChanged.connect(self.validate_costo)
+        self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
     
     def validate_costo(self, text):
         regex = re.compile(r"^(\d*\.?\d*)$")
@@ -105,7 +107,7 @@ class MaterialForm(QWidget,Ui_materialesForm):
 
     def save(self):
         if self.lineEdit.text() == "" or self.costo.text() == "":
-            QMessageBox.warning(self, "Advertencia", "Para llevar a cabo la acción debe llenar los campos correctamente", QMessageBox.StandardButton.Ok)
+            QMessageBox.warning(self.mainWindowWidget, "Advertencia", "Para llevar a cabo la acción debe llenar los campos correctamente", QMessageBox.StandardButton.Ok)
             return 
 
         with  Session() as session:
@@ -124,9 +126,9 @@ class MaterialForm(QWidget,Ui_materialesForm):
                 self.lineEdit.clear()
                 self.costo.clear()
                 self.obj = None
-                QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
+                QMessageBox.information(self.mainWindowWidget, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
             except IntegrityError:
-                QMessageBox.critical(self, "Error", "Ya existe este material.", QMessageBox.StandardButton.Ok)
+                QMessageBox.critical(self.mainWindowWidget, "Error", "Ya existe este material.", QMessageBox.StandardButton.Ok)
             
 
     def mostrar_widget(self):

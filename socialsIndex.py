@@ -20,6 +20,7 @@ class SocialsIndex(QWidget, Ui_SocialsIndex):
         self.table = None
         self.bt_create.clicked.connect(self.create)
         self.search()
+        self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
     def editFunc(self,obj):
         sw = self.parentWidget()
@@ -74,14 +75,14 @@ class SocialsIndex(QWidget, Ui_SocialsIndex):
     def delete(self, obj):
         with Session() as session:
             obj = session.merge(obj)
-            reply = QMessageBox.question(self, "Advertencia", "Está a punto de eliminar una red social, si continúa no se podrá recuperar la información. ¿Desea continuar?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            reply = QMessageBox.question(self.mainWindowWidget, "Advertencia", "Está a punto de eliminar una red social, si continúa no se podrá recuperar la información. ¿Desea continuar?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
             if reply == QMessageBox.StandardButton.Yes:
                 stmp =  delete(t_r_clients_socials).where(t_r_clients_socials.c.social_id == obj.id)
                 session.execute(stmp)
                 session.delete(obj)
                 session.commit()
-                QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
+                QMessageBox.information(self.mainWindowWidget, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
 
         self.search()
         
@@ -97,10 +98,11 @@ class SocialsWidgetCreate(QWidget,Ui_socialCreate):
         self.obj = None
         self.bt_back.clicked.connect(self.mostrar_widget)
         self.social.returnPressed.connect(self.save)
+        self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
     def save(self):
         if self.social.text() == "":
-            QMessageBox.warning(self, "Advertencia", "Para agregar un elemento nuevo debe llenar los campos correctamente", QMessageBox.StandardButton.Ok)
+            QMessageBox.warning(self.mainWindowWidget, "Advertencia", "Para agregar un elemento nuevo debe llenar los campos correctamente", QMessageBox.StandardButton.Ok)
             return
         
         with  Session() as session:
@@ -118,9 +120,9 @@ class SocialsWidgetCreate(QWidget,Ui_socialCreate):
                 self.mostrar_widget()
                 self.social.clear()
                 self.obj = None
-                QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
+                QMessageBox.information(self.mainWindowWidget, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
             except IntegrityError:
-                QMessageBox.critical(self, "Error", "Ya existe esta red social.", QMessageBox.StandardButton.Ok)
+                QMessageBox.critical(self.mainWindowWidget, "Error", "Ya existe esta red social.", QMessageBox.StandardButton.Ok)
             
 
     def mostrar_widget(self):

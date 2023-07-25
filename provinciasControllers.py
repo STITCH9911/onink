@@ -20,6 +20,7 @@ class ProvinciasIndex(QWidget, Ui_ProvinciaIndex):
         self.table = None
         self.bt_create.clicked.connect(self.create)
         self.search()
+        self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
     def editFunc(self,obj):
         sw = self.parentWidget()
@@ -74,12 +75,12 @@ class ProvinciasIndex(QWidget, Ui_ProvinciaIndex):
     def delete(self, obj):
         with Session() as session:
             obj = session.merge(obj)
-            reply = QMessageBox.question(self, "Advertencia", "Está a punto de eliminar una provincia, si continúa no se podrá recuperar la información. ¿Desea continuar?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            reply = QMessageBox.question(self.mainWindowWidget, "Advertencia", "Está a punto de eliminar una provincia, si continúa no se podrá recuperar la información. ¿Desea continuar?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
             if reply == QMessageBox.StandardButton.Yes:
                 session.delete(obj)
                 session.commit()
-                QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
+                QMessageBox.information(self.mainWindowWidget, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
 
         self.search()
         
@@ -95,10 +96,11 @@ class ProvinciasForm(QWidget,Ui_provinciasForm):
         self.obj = None
         self.bt_back.clicked.connect(self.mostrar_widget)
         self.provincia.returnPressed.connect(self.save)
+        self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
     def save(self):
         if self.provincia.text() == "":
-            QMessageBox.warning(self, "Advertencia", "Para llevar a cabo la acción debe llenar los campos correctamente", QMessageBox.StandardButton.Ok)
+            QMessageBox.warning(self.mainWindowWidget, "Advertencia", "Para llevar a cabo la acción debe llenar los campos correctamente", QMessageBox.StandardButton.Ok)
             return 
 
         with  Session() as session:
@@ -115,9 +117,9 @@ class ProvinciasForm(QWidget,Ui_provinciasForm):
                 self.mostrar_widget()
                 self.provincia.clear()
                 self.obj = None
-                QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
+                QMessageBox.information(self.mainWindowWidget, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
             except IntegrityError:
-                QMessageBox.critical(self, "Error", "Ya existe esta provincia.", QMessageBox.StandardButton.Ok)
+                QMessageBox.critical(self.mainWindowWidget, "Error", "Ya existe esta provincia.", QMessageBox.StandardButton.Ok)
             
 
     def mostrar_widget(self):

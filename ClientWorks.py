@@ -44,7 +44,11 @@ class ClientWorks(QWidget, Ui_ClientWorks):
             dropdown_buttons = []
             for w in trabajos:
                 w = session.merge(w)
-                data.append([w.tipo_trabajo.tipo, w.price, w.tipo_pago.tipo, w.created_at.strftime('%d-%m-%Y')])
+                if w.tipo_pago_id is not None:
+                    tipo_pago = w.tipo_pago.tipo
+                else:
+                    tipo_pago = "NO PAGADO"
+                data.append([w.tipo_trabajo.tipo, str(w.price), tipo_pago, w.created_at.strftime('%d-%m-%Y')])
         return headers, data, dropdown_buttons, trabajos
     
     def setFunciones(self, funcVolver, funcChangePage):

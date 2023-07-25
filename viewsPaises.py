@@ -20,6 +20,7 @@ class PaisesWidget(QWidget, Ui_PaisWidget):
         self.table = None
         self.bt_add_pais.clicked.connect(self.create)
         self.search()
+        self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
         
 
@@ -77,12 +78,12 @@ class PaisesWidget(QWidget, Ui_PaisWidget):
     def delete(self, obj):
         with Session() as session:
             obj = session.merge(obj)
-            reply = QMessageBox.question(self, "Advertencia", "Está a punto de eliminar un país, si continúa no se podrá recuperar la información. ¿Desea continuar?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            reply = QMessageBox.question(self.mainWindowWidget, "Advertencia", "Está a punto de eliminar un país, si continúa no se podrá recuperar la información. ¿Desea continuar?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
             if reply == QMessageBox.StandardButton.Yes:
                 session.delete(obj)
                 session.commit()
-                QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
+                QMessageBox.information(self.mainWindowWidget, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
         
         self.search()
             
@@ -99,13 +100,14 @@ class PaisesWidgetCreate(QWidget,Ui_create_pais):
         self.obj = None
         self.bt_back.clicked.connect(self.mostrar_widget)
         self.pais.returnPressed.connect(self.save)
+        self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
     def set_functions(self, backFunc):
         self.bt_back.clicked.connect(backFunc)
 
     def save(self):
         if self.pais.text() == "":
-            QMessageBox.critical(self, "Error", "No pueden existir campos vacíos.", QMessageBox.StandardButton.Ok)
+            QMessageBox.critical(self.mainWindowWidget, "Error", "No pueden existir campos vacíos.", QMessageBox.StandardButton.Ok)
             return
         with  Session() as session:
             if self.obj:
@@ -121,9 +123,9 @@ class PaisesWidgetCreate(QWidget,Ui_create_pais):
                 self.mostrar_widget()
                 self.pais.clear()
                 self.obj = None
-                QMessageBox.information(self, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
+                QMessageBox.information(self.mainWindowWidget, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
             except IntegrityError:
-                QMessageBox.critical(self, "Error", "Ya existe este país.", QMessageBox.StandardButton.Ok)
+                QMessageBox.critical(self.mainWindowWidget, "Error", "Ya existe este país.", QMessageBox.StandardButton.Ok)
             
 
     def mostrar_widget(self):
