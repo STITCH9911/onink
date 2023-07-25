@@ -498,7 +498,7 @@ QScrollBar:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>178</width>
+                  <width>171</width>
                   <height>1346</height>
                  </rect>
                 </property>
@@ -520,6 +520,35 @@ font-size: 12pt;</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="bt_menu_home">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
+                   </property>
+                   <property name="text">
+                    <string>Inicio</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>images/home (1).svg</normaloff>images/home (1).svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>35</width>
+                     <height>35</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -814,22 +843,6 @@ font-size: 12pt;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_18">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="text">
-                    <string>Redes Sociales</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
                   <widget class="QPushButton" name="bt_redes_sociales_17">
                    <property name="minimumSize">
                     <size>
@@ -1111,8 +1124,7 @@ font-size: 12pt;</string>
           <item>
            <widget class="QFrame" name="frame_paginas">
             <property name="styleSheet">
-             <string notr="true">
-</string>
+             <string notr="true"/>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
