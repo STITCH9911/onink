@@ -3,6 +3,8 @@ from sqlalchemy import Column, Date, DateTime, Float, ForeignKey, Integer, Table
 from sqlalchemy.orm import Mapped, declarative_base, mapped_column, relationship
 from sqlalchemy.orm.base import Mapped
 from functools import reduce
+from datetime import date
+from config import Session
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -163,6 +165,21 @@ class Trabajos(Base):
     tipo_trabajo: Mapped['TipoTrabajos'] = relationship('TipoTrabajos', back_populates='trabajos')
     tonalidad: Mapped[Optional['Tonalidades']] = relationship('Tonalidades', back_populates='trabajos')
     turnos: Mapped[List['Turnos']] = relationship('Turnos', uselist=True, back_populates='trabajo')
+
+    @staticmethod
+    def cant_trabajos_dia(date: date):
+        with Session() as session:
+            q = session.query(Trabajos).where(Trabajos.created_at.date() == date).all()
+
+        return len(q)
+    
+    @staticmethod
+    def total_dinero_dia(date: date):
+        with Session() as session:
+            q = session.query(Trabajos).where(Trabajos.created_at.date() == date).all()
+        
+        r = reduce(lambda x,y: x + y.price, q)
+        return r
 
 class Turnos(Base):
     __tablename__ = 'turnos'
