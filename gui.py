@@ -129,7 +129,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.cb_search_clientes_provincia.currentIndexChanged.connect(lambda: self.change_provincia(self.cb_search_clientes_provincia))
         self.bt_cliente_insertar_reestablecer.clicked.connect(self.reestablecer)
         self.bt_add_image_clients_insert.clicked.connect(lambda: self.select_image(label=self.lb_pic_insert_cliente))
-        self.bt_delete_image_clients_insert.clicked.connect(lambda: self.restart_image)
+        self.bt_delete_image_clients_insert.clicked.connect(self.restart_image)
         self.bt_save_usernames.clicked.connect(self.save_usernames)
         self.le_search_clients.textChanged.connect(self.search)
         self.cb_search_clientes_municipio.currentIndexChanged.connect(lambda: self.change_municipio(self.cb_search_clientes_municipio))
