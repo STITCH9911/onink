@@ -61,6 +61,9 @@ class TrabajosIndex(QWidget, Ui_trabajosIndex):
         w.load_cb()
         sw.setCurrentWidget(w)
 
+    def payWork(self, obj: Trabajos):
+        payment =  Payment(obj, self, self.mainWindowWidget)
+        payment.exec()
     
 
     def edit(self, obj):
@@ -99,8 +102,10 @@ class TrabajosIndex(QWidget, Ui_trabajosIndex):
                 size = QSize(30,30)
                 edit = os.path.join(dir, 'edit-pencil.svg')
                 trash = os.path.join(dir, 'trash.svg')
+                pay = os.path.join(dir, 'credit-card.svg')
                 buttons = [
                     {'Editar datos': self.edit, edit:size},
+                    {'Pago': self.payWork, pay:size},
                     {'ELiminar': self.delete, trash:size},
                 ]
                 dropdown_buttons.append(buttons)
