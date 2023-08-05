@@ -1,7 +1,7 @@
 import typing
 from PyQt6 import QtCore
 from config import Session
-from models import TipoTrabajos, Trabajos
+from models import TiposPagos, Trabajos
 from views.viaPagosForm_ui import Ui_viaPagosForm
 from PyQt6.QtWidgets import QDialog, QComboBox, QMessageBox
 from PyQt6.QtCore import QDate, QLocale
@@ -56,7 +56,7 @@ class Payment(QDialog, Ui_viaPagosForm):
         self.cb_via.clear()
         if text != "":
             with Session() as session:
-                q = session.query(TipoTrabajos).filter(TipoTrabajos.tipo.like(f"%{text}%")).all()
+                q = session.query(TiposPagos).filter(TiposPagos.tipo.like(f"%{text}%")).all()
                 if not len(q):
                     ph = "Sin resultados"
                 for item in q:
@@ -69,7 +69,7 @@ class Payment(QDialog, Ui_viaPagosForm):
         ph = "Seleccione"
         self.cb_via.clear()
         with Session() as session:
-            q = session.query(TipoTrabajos).all()
+            q = session.query(TiposPagos).all()
             for item in q:
                 self.cb_via.addItem(item.tipo, item.id)
             self.cb_via.setPlaceholderText(ph)
