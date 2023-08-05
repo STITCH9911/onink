@@ -692,6 +692,7 @@ class Ui_OnInkMainWindow(object):
         self.verticalLayout_6 = QtWidgets.QVBoxLayout()
         self.verticalLayout_6.setObjectName("verticalLayout_6")
         self.bt_add_image_clients_insert = QtWidgets.QPushButton(parent=self.page_insertar_cliente)
+        self.bt_add_image_clients_insert.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         self.bt_add_image_clients_insert.setText("")
         icon19 = QtGui.QIcon()
         icon19.addPixmap(QtGui.QPixmap("d:\\Programacion\\Proyectos\\Python\\OnInk\\onink\\views\\images/upload-picture.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
@@ -700,6 +701,7 @@ class Ui_OnInkMainWindow(object):
         self.bt_add_image_clients_insert.setObjectName("bt_add_image_clients_insert")
         self.verticalLayout_6.addWidget(self.bt_add_image_clients_insert)
         self.bt_delete_image_clients_insert = QtWidgets.QPushButton(parent=self.page_insertar_cliente)
+        self.bt_delete_image_clients_insert.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         self.bt_delete_image_clients_insert.setText("")
         self.bt_delete_image_clients_insert.setIcon(icon17)
         self.bt_delete_image_clients_insert.setIconSize(QtCore.QSize(32, 32))
@@ -879,7 +881,7 @@ class Ui_OnInkMainWindow(object):
         OnInkMainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(OnInkMainWindow)
-        self.stackedWidget.setCurrentIndex(3)
+        self.stackedWidget.setCurrentIndex(2)
         self.bt_close.clicked.connect(OnInkMainWindow.close) # type: ignore
         self.bt_maximizar.clicked.connect(OnInkMainWindow.showMaximized) # type: ignore
         self.bt_maximizar.clicked.connect(self.bt_restaurar.show) # type: ignore

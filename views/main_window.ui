@@ -1234,7 +1234,7 @@ QTextEdit {
     }</string>
                </property>
                <property name="currentIndex">
-                <number>3</number>
+                <number>2</number>
                </property>
                <widget class="QWidget" name="page_inicio"/>
                <widget class="QWidget" name="page_clientes">
@@ -1563,6 +1563,9 @@ QTextEdit {
                         <layout class="QVBoxLayout" name="verticalLayout_6">
                          <item>
                           <widget class="QPushButton" name="bt_add_image_clients_insert">
+                           <property name="cursor">
+                            <cursorShape>PointingHandCursor</cursorShape>
+                           </property>
                            <property name="toolTip">
                             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Añadir imagen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                            </property>
@@ -1583,6 +1586,9 @@ QTextEdit {
                          </item>
                          <item>
                           <widget class="QPushButton" name="bt_delete_image_clients_insert">
+                           <property name="cursor">
+                            <cursorShape>PointingHandCursor</cursorShape>
+                           </property>
                            <property name="toolTip">
                             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reestablecer imagen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                            </property>
