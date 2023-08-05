@@ -8,6 +8,7 @@ from socialsIndex import SocialsIndex, SocialsWidgetCreate
 from strippedTable import StripedTable
 from ClientWorks import ClientWorks
 from showClient import ShowCLient
+from homeController import Home
 from tecnicasControllers import TecnicaForm, TecnicaIndex
 from viewsPaises import PaisesWidget, PaisesWidgetCreate
 from provinciasControllers import ProvinciasIndex, ProvinciasForm
@@ -31,11 +32,9 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.icono = QIcon()
         self.setWindowIcon(self.icono)
 
-        #establecer widgetInicial
-        self.stackedWidget.setCurrentWidget(self.page_inicio)
-
         #widgets
         self.strippedTable = None
+        self.home = Home(self.stackedWidget)
         self.qWidgetShowClient = ShowCLient()
         self.CWorks = ClientWorks()
         self.WPaises = PaisesWidget(self.stackedWidget)
@@ -60,6 +59,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.TiposTrabajosForm = TiposTrabajosForm(self.stackedWidget)
 
         #add widgets a stackedWidget
+        self.stackedWidget.addWidget(self.home)
         self.stackedWidget.addWidget(self.WPaises)
         self.stackedWidget.addWidget(self.qWidgetShowClient)
         self.stackedWidget.addWidget(self.CWorks)
@@ -82,6 +82,9 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.stackedWidget.addWidget(self.TrabajosForm)
         self.stackedWidget.addWidget(self.TiposTrabajosIndex)
         self.stackedWidget.addWidget(self.TiposTrabajosForm)
+        
+        #establecer widgetInicial
+        self.stackedWidget.setCurrentWidget(self.home)
 
         # Inicializar listas
         with Session() as session:
@@ -104,6 +107,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.bt_restaurar.hide()
 
         #btMenus
+        self.bt_menu_home.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.home))
         self.bt_menu.clicked.connect(self.mover_menu)
         self.bt_menu_clientes.clicked.connect(self.clients_list)
         self.bt_menu_paises.clicked.connect(self.paisesIndex)
