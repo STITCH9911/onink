@@ -58,11 +58,15 @@ class TrabajosIndex(QWidget, Ui_trabajosIndex):
         sw = self.parentWidget()
         w = sw.findChild(QWidget, 'trabajoForm')
         w.refresh()
+        w.load_cb()
         sw.setCurrentWidget(w)
+
+    
 
     def edit(self, obj):
         sw = self.parentWidget()
         w = sw.findChild(QWidget, 'trabajoForm')
+        w.load_cb()
         w.setObjeto(obj)
         sw.setCurrentWidget(w)
 
@@ -77,7 +81,7 @@ class TrabajosIndex(QWidget, Ui_trabajosIndex):
                 QMessageBox.information(self.mainWindowWidget, "Correcto", "Operación completada correctamente", QMessageBox.StandardButton.Ok)
 
         self.search()
-        
+    
     def getDataTable(self, items: List['Trabajos'])-> Tuple:
         with Session() as session:
             headers = ["Cliente", "Trabajo","Fecha","Precio", "Pago", "Tono", "Técnica", "Opciones"]
@@ -125,11 +129,7 @@ class TrabajoForm(QWidget,Ui_trabajoForm):
             self.precio.setValidator(QDoubleValidator())
             self.precio.textChanged.connect(self.validate_precio)
             self.bt_refresh.clicked.connect(self.refresh)
-            with Session() as session:
-                trabajos = session.query(TipoTrabajos).all()
-
-            for w in trabajos:
-                self.cb_t_trabajo.addItem(w.tipo, w.id)
+           
 
             for anio in range(2000, fecha.year()+1):
                 self.w_year.addItem(str(anio), anio)
@@ -145,6 +145,15 @@ class TrabajoForm(QWidget,Ui_trabajoForm):
             self.w_month.currentIndexChanged.connect(self.actualizar_dias_w)
             self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
             
+        def load_cb(self):
+            self.cb_t_trabajo.clear()
+            self.cb_t_trabajo.setCurrentIndex(-1)
+            with Session() as session:
+               trabajos = session.query(TipoTrabajos).all()
+
+            for w in trabajos:
+               self.cb_t_trabajo.addItem(w.tipo, w.id)
+
 
         def actualizar_dias_mes(self, cb_day: QComboBox, month: int, year: int):
             days = QDate.daysInMonth(QDate(year, month, 1))
