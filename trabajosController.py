@@ -308,7 +308,7 @@ class TrabajoForm(QWidget,Ui_trabajoForm):
                 self.obj = obj
                 self.bt_refresh.hide()
                 obj = session.merge(obj)
-                n_ape = obj.cliente.nombre_apellidos[:3]
+                self.setClient(obj.cliente)
                 tec_id = -1
                 ton_id = -1
                 if obj.tecnica_id is not None:
@@ -321,10 +321,8 @@ class TrabajoForm(QWidget,Ui_trabajoForm):
                     ton_id =  obj.tonalidad_id
                 else:
                     ton = ""
-                self.search_client.setText(n_ape)
                 self.search_tecnica.setText(tec)
                 self.search_tono.setText(ton)
-                self.cb_client.setCurrentIndex(self.cb_client.findData(obj.cliente_id))
                 self.cb_tecnica.setCurrentIndex(self.cb_tecnica.findData(tec_id))
                 self.cb_tono.setCurrentIndex(self.cb_tono.findData(ton_id))
                 self.cb_t_trabajo.setCurrentIndex(self.cb_t_trabajo.findData(obj.tipo_trabajo_id))
@@ -333,3 +331,8 @@ class TrabajoForm(QWidget,Ui_trabajoForm):
                 self.w_year.setCurrentIndex(self.w_year.findData(d.date().year()))
                 self.w_month.setCurrentIndex(self.w_month.findData(d.date().month()))
                 self.w_day.setCurrentIndex(self.w_day.findData(d.date().day()))
+
+        def setClient(self, client: Clients):
+            n_ape = client.nombre_apellidos[:3]
+            self.search_client.setText(n_ape)
+            self.cb_client.setCurrentIndex(self.cb_client.findData(client.id))
