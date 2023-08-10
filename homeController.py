@@ -12,6 +12,6 @@ class Home(QWidget, Ui_Home):
 
     def showInfo(self):
         p = self.parentWidget()
-        w = p.findChild(QWidget, 'InfoDay')
-        w.refresh()
+        w = p.findChild(QWidget, 'StatsDay')
+        w.loadData()
         p.setCurrentWidget(w)
