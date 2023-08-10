@@ -497,9 +497,9 @@ QScrollBar:vertical {
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>0</y>
+                  <y>-193</y>
                   <width>171</width>
-                  <height>1346</height>
+                  <height>794</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -582,35 +582,6 @@ font-size: 12pt;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="bt_menu_sociales">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="layoutDirection">
-                    <enum>Qt::RightToLeft</enum>
-                   </property>
-                   <property name="text">
-                    <string>Redes </string>
-                   </property>
-                   <property name="icon">
-                    <iconset>
-                     <normaloff>images/social-network.svg</normaloff>images/social-network.svg</iconset>
-                   </property>
-                   <property name="iconSize">
-                    <size>
-                     <width>35</width>
-                     <height>35</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
                   <widget class="QPushButton" name="bt_menu_trabajos">
                    <property name="minimumSize">
                     <size>
@@ -630,6 +601,35 @@ font-size: 12pt;</string>
                    <property name="icon">
                     <iconset>
                      <normaloff>images/services-portfolio.svg</normaloff>images/services-portfolio.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>35</width>
+                     <height>35</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="bt_menu_sociales">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
+                   </property>
+                   <property name="text">
+                    <string>Redes </string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>images/social-network.svg</normaloff>images/social-network.svg</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
@@ -843,7 +843,7 @@ font-size: 12pt;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_17">
+                  <widget class="QPushButton" name="bt_stats">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -853,13 +853,26 @@ font-size: 12pt;</string>
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
+                   </property>
                    <property name="text">
-                    <string>Redes Sociales</string>
+                    <string>Estadísticas</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>images/stats.svg</normaloff>images/stats.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>35</width>
+                     <height>35</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_16">
+                  <widget class="QPushButton" name="bt_productos">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -869,8 +882,21 @@ font-size: 12pt;</string>
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
+                   </property>
                    <property name="text">
-                    <string>Redes Sociales</string>
+                    <string>Productos</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>images/products.svg</normaloff>images/products.svg</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>35</width>
+                     <height>35</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -908,198 +934,6 @@ font-size: 12pt;</string>
                  </item>
                  <item>
                   <widget class="QPushButton" name="bt_redes_sociales_13">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="text">
-                    <string>Redes Sociales</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_12">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="text">
-                    <string>Redes Sociales</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_11">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="text">
-                    <string>Redes Sociales</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_10">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="text">
-                    <string>Redes Sociales</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_9">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="text">
-                    <string>Redes Sociales</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_8">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="text">
-                    <string>Redes Sociales</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_7">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="text">
-                    <string>Redes Sociales</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_6">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="text">
-                    <string>Redes Sociales</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_5">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="text">
-                    <string>Redes Sociales</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_4">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="text">
-                    <string>Redes Sociales</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_3">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="text">
-                    <string>Redes Sociales</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="bt_redes_sociales_2">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="text">
-                    <string>Redes Sociales</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="bt_redes_sociales">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1234,9 +1068,23 @@ QTextEdit {
     }</string>
                </property>
                <property name="currentIndex">
-                <number>2</number>
+                <number>0</number>
                </property>
-               <widget class="QWidget" name="page_inicio"/>
+               <widget class="QWidget" name="page_stats">
+                <widget class="QPushButton" name="bt_stats_day">
+                 <property name="geometry">
+                  <rect>
+                   <x>70</x>
+                   <y>130</y>
+                   <width>151</width>
+                   <height>51</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Trabajos por día</string>
+                 </property>
+                </widget>
+               </widget>
                <widget class="QWidget" name="page_clientes">
                 <layout class="QVBoxLayout" name="verticalLayout_page_clientes">
                  <item>

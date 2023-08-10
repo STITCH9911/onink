@@ -5,6 +5,7 @@ from config import DEFAULT_PICTURE, Session, PICTURES_DIR
 from materialesControllers import MaterialForm, MaterialIndex
 from municipiosController import MunicipiosForm, MunicipiosIndex
 from socialsIndex import SocialsIndex, SocialsWidgetCreate
+from stadisticsPerDay import StatsDay
 from strippedTable import StripedTable
 from ClientWorks import ClientWorks
 from showClient import ShowCLient
@@ -36,7 +37,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.strippedTable = None
         self.home = Home(self.stackedWidget)
         self.qWidgetShowClient = ShowCLient()
-        self.CWorks = ClientWorks()
+        self.CWorks = ClientWorks(self.stackedWidget)
         self.WPaises = PaisesWidget(self.stackedWidget)
         self.CreatePaisesWidget = PaisesWidgetCreate(self.stackedWidget)
         self.SocialWidgetForm = SocialsWidgetCreate(self.stackedWidget)
@@ -57,6 +58,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.TrabajosForm = TrabajoForm(self.stackedWidget)
         self.TiposTrabajosIndex = TiposTrabajosIndex(self.stackedWidget)
         self.TiposTrabajosForm = TiposTrabajosForm(self.stackedWidget)
+        self.statsDay = StatsDay(self.stackedWidget)
 
         #add widgets a stackedWidget
         self.stackedWidget.addWidget(self.home)
@@ -82,6 +84,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.stackedWidget.addWidget(self.TrabajosForm)
         self.stackedWidget.addWidget(self.TiposTrabajosIndex)
         self.stackedWidget.addWidget(self.TiposTrabajosForm)
+        self.stackedWidget.addWidget(self.statsDay)
         
         #establecer widgetInicial
         self.stackedWidget.setCurrentWidget(self.home)
@@ -119,6 +122,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.bt_menu_tecnicas.clicked.connect(self.tecnicas_index)
         self.bt_menu_materiales.clicked.connect(self.materiales_index)
         self.bt_menu_trabajos.clicked.connect(self.trabajos_index)
+        self.bt_stats.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_stats))
 
 
         #Señales de CRUD Clientes
@@ -564,6 +568,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                     {"Editar datos": self.edit_client_data, edit : size},
                     {"Redes sociales": self.edit_usernames_socials, social: size},
                     {"Servicios": self.client_works, service: size},
+                    {"Nuevo trabajo": self.newWorkClient, service:size},
                     {"Eliminar": self.delete_client, trash : size}
                 ]
                 dropdown_buttons.append(buttons)
@@ -667,3 +672,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     #metodo para ver listado de trabajos
     def trabajos_index(self):
         self.stackedWidget.setCurrentWidget(self.TrabajosIndex)
+
+    def newWorkClient(self, client: Clients):
+        self.TrabajosForm.refresh()
+        self.TrabajosForm.setClient(client)
+        self.stackedWidget.setCurrentWidget(self.TrabajosForm)
