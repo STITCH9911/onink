@@ -1,5 +1,5 @@
 from typing import List, Optional
-from sqlalchemy import Column, Date, DateTime, Float, ForeignKey, Integer, Table, Text, UniqueConstraint, text
+from sqlalchemy import Column, Date, DateTime, Float, ForeignKey, Integer, Table, Text, UniqueConstraint, text, cast
 from sqlalchemy.orm import Mapped, declarative_base, mapped_column, relationship
 from sqlalchemy.orm.base import Mapped
 from functools import reduce
@@ -134,7 +134,7 @@ class Clients(Base):
     pais_id = mapped_column(ForeignKey('paises.id', ondelete='SET NULL', onupdate='CASCADE'), server_default='1')
 
     municipio: Mapped[Optional['Municipios']] = relationship('Municipios', back_populates='clients')
-    trabajos: Mapped[List['Trabajos']] = relationship('Trabajos', uselist=True, back_populates='cliente',  cascade='delete, delete-orphan')
+    trabajos: Mapped[List['Trabajos']] = relationship('Trabajos', uselist=True, back_populates='cliente',  cascade='delete, delete-orphan', order_by="desc(Trabajos.created_at)")
     turnos: Mapped[List['Turnos']] = relationship('Turnos', uselist=True, back_populates='cliente', cascade='delete, delete-orphan')
     social: Mapped[List['Socials']] = relationship('Socials', secondary=t_r_clients_socials, back_populates='client')
     pais: Mapped[Optional['Paises']] = relationship('Paises', back_populates='clients')
@@ -166,20 +166,6 @@ class Trabajos(Base):
     tonalidad: Mapped[Optional['Tonalidades']] = relationship('Tonalidades', back_populates='trabajos')
     turnos: Mapped[List['Turnos']] = relationship('Turnos', uselist=True, back_populates='trabajo')
 
-    @staticmethod
-    def cant_trabajos_dia(date: date):
-        with Session() as session:
-            q = session.query(Trabajos).where(Trabajos.created_at.date() == date).all()
-
-        return len(q)
-    
-    @staticmethod
-    def total_dinero_dia(date: date):
-        with Session() as session:
-            q = session.query(Trabajos).where(Trabajos.created_at.date() == date).all()
-        
-        r = reduce(lambda x,y: x + y.price, q)
-        return r
 
 class Turnos(Base):
     __tablename__ = 'turnos'
