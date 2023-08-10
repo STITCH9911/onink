@@ -1,5 +1,7 @@
+import os
 from typing import List, Tuple
-from PyQt6 import QtCore
+from PyQt6.QtCore import QSize
+from payment import Payment
 from views.clientWorks_ui import Ui_ClientWorks
 from PyQt6.QtWidgets import QWidget
 from config import DEFAULT_PICTURE, Session
@@ -14,6 +16,7 @@ class ClientWorks(QWidget, Ui_ClientWorks):
         super().__init__(parent)
         self.setupUi(self)
         self.table = None
+        self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
     
     def setPic(self):
         ci = file_exists(self.client.ci, 'clients_pictures')
@@ -39,18 +42,27 @@ class ClientWorks(QWidget, Ui_ClientWorks):
     
     def getDataTable(self, trabajos: List['Trabajos'])-> Tuple:
         with Session() as session:
-            headers = ["Trabajo", "Precio","Tipo de pago", "Fecha"]
+            headers = ["Trabajo", "Precio","Tipo de pago", "Fecha", "Opciones"]
             data = []
             dropdown_buttons = []
             for w in trabajos:
                 w = session.merge(w)
+                dir = "views/images"
+                pay = os.path.join(dir, 'credit-card.svg')
+                size = QSize(30,30)
                 if w.tipo_pago_id is not None:
                     tipo_pago = w.tipo_pago.tipo
                 else:
                     tipo_pago = "NO PAGADO"
+                buttons = [{'Pago': self.payWork, pay:size}]
+                dropdown_buttons.append(buttons)
                 data.append([w.tipo_trabajo.tipo, str(w.price), tipo_pago, w.created_at.strftime('%d-%m-%Y')])
         return headers, data, dropdown_buttons, trabajos
     
     def setFunciones(self, funcVolver, funcChangePage):
         self.bt_back.clicked.connect(funcVolver)
         self.bt_change_page.clicked.connect(funcChangePage)
+    
+    def payWork(self, obj: Trabajos):
+        payment = Payment(obj, self, self.mainWindowWidget)
+        payment.exec()
