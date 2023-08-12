@@ -129,6 +129,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.bt_menu_trabajos.clicked.connect(self.trabajos_index)
         self.bt_stats.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_stats))
         self.bt_productos.clicked.connect(self.productIndex)
+        self.bt_stats_day.clicked.connect(self.statsDayIndex)
 
 
         #Señales de CRUD Clientes
@@ -687,3 +688,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def productIndex(self):
         self.productosIndex.search()
         self.stackedWidget.setCurrentWidget(self.productosIndex)
+
+    def statsDayIndex(self):
+        self.statsDay.loadData()
+        self.stackedWidget.setCurrentWidget(self.statsDay)
