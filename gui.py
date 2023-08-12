@@ -4,6 +4,7 @@ from PyQt6.QtGui import QDoubleValidator, QRegularExpressionValidator, QPixmap, 
 from config import DEFAULT_PICTURE, Session, PICTURES_DIR
 from materialesControllers import MaterialForm, MaterialIndex
 from municipiosController import MunicipiosForm, MunicipiosIndex
+from productosWidget import ProductosForm, ProductosIndex
 from socialsIndex import SocialsIndex, SocialsWidgetCreate
 from stadisticsPerDay import StatsDay
 from strippedTable import StripedTable
@@ -59,6 +60,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.TiposTrabajosIndex = TiposTrabajosIndex(self.stackedWidget)
         self.TiposTrabajosForm = TiposTrabajosForm(self.stackedWidget)
         self.statsDay = StatsDay(self.stackedWidget)
+        self.productosIndex = ProductosIndex(self.stackedWidget)
+        self.productosForm = ProductosForm(self.stackedWidget)
 
         #add widgets a stackedWidget
         self.stackedWidget.addWidget(self.home)
@@ -85,6 +88,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.stackedWidget.addWidget(self.TiposTrabajosIndex)
         self.stackedWidget.addWidget(self.TiposTrabajosForm)
         self.stackedWidget.addWidget(self.statsDay)
+        self.stackedWidget.addWidget(self.productosIndex)
+        self.stackedWidget.addWidget(self.productosForm)
         
         #establecer widgetInicial
         self.stackedWidget.setCurrentWidget(self.home)
@@ -123,6 +128,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.bt_menu_materiales.clicked.connect(self.materiales_index)
         self.bt_menu_trabajos.clicked.connect(self.trabajos_index)
         self.bt_stats.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_stats))
+        self.bt_productos.clicked.connect(self.productIndex)
 
 
         #Señales de CRUD Clientes
@@ -677,3 +683,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.TrabajosForm.refresh()
         self.TrabajosForm.setClient(client)
         self.stackedWidget.setCurrentWidget(self.TrabajosForm)
+
+    def productIndex(self):
+        self.productosIndex.search()
+        self.stackedWidget.setCurrentWidget(self.productosIndex)
