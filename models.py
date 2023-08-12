@@ -15,14 +15,12 @@ t_r_trabajos_materiales = Table(
     Column('material_id', ForeignKey('materiales.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
 )
 
-
 t_r_clients_socials = Table(
     'r_clients_socials', metadata,
     Column('username', Text, nullable=False),
     Column('client_id', ForeignKey('clients.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False),
     Column('social_id', ForeignKey('socials.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
 )
-
 
 class Materiales(Base):
     __tablename__ = 'materiales'
@@ -166,7 +164,6 @@ class Trabajos(Base):
     tonalidad: Mapped[Optional['Tonalidades']] = relationship('Tonalidades', back_populates='trabajos')
     turnos: Mapped[List['Turnos']] = relationship('Turnos', uselist=True, back_populates='trabajo')
 
-
 class Turnos(Base):
     __tablename__ = 'turnos'
 
@@ -192,3 +189,27 @@ class Paises(Base):
     pais = mapped_column(Text, nullable=False)
 
     clients: Mapped[List['Clients']] = relationship('Clients', uselist=True, back_populates='pais')
+
+class Productos(Base):
+    __tablename__ = 'productos'
+    __table_args__ = (
+            UniqueConstraint('producto','price', name='prodctUnique'),
+        )
+    id = mapped_column(Integer, primary_key=True)
+    producto = mapped_column(Text, nullable=False)
+    price = mapped_column(Float)
+    existencia = mapped_column(Integer)
+    nick = mapped_column(Text)
+    
+    io_productos: Mapped[List['Io_productos']] = relationship('Io_productos', back_populates='producto', uselist=True, cascade='delete, delete-orphan')
+
+class Io_productos(Base):
+    __tablename__ = 'io_productos'
+
+    id = mapped_column(Integer, primary_key=True)
+    io = mapped_column(Text, nullable=False)
+    cant = mapped_column(Integer, nullable=False)
+    producto_id = mapped_column(ForeignKey('productos.id'))
+    fecha = mapped_column(Date,nullable=False)
+
+    producto: Mapped['Productos'] = relationship('Productos', back_populates='io_productos')
