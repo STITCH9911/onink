@@ -8,6 +8,7 @@ from productosWidget import ProductosForm, ProductosIndex
 from rangoStatsWidgets import RangoStats
 from socialsIndex import SocialsIndex, SocialsWidgetCreate
 from stadisticsPerDay import StatsDay
+from statsProducts import StatsProd
 from strippedTable import StripedTable
 from ClientWorks import ClientWorks
 from showClient import ShowCLient
@@ -64,6 +65,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.productosIndex = ProductosIndex(self.stackedWidget)
         self.productosForm = ProductosForm(self.stackedWidget)
         self.rangoWidget = RangoStats(self.stackedWidget)
+        self.statsProducts = StatsProd(self.stackedWidget)
 
         #add widgets a stackedWidget
         self.stackedWidget.addWidget(self.home)
@@ -93,6 +95,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.stackedWidget.addWidget(self.productosIndex)
         self.stackedWidget.addWidget(self.productosForm)
         self.stackedWidget.addWidget(self.rangoWidget)
+        self.stackedWidget.addWidget(self.statsProducts)
         
         #establecer widgetInicial
         self.stackedWidget.setCurrentWidget(self.home)
@@ -134,6 +137,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.bt_productos.clicked.connect(self.productIndex)
         self.bt_stats_day.clicked.connect(self.statsDayIndex)
         self.bt_stats_rango.clicked.connect(self.rangoIndex)
+        self.bt_stats_productos.clicked.connect(self.statsproductosIndex)
 
 
         #Señales de CRUD Clientes
@@ -686,6 +690,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
 
     def newWorkClient(self, client: Clients):
         self.TrabajosForm.refresh()
+        self.TrabajosForm.load_cb()
         self.TrabajosForm.setClient(client)
         self.stackedWidget.setCurrentWidget(self.TrabajosForm)
 
@@ -700,3 +705,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def rangoIndex(self):
         self.rangoWidget.loadData()
         self.stackedWidget.setCurrentWidget(self.rangoWidget)
+
+    def statsproductosIndex(self):
+        self.statsProducts.loadData()
+        self.stackedWidget.setCurrentWidget(self.statsProducts)

@@ -1,11 +1,13 @@
 import sys, traceback, logging
 from app import Application
+from datetime import datetime
 
 logging.basicConfig(filename='log.txt', level=logging.ERROR)
 
 def new_excepthook(type, value, tb):
+    d = datetime.now()
     traceback.print_exception(type, value, tb)
-    logging.exception("Excepción de aplicación", exc_info=(type,value,tb))
+    logging.exception(f"Excepcion de aplicacion\nFecha: {d.isoformat()}\n", exc_info=(type,value,tb))
     
 sys.excepthook= new_excepthook
 
