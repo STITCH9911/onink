@@ -5,6 +5,7 @@ from config import DEFAULT_PICTURE, Session, PICTURES_DIR
 from materialesControllers import MaterialForm, MaterialIndex
 from municipiosController import MunicipiosForm, MunicipiosIndex
 from productosWidget import ProductosForm, ProductosIndex
+from rangoStatsWidgets import RangoStats
 from socialsIndex import SocialsIndex, SocialsWidgetCreate
 from stadisticsPerDay import StatsDay
 from strippedTable import StripedTable
@@ -62,6 +63,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.statsDay = StatsDay(self.stackedWidget)
         self.productosIndex = ProductosIndex(self.stackedWidget)
         self.productosForm = ProductosForm(self.stackedWidget)
+        self.rangoWidget = RangoStats(self.stackedWidget)
 
         #add widgets a stackedWidget
         self.stackedWidget.addWidget(self.home)
@@ -90,6 +92,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.stackedWidget.addWidget(self.statsDay)
         self.stackedWidget.addWidget(self.productosIndex)
         self.stackedWidget.addWidget(self.productosForm)
+        self.stackedWidget.addWidget(self.rangoWidget)
         
         #establecer widgetInicial
         self.stackedWidget.setCurrentWidget(self.home)
@@ -130,6 +133,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.bt_stats.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_stats))
         self.bt_productos.clicked.connect(self.productIndex)
         self.bt_stats_day.clicked.connect(self.statsDayIndex)
+        self.bt_stats_rango.clicked.connect(self.rangoIndex)
 
 
         #Señales de CRUD Clientes
@@ -692,3 +696,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def statsDayIndex(self):
         self.statsDay.loadData()
         self.stackedWidget.setCurrentWidget(self.statsDay)
+
+    def rangoIndex(self):
+        self.rangoWidget.loadData()
+        self.stackedWidget.setCurrentWidget(self.rangoWidget)
