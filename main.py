@@ -16,6 +16,12 @@ def main():
     from PyQt6.QtWidgets import QApplication
     from PyQt6.QtCore import QTranslator, QLibraryInfo, QLocale
     from gui import MainWindow
+    from config import get_config
+    created = get_config()["created"]
+    if not created:
+        print("No existe base de datos\nProcediendo a crear base de datos...")
+        from falsos import execute_falsos
+        execute_falsos()
     qapp = QApplication(sys.argv)
     translator = QTranslator()
     translator.load(QLibraryInfo.path(QLibraryInfo.LibraryPath.TranslationsPath) + "/qtbase_" + QLocale.system().name())

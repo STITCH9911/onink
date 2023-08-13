@@ -1,10 +1,10 @@
-import configparser
+from configparser import ConfigParser
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm.session import sessionmaker
 from time import sleep
 
-config = configparser.ConfigParser()
+config = ConfigParser()
 CONFIG_FILE_NAME = 'config.ini'
 user_profile_dir = os.environ['USERPROFILE']
 pictures_dir = os.path.join(user_profile_dir, 'Pictures')
