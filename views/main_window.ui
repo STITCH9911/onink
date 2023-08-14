@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>images/icon.ico</normaloff>images/icon.ico</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">@font-face{
  font-family: &quot;Oswald&quot;;
@@ -497,7 +501,7 @@ QScrollBar:vertical {
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>-55</y>
+                  <y>0</y>
                   <width>171</width>
                   <height>656</height>
                  </rect>
@@ -1029,6 +1033,19 @@ QTextEdit {
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_10">
                      <item>
+                      <spacer name="verticalSpacer_9">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>20</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                     <item>
                       <widget class="QPushButton" name="bt_stats_day">
                        <property name="cursor">
                         <cursorShape>PointingHandCursor</cursorShape>
@@ -1039,6 +1056,19 @@ QTextEdit {
                       </widget>
                      </item>
                      <item>
+                      <spacer name="verticalSpacer_8">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>20</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                     <item>
                       <widget class="QPushButton" name="bt_stats_rango">
                        <property name="cursor">
                         <cursorShape>PointingHandCursor</cursorShape>
@@ -1047,6 +1077,19 @@ QTextEdit {
                         <string>Trabajos por rango</string>
                        </property>
                       </widget>
+                     </item>
+                     <item>
+                      <spacer name="verticalSpacer_10">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>20</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                      </spacer>
                      </item>
                     </layout>
                    </item>

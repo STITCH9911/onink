@@ -163,6 +163,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.setWindowOpacity(1)
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
         self.setCorner(Qt.Corner.BottomRightCorner, Qt.DockWidgetArea.RightDockWidgetArea)
+        self.setWindowIcon(QIcon(os.path.join('images', 'icon.ico')))
 
     #reiniciar imagen
     def restart_image(self):
@@ -305,14 +306,15 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
                     QMessageBox.critical(self,"Error", "Existen un cliente con este número de identidad")
                     session.rollback()
                     return
-                
-                msg_box = QMessageBox()
-                msg_box.setWindowTitle("Redes Sociales")
-                msg_box.setText("¿Desea administrar las redes sociales para el nuevo cliente?. Esta acción puede realizarse en otro momento.")
-                msg_box.setStandardButtons(QMessageBox.StandardButton.Yes|QMessageBox.StandardButton.No)
-                msg_box.button(QMessageBox.StandardButton.Yes).setText("Sí")
-                msg_box.button(QMessageBox.StandardButton.No).setText("No")
-                reply = msg_box.exec()
+                reply = None
+                if self.createClient:
+                    msg_box = QMessageBox()
+                    msg_box.setWindowTitle("Redes Sociales")
+                    msg_box.setText("¿Desea administrar las redes sociales para el nuevo cliente?. Esta acción puede realizarse en otro momento.")
+                    msg_box.setStandardButtons(QMessageBox.StandardButton.Yes|QMessageBox.StandardButton.No)
+                    msg_box.button(QMessageBox.StandardButton.Yes).setText("Sí")
+                    msg_box.button(QMessageBox.StandardButton.No).setText("No")
+                    reply = msg_box.exec()
                 if reply == QMessageBox.StandardButton.Yes:
                     self.item_selected = cliente
                     self.add_usernames_socials()
