@@ -2,6 +2,7 @@ from typing import List, Tuple, Optional
 from sqlalchemy.exc import IntegrityError
 from PyQt6 import QtCore
 from config import Session
+from utils import BACK_ARROW, COUNTRY_WHITE, ICON_SAVE, PLUS
 from views.paises_ui import Ui_PaisWidget
 from PyQt6.QtWidgets import QWidget, QMessageBox
 from PyQt6.QtCore import Qt, QSize
@@ -19,6 +20,7 @@ class PaisesWidget(QWidget, Ui_PaisWidget):
         self.le_search_pais.textChanged.connect(self.search)
         self.table = None
         self.bt_add_pais.clicked.connect(self.create)
+        self.bt_add_pais.setIcon(PLUS)
         self.search()
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
@@ -99,6 +101,9 @@ class PaisesWidgetCreate(QWidget,Ui_create_pais):
         self.bt_save.clicked.connect(self.save)
         self.obj = None
         self.bt_back.clicked.connect(self.mostrar_widget)
+        self.bt_back.setIcon(BACK_ARROW)
+        self.bt_save.setIcon(ICON_SAVE)
+        self.bt_title.setIcon(COUNTRY_WHITE)
         self.pais.returnPressed.connect(self.save)
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 

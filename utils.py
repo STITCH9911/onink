@@ -1,6 +1,6 @@
 from PyQt6.QtCore import QDate, Qt, QTimer
 from PyQt6.QtWidgets import QLabel, QProgressDialog
-from PyQt6.QtGui import QPixmap
+from PyQt6.QtGui import QPixmap, QIcon
 import functools
 from time import sleep
 
@@ -43,37 +43,48 @@ def default_image(label: QLabel, default: str, dir: str):
     label.setPixmap(pixmap.scaled(label.size(), aspectRatioMode=Qt.AspectRatioMode.KeepAspectRatio))
 
 
-""" def cargando(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        # crear el temporizador
-        timer = QTimer()
-        timer.setInterval(2000)  # 2 segundos
-
-        # crear la ventana emergente con el gif de carga
-        dialog = QProgressDialog(flags=Qt.WindowType.FramelessWindowHint)
-        dialog.setLabel(QLabel("Cargando..."))
-        dialog.setCancelButtonText(None)
-        dialog.setWindowModality(Qt.WindowModality.ApplicationModal)
-
-        # función que se ejecuta si el temporizador se activa
-        def show_dialog():
-            print("Cargando...")
-            dialog.show()
-
-        # conectar el temporizador y la función que se ejecuta si se activa
-        timer.timeout.connect(show_dialog)
-
-        # iniciar el temporizador
-        timer.start()
-        # ejecutar la función
-        result = func(*args, **kwargs)
-
-        # detener el temporizador y cerrar la ventana emergente
-        timer.stop()
-        dialog.close()
-
-        # devolver el resultado de la función
-        return result
-
-    return wrapper """
+#Iconos
+IMAGES_ROUTE = 'views/images'
+ICON_SAVE = QIcon(os.path.join(IMAGES_ROUTE, 'save.svg'))
+CLOSE = QIcon(os.path.join(IMAGES_ROUTE, 'close.svg'))
+RESTAURAR = QIcon(os.path.join(IMAGES_ROUTE, 'restaurar.svg'))
+MINIMIZE = QIcon(os.path.join(IMAGES_ROUTE, 'minimize.svg'))
+MAXIMIZE = QIcon(os.path.join(IMAGES_ROUTE, 'maximize.svg'))
+SIDEBAR_MENU = QIcon(os.path.join(IMAGES_ROUTE, 'sidebar-menu.svg'))
+CANCEL = QIcon(os.path.join(IMAGES_ROUTE, 'cancel.svg'))
+HOME = QIcon(os.path.join(IMAGES_ROUTE, 'home (1).svg'))
+SERVICE = QIcon(os.path.join(IMAGES_ROUTE, 'services-portfolio.svg'))
+SOCIAL = QIcon(os.path.join(IMAGES_ROUTE, 'social-network.svg'))
+COUNTRY = QIcon(os.path.join(IMAGES_ROUTE, 'country-2.svg'))
+PROVINCIAS = QIcon(os.path.join(IMAGES_ROUTE, 'flag-1.svg'))
+MUNICIPIOS = QIcon(os.path.join(IMAGES_ROUTE, 'location.svg'))
+MATERIALS = QIcon(os.path.join(IMAGES_ROUTE, 'materials.svg'))
+TECNICAS = QIcon(os.path.join(IMAGES_ROUTE, 'solution.svg'))
+TONOS = QIcon(os.path.join(IMAGES_ROUTE, 'palette.svg'))
+PAGOS = QIcon(os.path.join(IMAGES_ROUTE, 'credit-card.svg'))
+STATS = QIcon(os.path.join(IMAGES_ROUTE, 'stats.svg'))
+PRODUCTOS = QIcon(os.path.join(IMAGES_ROUTE, 'products.svg'))
+USER = QIcon(os.path.join(IMAGES_ROUTE, 'user.svg'))
+ADD_CLIENT = QIcon(os.path.join(IMAGES_ROUTE, 'add-client.svg'))
+REFRESH = QIcon(os.path.join(IMAGES_ROUTE, 'refresh.svg'))
+BACK_ARROW = QIcon(os.path.join(IMAGES_ROUTE, 'back-arrow.svg'))
+UPLOAD_PICTURE = QIcon(os.path.join(IMAGES_ROUTE, 'upload-picture.svg'))
+CHANGE_PAGE = QIcon(os.path.join(IMAGES_ROUTE, 'change (2).svg'))
+COUNTRY_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'country - white.svg'))
+SOCIAL_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'social-network - white.svg'))
+EYE = QIcon(os.path.join(IMAGES_ROUTE, 'eye.svg'))
+MINIMIZE_DARK = QIcon(os.path.join(IMAGES_ROUTE, 'minimize-dark.svg'))
+PLUS = QIcon(os.path.join(IMAGES_ROUTE, 'icons8-plus-24.svg'))
+MATERIALS_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'materials white.svg'))
+MATERIALS_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'materials white.svg'))
+MUNICIPIOS_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'location white.svg'))
+PAGOS_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'credit-card white.svg'))
+PRODUCTOS_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'products-white.svg'))
+PROVINCIAS_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'flag-1 white.svg'))
+PROVINCIAS_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'flag-1 white.svg'))
+PROVINCIAS_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'flag-1 white.svg'))
+PROVINCIAS_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'flag-1 white.svg'))
+TECNICAS_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'solution white.svg'))
+TIPOS_TRABAJOS_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'folder-won white.svg'))
+TONOS_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'palette white.svg'))
+TIPOS_TRABAJOS = QIcon(os.path.join(IMAGES_ROUTE, 'folder-won.svg'))

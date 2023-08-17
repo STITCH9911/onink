@@ -2,6 +2,7 @@ import typing
 from PyQt6 import QtCore
 from config import Session
 from models import TiposPagos, Trabajos
+from utils import CANCEL, ICON_SAVE
 from views.viaPagosForm_ui import Ui_viaPagosForm
 from PyQt6.QtWidgets import QDialog, QComboBox, QMessageBox
 from PyQt6.QtCore import QDate, QLocale
@@ -13,6 +14,8 @@ class Payment(QDialog, Ui_viaPagosForm):
         self.trabajo = trabajo
         self.mainwindow = mainwindow
         self.bt_cancel.clicked.connect(self.cancel)
+        self.bt_cancel.setIcon(CANCEL)
+        self.bt_save.setIcon(ICON_SAVE)
         locale = QLocale(QLocale.Language.Spanish)
         self.loadCB()
         self.search_via.textChanged.connect(self.s_tipo)

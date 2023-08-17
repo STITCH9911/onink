@@ -27,7 +27,7 @@ from datetime import datetime
 from models import Clients, Provincias, Municipios, Paises, Socials, Turnos, t_r_clients_socials, t_r_trabajos_materiales, Trabajos
 from sqlalchemy import insert, update, delete
 from sqlalchemy.exc import IntegrityError
-from utils import file_exists, delete_file, default_image
+from utils import ADD_CLIENT, BACK_ARROW, CLOSE, COUNTRY, HOME, ICON_SAVE, MATERIALS, MAXIMIZE, MINIMIZE, MUNICIPIOS, PAGOS, PRODUCTOS, PROVINCIAS, REFRESH, RESTAURAR, SERVICE, SIDEBAR_MENU, SOCIAL, STATS, TECNICAS, TONOS, UPLOAD_PICTURE, USER, file_exists, delete_file, default_image
 
 class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def __init__(self, app, parent=None) -> None:
@@ -35,6 +35,37 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.setupUi(self)
         self.icono = QIcon()
         self.setWindowIcon(self.icono)
+
+        #Buttons_icons
+        self.bt_close.setIcon(CLOSE)
+        self.bt_maximizar.setIcon(MAXIMIZE)
+        self.bt_minimizar.setIcon(MINIMIZE)
+        self.bt_restaurar.setIcon(RESTAURAR)
+        self.bt_menu.setIcon(SIDEBAR_MENU)
+        self.bt_menu_home.setIcon(HOME)
+        self.bt_menu_clientes.setIcon(USER)
+        self.bt_menu_trabajos.setIcon(SERVICE)
+        self.bt_menu_sociales.setIcon(SOCIAL)
+        self.bt_menu_paises.setIcon(COUNTRY)
+        self.bt_menu_provincias.setIcon(PROVINCIAS)
+        self.bt_menu_municipios.setIcon(MUNICIPIOS)
+        self.bt_menu_materiales.setIcon(MATERIALS)
+        self.bt_menu_tecnicas.setIcon(TECNICAS)
+        self.bt_menu_tonos.setIcon(TONOS)
+        self.bt_menu_pagos.setIcon(PAGOS)
+        self.bt_stats.setIcon(STATS)
+        self.bt_productos.setIcon(PRODUCTOS)
+        self.bt_create_cliente.setIcon(ADD_CLIENT)
+        self.bt_refresh_search_clients.setIcon(REFRESH)
+        self.bt_volver_cliente_c.setIcon(BACK_ARROW)
+        self.bt_add_image_clients_insert.setIcon(UPLOAD_PICTURE)
+        self.bt_store_cliente.setIcon(ICON_SAVE)
+        self.bt_save_usernames.setIcon(ICON_SAVE)
+        self.bt_delete_image_clients_insert.setIcon(REFRESH)
+        self.bt_cliente_insertar_reestablecer.setIcon(REFRESH)
+
+
+
 
         #widgets
         self.strippedTable = None

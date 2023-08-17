@@ -4,6 +4,7 @@ from sqlalchemy.exc import IntegrityError
 from config import Session
 from models import Productos
 from strippedTable import StripedTable
+from utils import BACK_ARROW, ICON_SAVE, PLUS, PRODUCTOS_WHITE
 from views.productsIndex_ui import Ui_ProductosIndex
 from views.productsForm_ui import Ui_ProductosForm
 from PyQt6.QtWidgets import QWidget, QMessageBox
@@ -18,6 +19,7 @@ class ProductosIndex(QWidget, Ui_ProductosIndex):
         self.le_search.textChanged.connect(self.search)
         self.table = None
         self.bt_add.clicked.connect(self.create)
+        self.bt_add.setIcon(PLUS)
         self.search()
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
@@ -103,6 +105,9 @@ class ProductosForm(QWidget,Ui_ProductosForm):
         super().__init__(parent)
         self.setupUi(self)
         self.bt_save.clicked.connect(self.save)
+        self.bt_save.setIcon(ICON_SAVE)
+        self.bt_back.setIcon(BACK_ARROW)
+        self.pushButton_2.setIcon(PRODUCTOS_WHITE)
         self.obj = None
         self.bt_back.clicked.connect(self.mostrar_widget)
         self.le_producto.returnPressed.connect(self.save)
@@ -140,7 +145,7 @@ class ProductosForm(QWidget,Ui_ProductosForm):
         regex = re.compile(r"^(\d*\.?\d*)$")
         match = regex.search(text)
         if not match:
-            self.precio.setText(text[:-1])
+            self.le_price.setText(text[:-1])
 
     def mostrar_widget(self):
         stackedWidget = self.parentWidget()

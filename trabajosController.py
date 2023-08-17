@@ -4,6 +4,7 @@ from PyQt6 import QtGui
 from config import Session
 from payment import Payment
 from strippedTable import StripedTable
+from utils import BACK_ARROW, ICON_SAVE, PLUS, REFRESH, TIPOS_TRABAJOS
 from views.trabajosIndex_ui import Ui_trabajosIndex
 from views.trabajoForm_ui import Ui_trabajoForm
 from PyQt6.QtWidgets import QWidget, QMessageBox, QComboBox
@@ -25,6 +26,8 @@ class TrabajosIndex(QWidget, Ui_trabajosIndex):
         self.bt_tipos.clicked.connect(self.tipos_index)
         self.le_search.textChanged.connect(self.search)
         self.bt_create.clicked.connect(self.create)
+        self.bt_create.setIcon(PLUS)
+        self.bt_tipos.setIcon(TIPOS_TRABAJOS)
         self.search()
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
@@ -119,6 +122,9 @@ class TrabajoForm(QWidget,Ui_trabajoForm):
             super().__init__(parent)
             locale = QLocale(QLocale.Language.Spanish)
             self.setupUi(self)
+            self.bt_back.setIcon(BACK_ARROW)
+            self.bt_save.setIcon(ICON_SAVE)
+            self.bt_refresh.setIcon(REFRESH)
             fecha = QDate.currentDate()
             self.fecha_actual = fecha
             self.bt_save.clicked.connect(self.save)

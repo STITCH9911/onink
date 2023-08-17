@@ -3,6 +3,7 @@ from sqlalchemy.exc import IntegrityError
 from config import Session
 from models import Materiales
 from strippedTable import StripedTable
+from utils import BACK_ARROW, ICON_SAVE, MATERIALS_WHITE, PLUS
 from views.materialesIndex_ui import Ui_materialesIndex
 from views.materialesForm_ui import Ui_materialesForm
 from PyQt6.QtWidgets import QWidget, QMessageBox
@@ -18,6 +19,7 @@ class MaterialIndex(QWidget, Ui_materialesIndex):
         self.le_search.textChanged.connect(self.search)
         self.table = None
         self.bt_create.clicked.connect(self.create)
+        self.bt_create.setIcon(PLUS)
         self.search()
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
@@ -91,6 +93,9 @@ class MaterialForm(QWidget,Ui_materialesForm):
     def __init__(self,parent: QWidget | None = ...) -> None:
         super().__init__(parent)
         self.setupUi(self)
+        self.bt_back.setIcon(BACK_ARROW)
+        self.bt_title.setIcon(MATERIALS_WHITE)
+        self.bt_save.setIcon(ICON_SAVE)
         self.bt_save.clicked.connect(self.save)
         self.obj = None
         self.bt_back.clicked.connect(self.mostrar_widget)

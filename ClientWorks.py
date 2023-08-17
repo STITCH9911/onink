@@ -8,7 +8,7 @@ from config import DEFAULT_PICTURE, Session
 
 from models import Clients, Trabajos
 from strippedTable import StripedTable
-from utils import default_image, file_exists
+from utils import BACK_ARROW, CHANGE_PAGE, default_image, file_exists
 
 
 class ClientWorks(QWidget, Ui_ClientWorks):
@@ -17,7 +17,9 @@ class ClientWorks(QWidget, Ui_ClientWorks):
         self.setupUi(self)
         self.table = None
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
-    
+        self.bt_back.setIcon(BACK_ARROW)
+        self.bt_change_page.setIcon(CHANGE_PAGE)
+
     def setPic(self):
         ci = file_exists(self.client.ci, 'clients_pictures')
         if not ci:

@@ -5,6 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from config import Session
 from models import Provincias
 from strippedTable import StripedTable
+from utils import BACK_ARROW, ICON_SAVE, PLUS, PROVINCIAS_WHITE
 from views.provincias_ui import Ui_ProvinciaIndex
 from views.provinciaForm_ui import Ui_provinciasForm
 from PyQt6.QtWidgets import QWidget, QMessageBox
@@ -19,6 +20,7 @@ class ProvinciasIndex(QWidget, Ui_ProvinciaIndex):
         self.le_search.textChanged.connect(self.search)
         self.table = None
         self.bt_create.clicked.connect(self.create)
+        self.bt_create.setIcon(PLUS)
         self.search()
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
@@ -93,6 +95,9 @@ class ProvinciasForm(QWidget,Ui_provinciasForm):
         super().__init__(parent)
         self.setupUi(self)
         self.bt_save.clicked.connect(self.save)
+        self.bt_save.setIcon(ICON_SAVE)
+        self.bt_back.setIcon(BACK_ARROW)
+        self.pushButton.setIcon(PROVINCIAS_WHITE)
         self.obj = None
         self.bt_back.clicked.connect(self.mostrar_widget)
         self.provincia.returnPressed.connect(self.save)

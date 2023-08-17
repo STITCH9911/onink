@@ -5,6 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from config import Session
 from models import Provincias, Municipios
 from strippedTable import StripedTable
+from utils import BACK_ARROW, ICON_SAVE, MUNICIPIOS_WHITE, PLUS, REFRESH
 from views.municipios_ui import Ui_MunicipiosIndex
 from views.municipiosForm_ui import Ui_MunicipiosForm
 from PyQt6.QtWidgets import QWidget, QMessageBox
@@ -16,6 +17,8 @@ class MunicipiosIndex(QWidget, Ui_MunicipiosIndex):
     def __init__(self, parent: QWidget | None = ...) -> None:
         super().__init__(parent)
         self.setupUi(self)
+        self.bt_create.setIcon(PLUS)
+        self.bt_refresh.setIcon(REFRESH)
         self.le_search.textChanged.connect(self.search)
         self.cb_provincia.currentIndexChanged.connect(self.search)
         self.table = None
@@ -113,6 +116,9 @@ class MunicipiosForm(QWidget,Ui_MunicipiosForm):
         super().__init__(parent)
         self.setupUi(self)
         self.bt_save.clicked.connect(self.save)
+        self.bt_back.setIcon(BACK_ARROW)
+        self.bt_save.setIcon(ICON_SAVE)
+        self.pushButton.setIcon(MUNICIPIOS_WHITE)
         self.obj = None
         self.bt_back.clicked.connect(self.mostrar_widget)
         self.municipio.returnPressed.connect(self.save)

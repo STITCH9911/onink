@@ -5,6 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from config import Session
 from models import Tonalidades
 from strippedTable import StripedTable
+from utils import BACK_ARROW, ICON_SAVE, PLUS, TONOS_WHITE
 from views.tonos_ui import Ui_TonosWidget
 from views.TonoForm_ui import Ui_TonoForm
 from PyQt6.QtWidgets import QWidget, QMessageBox
@@ -19,6 +20,7 @@ class TonosIndex(QWidget, Ui_TonosWidget):
         self.le_search.textChanged.connect(self.search)
         self.table = None
         self.bt_create.clicked.connect(self.create)
+        self.bt_create.setIcon(PLUS)
         self.search()
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
@@ -94,6 +96,9 @@ class TonoForm(QWidget,Ui_TonoForm):
         self.setupUi(self)
         self.bt_save.clicked.connect(self.save)
         self.obj = None
+        self.bt_back.setIcon(BACK_ARROW)
+        self.bt_save.setIcon(ICON_SAVE)
+        self.bt_title.setIcon(TONOS_WHITE)
         self.bt_back.clicked.connect(self.mostrar_widget)
         self.tono.returnPressed.connect(self.save)
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()

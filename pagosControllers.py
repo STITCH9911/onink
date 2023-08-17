@@ -3,6 +3,7 @@ from sqlalchemy.exc import IntegrityError
 from config import Session
 from models import TiposPagos
 from strippedTable import StripedTable
+from utils import BACK_ARROW, ICON_SAVE, PAGOS_WHITE, PLUS
 from views.tiposPagosIndex_ui import Ui_pagoIndex
 from views.pagosForm_ui import Ui_pagosForm
 from PyQt6.QtWidgets import QWidget, QMessageBox
@@ -17,6 +18,7 @@ class PagoIndex(QWidget, Ui_pagoIndex):
         self.le_search.textChanged.connect(self.search)
         self.table = None
         self.bt_create.clicked.connect(self.create)
+        self.bt_create.setIcon(PLUS)
         self.search()
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
@@ -89,6 +91,9 @@ class PagosForm(QWidget,Ui_pagosForm):
         super().__init__(parent)
         self.setupUi(self)
         self.bt_save.clicked.connect(self.save)
+        self.bt_back.setIcon(BACK_ARROW)
+        self.bt_save.setIcon(ICON_SAVE)
+        self.bt_title.setIcon(PAGOS_WHITE)
         self.obj = None
         self.bt_back.clicked.connect(self.mostrar_widget)
         self.lineEdit.returnPressed.connect(self.save)

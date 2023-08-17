@@ -3,6 +3,7 @@ from sqlalchemy.exc import IntegrityError
 from config import Session
 from models import TipoTrabajos
 from strippedTable import StripedTable
+from utils import BACK_ARROW, ICON_SAVE, PLUS, TIPOS_TRABAJOS_WHITE
 from views.tiposTrabajosIndex_ui import Ui_tiposTrabajosIndex
 from views.tiposTrabajosForm_ui import Ui_tiposTrabajosForm
 from PyQt6.QtWidgets import QWidget, QMessageBox
@@ -17,6 +18,7 @@ class TiposTrabajosIndex(QWidget, Ui_tiposTrabajosIndex):
         self.le_search.textChanged.connect(self.search)
         self.table = None
         self.bt_create.clicked.connect(self.create)
+        self.bt_create.setIcon(PLUS)
         self.search()
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
@@ -89,6 +91,9 @@ class TiposTrabajosForm(QWidget,Ui_tiposTrabajosForm):
         super().__init__(parent)
         self.setupUi(self)
         self.bt_save.clicked.connect(self.save)
+        self.bt_back.setIcon(BACK_ARROW)
+        self.bt_save.setIcon(ICON_SAVE)
+        self.bt_title.setIcon(TIPOS_TRABAJOS_WHITE)
         self.obj = None
         self.bt_back.clicked.connect(self.mostrar_widget)
         self.lineEdit.returnPressed.connect(self.save)

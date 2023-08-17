@@ -3,13 +3,14 @@ from PyQt6.QtCore import QLocale, QDate
 from PyQt6.QtWidgets import QWidget, QMessageBox
 from config import Session
 from models import Trabajos
+from utils import REFRESH
 from views.RangoStats_ui import Ui_StatsPerRango
 
 class RangoStats(QWidget, Ui_StatsPerRango):
     def __init__(self, parent: QWidget | None = ...) -> None:
         super().__init__(parent)
         self.setupUi(self)
-
+        self.bt_refresh.setIcon(REFRESH)
         locale = QLocale(QLocale.Language.Spanish)
         cfecha = QDate.currentDate()
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()

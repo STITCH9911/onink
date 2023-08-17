@@ -1,6 +1,11 @@
 import sys, traceback, logging
 from app import Application
 from datetime import datetime, date
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtCore import QTranslator, QLibraryInfo, QLocale
+from PyQt6.QtGui import QIcon
+from gui import MainWindow
+from config import get_config
 import os
 
 ruta_documentos = os.path.expanduser("~")
@@ -20,11 +25,7 @@ sys.excepthook= new_excepthook
 
 def main():
     app = Application()
-    from PyQt6.QtWidgets import QApplication
-    from PyQt6.QtCore import QTranslator, QLibraryInfo, QLocale
-    from PyQt6.QtGui import QIcon
-    from gui import MainWindow
-    from config import get_config
+    
     created = get_config()["created"]
     if not created:
         print("No existe base de datos\nProcediendo a crear base de datos...")

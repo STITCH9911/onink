@@ -4,6 +4,7 @@ from PyQt6.QtGui import QIntValidator
 from PyQt6.QtWidgets import QDialog, QWidget, QMessageBox
 from config import Session
 from models import Productos, Io_productos
+from utils import CANCEL, ICON_SAVE, MINIMIZE_DARK, PLUS
 from views.io_productsDialog_ui import Ui_io_productsDialog
 
 class IO_Products(QDialog, Ui_io_productsDialog):
@@ -21,6 +22,10 @@ class IO_Products(QDialog, Ui_io_productsDialog):
         self.le_cant.setText(str(self.cantidad))
         title = producto.nick
         self.mainwindow = mainwindow
+        self.bt_minus.setIcon(MINIMIZE_DARK)
+        self.bt_plus.setIcon(PLUS)
+        self.bt_save.setIcon(ICON_SAVE)
+        self.bt_cancel.setIcon(CANCEL)
         
         if mode == "in":
             operacion = "Entrada de productos"

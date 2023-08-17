@@ -3,6 +3,7 @@ from sqlalchemy.exc import IntegrityError
 from config import Session
 from models import Tecnicas
 from strippedTable import StripedTable
+from utils import BACK_ARROW, ICON_SAVE, PLUS, TECNICAS_WHITE
 from views.tecnicaIndex_ui import Ui_tecnicaIndex
 from views.tecnicaForm_ui import Ui_tecnicaForm
 from PyQt6.QtWidgets import QWidget, QMessageBox
@@ -17,6 +18,7 @@ class TecnicaIndex(QWidget, Ui_tecnicaIndex):
         self.le_search.textChanged.connect(self.search)
         self.table = None
         self.bt_create.clicked.connect(self.create)
+        self.bt_create.setIcon(PLUS)
         self.search()
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
 
@@ -88,6 +90,9 @@ class TecnicaForm(QWidget,Ui_tecnicaForm):
         super().__init__(parent)
         self.setupUi(self)
         self.bt_save.clicked.connect(self.save)
+        self.bt_back.setIcon(BACK_ARROW)
+        self.bt_save.setIcon(ICON_SAVE)
+        self.bt_title.setIcon(TECNICAS_WHITE)
         self.obj = None
         self.bt_back.clicked.connect(self.mostrar_widget)
         self.lineEdit.returnPressed.connect(self.save)

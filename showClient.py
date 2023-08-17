@@ -5,14 +5,14 @@ from config import DEFAULT_PICTURE, Session
 from models import Clients
 from views.showClientView_ui import Ui_showClient
 from PyQt6.QtWidgets import QWidget
-from utils import file_exists, default_image
+from utils import BACK_ARROW, CHANGE_PAGE, file_exists, default_image
 
 class ShowCLient(QWidget, Ui_showClient):
     def __init__(self, parent: QWidget = None) -> None:
         super().__init__(parent)
         self.setupUi(self)
-        
-        
+        self.bt_volver_show.setIcon(BACK_ARROW)
+        self.bt_change_view_show.setIcon(CHANGE_PAGE)
     
     def setPic(self):
         ci = file_exists(self.cliente.ci, 'clients_pictures')
