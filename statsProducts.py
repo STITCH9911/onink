@@ -53,9 +53,12 @@ class StatsProd(QWidget, Ui_StatsProductsDay):
         return self._fecha
 
     def prod(self)->Productos:
-        with Session() as session:
-            identifier = self.cb_producto.currentData()
-            p = session.query(Productos).get(identifier)
+        identifier = self.cb_producto.currentData()
+        if identifier != None:
+            with Session() as session:
+                p = session.query(Productos).get(identifier)
+        else:
+            p = None
         return p
     
     def actualizar_dias_mes(self, cb_day, month: int, year: int):
@@ -81,8 +84,12 @@ class StatsProd(QWidget, Ui_StatsProductsDay):
 
     def change_data(self):
         p = self.productosDiarios()
-        self.compras = sum(producto.cant for producto in p[0])
-        self.ventas = sum(producto.cant for producto in p[1])
+        if p != None:
+            self.compras = sum(producto.cant for producto in p[0])
+            self.ventas = sum(producto.cant for producto in p[1])
+        else:
+            self.compras = 0
+            self.ventas = 0
         self.lb_comprados.setText(str(self.compras))
         self.lb_vendidos.setText(str(self.ventas))
 
@@ -104,9 +111,13 @@ class StatsProd(QWidget, Ui_StatsProductsDay):
     def productosDiarios(self):
         fecha = self.fecha.toPyDate()
         p = self.prod()
-        with Session() as session:
-            p = session.merge(p)
-            entrantes = list(filter(lambda x: x.fecha == fecha and x.io == "in", p.io_productos))
-            salientes = list(filter(lambda x: x.fecha == fecha and x.io == "out", p.io_productos))        
-        q = [entrantes, salientes]
+        if p != None:
+            with Session() as session:
+                p = session.merge(p)
+                entrantes = list(filter(lambda x: x.fecha == fecha and x.io == "in", p.io_productos))
+                salientes = list(filter(lambda x: x.fecha == fecha and x.io == "out", p.io_productos))
+            q = [entrantes, salientes]
+        else:
+            q = None
+            
         return q
