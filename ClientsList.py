@@ -14,6 +14,7 @@ class ClientListWidget(QWidget, Ui_ClientsListWidget):
     def __init__(self, parent: QWidget | None = ...) -> None:
         super().__init__(parent)
         self.setupUi(self)
+        self.Desc = False
         self.bt_create_cliente.setIcon(ADD_CLIENT)
         self.bt_refresh_search_clients.setIcon(REFRESH)
         self.bt_create_cliente.clicked.connect(self.create_client)
@@ -23,6 +24,7 @@ class ClientListWidget(QWidget, Ui_ClientsListWidget):
         self.le_search_clients.textChanged.connect(self.search)
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
         self.bt_refresh_search_clients.clicked.connect(self.refresh)
+        self.bt_revert.clicked.connect(self.toggle)
 
     #Evento de mostrar widget
     def showEvent(self, a0: QShowEvent) -> None:
@@ -34,7 +36,7 @@ class ClientListWidget(QWidget, Ui_ClientsListWidget):
     #generar tabla
     def create_table(self):
         headers, data, dropdowns_buttons, clients = self.getClientsDataTable(self.Clientes())
-        tabla = StripedTable(headers,data,dropdowns_buttons,clients)
+        tabla = StripedTable(headers,data,dropdowns_buttons,clients, Desc=self.Desc)
         eliminar_contenido(self.tableLayout)
         self.tableLayout.addWidget(tabla)
   
@@ -228,4 +230,8 @@ class ClientListWidget(QWidget, Ui_ClientsListWidget):
     def refresh(self):
         self.load_cb()
         self.le_search_clients.clear()
+        self.create_table()
+    
+    def toggle(self):
+        self.Desc = not self.Desc
         self.create_table()
