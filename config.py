@@ -2,7 +2,6 @@ from configparser import ConfigParser
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm.session import sessionmaker
-from time import sleep
 
 config = ConfigParser()
 CONFIG_FILE_NAME = 'config.ini'
@@ -30,7 +29,6 @@ def get_config():
     config.read(CONFIG_FILE_NAME)
     db = config.get('DATABASE', 'name')
     created = config.getboolean("DATABASE", 'created')
-    sleep(4)
     return {'db': db, 'created': created}
 
 

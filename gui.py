@@ -46,7 +46,6 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         
         
         #widgets
-        self.strippedTable = None
         self.home = Home(self.stackedWidget)
         self.WPaises = PaisesWidget(self.stackedWidget)
         self.CreatePaisesWidget = PaisesWidgetCreate(self.stackedWidget)
@@ -138,6 +137,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
         self.setCorner(Qt.Corner.BottomRightCorner, Qt.DockWidgetArea.RightDockWidgetArea)
 
+    #
     def clienList(self):
         from ClientsList import ClientListWidget
         w = self.stackedWidget.findChildren(ClientListWidget)
