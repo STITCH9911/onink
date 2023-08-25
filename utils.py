@@ -42,6 +42,18 @@ def default_image(label: QLabel, default: str, dir: str):
     pixmap = QPixmap(file_name)
     label.setPixmap(pixmap.scaled(label.size(), aspectRatioMode=Qt.AspectRatioMode.KeepAspectRatio))
 
+#metodo para aeliminar ocntenido de un layout
+def eliminar_contenido(contenedor):
+    while contenedor.count():
+        item = contenedor.takeAt(0)
+        widget = item.widget()
+        if widget is not None:
+            widget.setParent(None)
+        else:
+            sublayout = item.layout()
+            if sublayout is not None:
+                eliminar_contenido(sublayout)
+            contenedor.removeItem(item)
 
 #Iconos
 IMAGES_ROUTE = 'views/images'
