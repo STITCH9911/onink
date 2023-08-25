@@ -67,6 +67,7 @@ COLOR_IMPAR = QColor(60,60,60)
 class StripedTable(QTableWidget):
     def __init__(self, headers, data, buttons, objects, parent=None):
         super().__init__(parent)
+        self.setObjectName('Tabla')
         self.setColumnCount(len(headers) + 1)
         if data:
             self.setRowCount(len(data))
