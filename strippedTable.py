@@ -65,9 +65,10 @@ COLOR_PAR = QColor(100,100,100)
 COLOR_IMPAR = QColor(60,60,60)
 
 class StripedTable(QTableWidget):
-    def __init__(self, headers, data, buttons, objects, parent=None):
+    def __init__(self, headers, data, buttons, objects, parent=None, Desc=False):
         super().__init__(parent)
         self.setObjectName('Tabla')
+        self.Desc = Desc
         self.setColumnCount(len(headers) + 1)
         if data:
             self.setRowCount(len(data))
@@ -76,6 +77,9 @@ class StripedTable(QTableWidget):
             self.verticalHeader().setVisible(False)
             self.setAlternatingRowColors(True)
             self.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
+            if self.Desc:
+                objects = list(reversed(data))
+                data = list(reversed(data))
             self.populate_table(data, buttons, objects)
         else:
             self.setRowCount(2)
@@ -95,7 +99,10 @@ class StripedTable(QTableWidget):
 
     def populate_table(self, data, buttons, objects):
         for i, row in enumerate(data):
-            first_item = QTableWidgetItem(str(i+1))
+            if self.Desc:
+                first_item = QTableWidgetItem(str(len(data)-i))
+            else:
+                first_item = QTableWidgetItem(str(i+1))
             first_item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
             first_item.setFont(QFont('Oswald', 12))
             self.setItem(i, 0,first_item)
