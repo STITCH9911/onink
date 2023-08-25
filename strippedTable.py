@@ -78,7 +78,7 @@ class StripedTable(QTableWidget):
             self.setAlternatingRowColors(True)
             self.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
             if self.Desc:
-                objects = list(reversed(data))
+                objects = list(reversed(objects))
                 data = list(reversed(data))
             self.populate_table(data, buttons, objects)
         else:
