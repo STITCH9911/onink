@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>620</width>
-    <height>521</height>
+    <width>651</width>
+    <height>509</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -132,7 +132,41 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="filterDatesLayout" stretch=""/>
+    <layout class="QHBoxLayout" name="filterDatesLayout">
+     <item>
+      <widget class="QPushButton" name="bt_revertir">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Invertir orden</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>images/change (3).svg</normaloff>images/change (3).svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
    <item>
     <layout class="QHBoxLayout" name="layout_tabla"/>

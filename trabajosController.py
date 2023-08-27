@@ -1,35 +1,37 @@
 from typing import List, Tuple
-
-from PyQt6 import QtGui
 from config import Session
 from payment import Payment
 from strippedTable import StripedTable
-from utils import BACK_ARROW, ICON_SAVE, PLUS, REFRESH, TIPOS_TRABAJOS
+from utils import BACK_ARROW, ICON_SAVE, INVERT, PLUS, REFRESH, TIPOS_TRABAJOS, eliminar_contenido
 from views.trabajosIndex_ui import Ui_trabajosIndex
 from views.trabajoForm_ui import Ui_trabajoForm
 from PyQt6.QtWidgets import QWidget, QMessageBox, QComboBox
 from PyQt6.QtCore import QSize, QDate, QLocale, QDateTime, QTime
 from PyQt6.QtGui import QDoubleValidator
-from models import Trabajos, Clients, TipoTrabajos, TiposPagos, Tonalidades, Tecnicas
+from models import Trabajos, Clients, TipoTrabajos, Tonalidades, Tecnicas
 import os, re
 from sqlalchemy import or_
-from sqlalchemy.exc import IntegrityError
-from datetime import datetime
 
 
 class TrabajosIndex(QWidget, Ui_trabajosIndex):
     def __init__(self, parent: QWidget | None = ...) -> None:
         super().__init__(parent)
         self.setupUi(self)
+        self.Desc = False
         self.table = None
-        self.fecha_actual = QDate.currentDate()
+        """ self.fecha_actual = QDate.currentDate() """
         self.bt_tipos.clicked.connect(self.tipos_index)
         self.le_search.textChanged.connect(self.search)
         self.bt_create.clicked.connect(self.create)
         self.bt_create.setIcon(PLUS)
         self.bt_tipos.setIcon(TIPOS_TRABAJOS)
-        self.search()
+        self.bt_revertir.setIcon(INVERT)
+        self.bt_revertir.clicked.connect(self.invert)
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
+
+    def invert(self):
+        self.Desc = not self.Desc
+        self.setItemsTable()
 
     def tipos_index(self):
         sw = self.parentWidget()
@@ -37,25 +39,31 @@ class TrabajosIndex(QWidget, Ui_trabajosIndex):
         w.search()
         sw.setCurrentWidget(w)
 
-    def setItemsTable(self, objects):
-            headers, data, dropdown_buttons, objects = self.getDataTable(objects)
-            if self.table is not None:
-                self.layout_tabla.removeWidget(self.table)
-                self.table.clearContents()        
-            self.table = StripedTable(headers, data, dropdown_buttons, objects)
+    def search(self):
+        self.setItemsTable()
+    
+    def showEvent(self, a0) -> None:
+        self.setItemsTable()
+        return super().showEvent(a0)
+    
+    def setItemsTable(self):
+            headers, data, dropdown_buttons, objects = self.getDataTable(self.Works())
+            eliminar_contenido(self.layout_tabla)
+            self.table = StripedTable(headers, data, dropdown_buttons, objects, Desc=self.Desc)
             self.layout_tabla.addWidget(self.table)
             
-    def search(self):
+    def Works(self):
         le = self.le_search.text()
         with Session() as session:
             q = session.query(Trabajos)
             if le != "":
                 if le.isdigit():
-                    q = q.filter(Trabajos.price.like(f"%{le}%"))
+                    q = session.query(Trabajos).filter(Trabajos.price.like(f"%{le}%"))
                 else:
-                    q = q.select_from(Trabajos).join(Clients).join(TipoTrabajos).join(TiposPagos).join(Tonalidades).join(Tecnicas).where(or_(Clients.nombre_apellidos.like(f"%{le}%"),TipoTrabajos.tipo.like(f"%{le}%"),TiposPagos.tipo.like(f"%{le}%"),Tonalidades.tono.like(f"%{le}%"),Tecnicas.tecnica.like(f"%{le}%")))
+                    q = session.query(Trabajos).select_from(Trabajos).join(Clients).join(TipoTrabajos).filter(or_(Clients.nombre_apellidos.like(f"%{le}%"), TipoTrabajos.tipo.like(f"%{le}%")))
             q = q.all()
-        self.setItemsTable(q)
+            
+        return q
 
     def create(self):
         sw = self.parentWidget()
