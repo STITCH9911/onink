@@ -1,4 +1,3 @@
-from config import DEFAULT_PICTURE, PICTURES_DIR
 from materialesControllers import MaterialForm, MaterialIndex
 from municipiosController import MunicipiosForm, MunicipiosIndex
 from productosWidget import ProductosForm, ProductosIndex
@@ -17,7 +16,7 @@ from tiposTrabajosControllers import TiposTrabajosIndex, TiposTrabajosForm
 from views.main_window_ui import Ui_OnInkMainWindow
 from PyQt6.QtWidgets import QMainWindow, QSizeGrip
 from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve
-from utils import CLOSE, COUNTRY, HOME, MATERIALS, MAXIMIZE, MINIMIZE, MUNICIPIOS, PAGOS, PRODUCTOS, PROVINCIAS, REFRESH, RESTAURAR, SERVICE, SIDEBAR_MENU, SOCIAL, STATS, TECNICAS, TONOS, USER, default_image
+from utils import CLOSE, COUNTRY, HOME, MATERIALS, MAXIMIZE, MINIMIZE, MUNICIPIOS, PAGOS, PRODUCTOS, PROVINCIAS, RESTAURAR, SERVICE, SIDEBAR_MENU, SOCIAL, STATS, TECNICAS, TONOS, USER
 
 class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def __init__(self, app, parent=None) -> None:
