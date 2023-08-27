@@ -2,7 +2,7 @@ import os
 from typing import List
 from PyQt6.QtCore import QSize
 from sqlalchemy import delete
-from utils import ADD_CLIENT, REFRESH, eliminar_contenido
+from utils import ADD_CLIENT, INVERT, REFRESH, eliminar_contenido
 from views.ClientsListWidget_ui import Ui_ClientsListWidget
 from PyQt6.QtWidgets import QWidget, QMessageBox, QStackedWidget
 from PyQt6.QtGui import QShowEvent
@@ -25,6 +25,7 @@ class ClientListWidget(QWidget, Ui_ClientsListWidget):
         self.mainWindowWidget  = self.parentWidget().parentWidget().parentWidget().parentWidget().parentWidget().parentWidget()
         self.bt_refresh_search_clients.clicked.connect(self.refresh)
         self.bt_revert.clicked.connect(self.toggle)
+        self.bt_revert.setIcon(INVERT)
 
     #Evento de mostrar widget
     def showEvent(self, a0: QShowEvent) -> None:
