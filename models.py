@@ -44,6 +44,10 @@ class Provincias(Base):
 
     municipios: Mapped[List['Municipios']] = relationship('Municipios', uselist=True, back_populates='provincia', cascade='delete, delete-orphan')
 
+    def cantClientes(self)->int:
+        c = reduce(lambda x, y: x+y.cantClientes(), self.municipios, 0)
+        return c
+
 class Socials(Base):
     __tablename__ = 'socials'
     __table_args__ = (
@@ -113,6 +117,9 @@ class Municipios(Base):
 
     provincia: Mapped['Provincias'] = relationship('Provincias', back_populates='municipios', )
     clients: Mapped[List['Clients']] = relationship('Clients', uselist=True, back_populates='municipio',cascade='delete, delete-orphan')
+
+    def cantClientes(self)->int:
+        return len(self.clients)
 
 class Clients(Base):
     __tablename__ = 'clients'

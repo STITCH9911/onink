@@ -75,14 +75,14 @@ class MunicipiosIndex(QWidget, Ui_MunicipiosIndex):
 
     def getDataTable(self, lista: List['Municipios'])-> Tuple:
         with Session() as session:
-            headers = ["Municipio", "Provincia", "Opciones"]
+            headers = ["Municipio", "Provincia", "Clientes", "Opciones"]
             data = []
             
             dropdown_buttons = []
             
             for item in lista:
                 item = session.merge(item)
-                data.append([item.municipio, item.provincia.provincia])
+                data.append([item.municipio, item.provincia.provincia, str(item.cantClientes())])
                 dir = "views/images"
                 size = QSize(30,30)
                 edit = os.path.join(dir, 'edit-pencil.svg')
