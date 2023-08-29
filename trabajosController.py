@@ -297,6 +297,7 @@ class TrabajoForm(QWidget,Ui_trabajoForm):
             self.cb_t_trabajo.setCurrentIndex(-1)
             self.cb_tecnica.setCurrentIndex(-1)
             self.cb_tono.setCurrentIndex(-1)
+            self.precio.clear()
             fecha = QDate.currentDate()
             self.w_year.setCurrentIndex(self.w_year.findData(fecha.year()))
             self.w_month.setCurrentIndex(self.w_month.findData(fecha.month()))
