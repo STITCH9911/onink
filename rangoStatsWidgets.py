@@ -2,7 +2,7 @@ import typing
 from PyQt6.QtCore import QLocale, QDate
 from PyQt6.QtWidgets import QWidget, QMessageBox
 from config import Session
-from models import Trabajos
+from models import TipoTrabajos, Trabajos
 from utils import REFRESH
 from views.RangoStats_ui import Ui_StatsPerRango
 
@@ -72,6 +72,7 @@ class RangoStats(QWidget, Ui_StatsPerRango):
         self.actualizar_dias_mes(self.cb_dia_fin, self.cb_mes_fin.currentData(), self.cb_anio_fin.currentData())
 
     def showEvent(self, a0) -> None:
+        self.loadTrabajos()
         self.loadData()
         return super().showEvent(a0)
 
@@ -97,13 +98,29 @@ class RangoStats(QWidget, Ui_StatsPerRango):
     def trabajosDiarios(self):
         fecha = self.fecha_inicial().toPyDate()
         fecha_fin = self.fecha_final().toPyDate()
+        trabajo = self.cb_trabajos.currentData()
         if fecha > fecha_fin:
             QMessageBox.critical(self.mainWindowWidget,"Error", "La fecha final no puede ser menor que la fecha de inicio. Rectifique los datos")
             self.t_trabajos.setText(str(0))
             self.t_cash.setText(str(0))
             return False
         with Session() as session:
-            w = session.query(Trabajos).all()        
+            q = session.query(Trabajos)
+            if trabajo != None:
+                q = q.filter(Trabajos.tipo_trabajo_id == trabajo)
+            w = q.all()
         q = list(filter(lambda x: x.created_at.date() >= fecha and x.created_at.date() <= fecha_fin, w))
         return q
 
+    def loadTrabajos(self):
+        self.cb_trabajos.clear()
+        self.cb_trabajos.setPlaceholderText("Todos")
+        with Session() as session:
+            self.cb_trabajos.addItem("Todos", None)
+            q = session.query(TipoTrabajos).all()
+            for i in q:
+                self.cb_trabajos.addItem(i.tipo, i.id)
+            self.cb_trabajos.setCurrentIndex(-1)
+
+    def changeTrabajos(self):
+        self.change_data()

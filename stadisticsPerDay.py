@@ -5,7 +5,7 @@ from PyQt6.QtCore import QDate, QLocale
 from PyQt6.QtWidgets import QWidget
 from sqlalchemy import Date, cast, func
 from config import Session
-from models import Trabajos
+from models import Trabajos, TipoTrabajos
 from views.statsPerDay_ui import Ui_StatsDay
 
 class StatsDay(QWidget, Ui_StatsDay):
@@ -30,6 +30,7 @@ class StatsDay(QWidget, Ui_StatsDay):
         self.cb_dia.currentIndexChanged.connect(self.updateFecha)
         self.cb_anio.currentIndexChanged.connect(self.actualizar_dias_w)
         self.cb_dia.setCurrentIndex(self.cb_dia.findData(cfecha.day()))
+        self.cb_trabajos.currentIndexChanged.connect(self.changeTrabajo)
 
     @property
     def fecha(self):
@@ -62,6 +63,7 @@ class StatsDay(QWidget, Ui_StatsDay):
         self.fecha = QDate(self.cb_anio.currentData(),self.cb_mes.currentData(), self.cb_dia.currentData())
 
     def showEvent(self, a0) -> None:
+        self.loadTrabajos()
         self.loadData()
         return super().showEvent(a0)
 
@@ -83,8 +85,24 @@ class StatsDay(QWidget, Ui_StatsDay):
 
     def trabajosDiarios(self):
         fecha = self.fecha.toPyDate()
+        tipoTrabajo = self.cb_trabajos.currentData()
         with Session() as session:
-            w = session.query(Trabajos).all()
-        
+            q = session.query(Trabajos)
+            if tipoTrabajo != None:
+                q = q.filter(Trabajos.tipo_trabajo_id == tipoTrabajo)
+            w = q.all()
         q = list(filter(lambda x: x.created_at.date() == fecha, w))
         return q
+
+    def loadTrabajos(self):
+        self.cb_trabajos.clear()
+        self.cb_trabajos.setPlaceholderText("Todos")
+        with Session() as session:
+            self.cb_trabajos.addItem("Todos", None)
+            q = session.query(TipoTrabajos).all()
+            for i in q:
+                self.cb_trabajos.addItem(i.tipo, i.id)
+            self.cb_trabajos.setCurrentIndex(-1)
+
+    def changeTrabajo(self):
+        self.change_data()

@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>393</height>
+    <width>411</width>
+    <height>441</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,2,6">
+  <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,1,1,6">
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
@@ -76,6 +76,33 @@
         <widget class="QComboBox" name="cb_anio"/>
        </item>
       </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,6,0">
+     <item>
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>Tipos de trabajos: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cb_trabajos"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
