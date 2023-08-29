@@ -40,6 +40,7 @@ def main():
     gui = MainWindow(app)
     gui.setWindowIcon(icon)
     gui.show()
+    gui.cumple()
     sys.exit(qapp.exec())
     
 

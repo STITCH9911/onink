@@ -1,4 +1,7 @@
+from typing import List
+from config import Session
 from materialesControllers import MaterialForm, MaterialIndex
+from models import Clients
 from municipiosController import MunicipiosForm, MunicipiosIndex
 from productosWidget import ProductosForm, ProductosIndex
 from rangoStatsWidgets import RangoStats
@@ -14,10 +17,20 @@ from pagosControllers import PagoIndex, PagosForm
 from trabajosController import TrabajosIndex, TrabajoForm
 from tiposTrabajosControllers import TiposTrabajosIndex, TiposTrabajosForm
 from views.main_window_ui import Ui_OnInkMainWindow
-from PyQt6.QtWidgets import QMainWindow, QSizeGrip
+from PyQt6.QtWidgets import QMainWindow, QSizeGrip, QMessageBox
 from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve
-from utils import CLOSE, COUNTRY, HOME, MATERIALS, MAXIMIZE, MINIMIZE, MUNICIPIOS, PAGOS, PRODUCTOS, PROVINCIAS, RESTAURAR, SERVICE, SIDEBAR_MENU, SOCIAL, STATS, TECNICAS, TONOS, USER
+from utils import CLOSE, COUNTRY, HOME, MATERIALS, MAXIMIZE, MINIMIZE, MUNICIPIOS, PAGOS, PRODUCTOS, PROVINCIAS, RESTAURAR, SERVICE, SIDEBAR_MENU, SOCIAL, STATS, TECNICAS, TONOS, USER, get_age, is_cumpleannos
 
+
+def getCumpleannearos()->List['Clients']:
+    lista = list()
+    with Session() as session:
+        clientes = session.query(Clients).all()
+    for i in clientes:
+        if is_cumpleannos(i):
+            lista.append(i)
+    return lista
+    
 class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     def __init__(self, app, parent=None) -> None:
         super().__init__(parent)
@@ -136,7 +149,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
         self.setCorner(Qt.Corner.BottomRightCorner, Qt.DockWidgetArea.RightDockWidgetArea)
 
-    #
+    #abrir widget clientes
     def clienList(self):
         from ClientsList import ClientListWidget
         w = self.stackedWidget.findChildren(ClientListWidget)
@@ -145,6 +158,17 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         w = ClientListWidget(parent=self.stackedWidget)
         self.stackedWidget.addWidget(w)
         self.stackedWidget.setCurrentWidget(w)
+
+    #obtener y mostrar mensaje con cumpleañeros del dia
+    def cumple(self):
+        c = getCumpleannearos()
+        if len(c) == 0:
+            QMessageBox.information(self, "Cumpleaños del día", "Hoy no hay ningún cliente cumpliendo años", QMessageBox.StandardButton.Ok)
+            return
+        texto: str = f"Hoy tenemos {len(c)} cliente(s) de cumpleaños:\n"
+        for i in c:
+            texto = texto + f"- {i.nombre_apellidos} ({get_age(i.ci)})\n"
+        QMessageBox.information(self, "Cumpleaños del día", texto, QMessageBox.StandardButton.Ok)
 
     #Evento abrir ventana
     def showEvent(self, a0) -> None:

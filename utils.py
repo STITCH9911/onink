@@ -1,26 +1,36 @@
-from PyQt6.QtCore import QDate, Qt, QTimer
-from PyQt6.QtWidgets import QLabel, QProgressDialog
+from PyQt6.QtCore import QDate, Qt
+from PyQt6.QtWidgets import QLabel
 from PyQt6.QtGui import QPixmap, QIcon
-import functools
-from time import sleep
-
+from datetime import datetime
 import os
 
+from models import Clients
+
+def is_cumpleannos(client: Clients)->bool:
+    hoy = datetime.now().strftime('%m%d')
+    birthday = str(client.ci)[2:6]
+    return hoy == birthday
 
 def get_birthday(ci: str) -> QDate:
     fecha_str = ci[:6]
+    year = int(fecha_str[:2])
+    hoy = QDate.currentDate()
 
-    fecha = QDate.fromString(fecha_str, "yyMMdd")  # crear objeto QDate a partir de la cadena de fecha
+    yearActual = hoy.year() - 2000
+    if year <= yearActual:
+        year = year+2000
+    else:
+        year = year + 1900
+    
+    month = int(fecha_str[2:4])
+    day = int(fecha_str[4:6])
 
-    hoy = QDate.currentDate()  # obtener la fecha actual
-
-    if fecha.year() > hoy.year() % 100:
-        fecha = fecha.addYears(-100)  # si la fecha es del futuro, restar 100 años
+    fecha = QDate(year,month,day)
 
     return fecha
 
 def get_age(ci):
-    fecha_nacimiento = get_birthday(ci=ci)
+    fecha_nacimiento = get_birthday(ci=str(ci))
     hoy = QDate.currentDate()
     return fecha_nacimiento.daysTo(hoy) // 365
 
@@ -101,3 +111,4 @@ TIPOS_TRABAJOS_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'folder-won white.svg'))
 TONOS_WHITE = QIcon(os.path.join(IMAGES_ROUTE, 'palette white.svg'))
 TIPOS_TRABAJOS = QIcon(os.path.join(IMAGES_ROUTE, 'folder-won.svg'))
 INVERT = QIcon(os.path.join(IMAGES_ROUTE,'change (3).svg'))
+BIRTHDAY = QIcon(os.path.join(IMAGES_ROUTE, 'birthday (3).svg'))
