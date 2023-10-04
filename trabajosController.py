@@ -54,6 +54,7 @@ class TrabajosIndex(QWidget, Ui_trabajosIndex):
             
     def Works(self):
         le = self.le_search.text()
+        today = QDate.currentDate().toPyDate()
         with Session() as session:
             q = session.query(Trabajos)
             if le != "":
@@ -62,6 +63,7 @@ class TrabajosIndex(QWidget, Ui_trabajosIndex):
                 else:
                     q = session.query(Trabajos).select_from(Trabajos).join(Clients).join(TipoTrabajos).filter(or_(Clients.nombre_apellidos.like(f"%{le}%"), TipoTrabajos.tipo.like(f"%{le}%")))
             q = q.all()
+            q = list(filter(lambda x: x.created_at.date() == today, q))
             
         return q
 
