@@ -58,23 +58,27 @@ class ClientListWidget(QWidget, Ui_ClientsListWidget):
         provincia = self.cb_search_clientes_provincia.currentData()
         municipio = self.cb_search_clientes_municipio.currentData()
         search = self.le_search_clients.text()
+        result = []
         with Session() as session:
-            q = session.query(Clients)
             if provincia:
-                q = q.select_from(Clients).join(Municipios).filter(Municipios.provincia_id == provincia)
+                q = session.query(Clients).select_from(Clients).join(Municipios).filter(Municipios.provincia_id == provincia).all()
+                result.extend(q)
             if search != "":
                 if search.isdigit():
-                    q = q.filter(Clients.ci.like(f"%{search}%"))
+                    q = session.query(Clients).filter(Clients.ci.like(f"%{search}%"))
+                    
                 else:
-                    q = q.filter(Clients.nombre_apellidos.like(f"%{search}%"))
+                    q = session.query(Clients).filter(Clients.nombre_apellidos.like(f"%{search}%"))
+                result.extend(q.all())
             if pais:
-                q = q.filter(Clients.pais_id == pais)
-           
+                q = session.query(Clients).filter(Clients.pais_id == pais).all()
+                result.extend(q)
+                           
             if municipio:
-                q = q.filter(Clients.municipio_id == municipio)
-            
-            q = q.all()
-        return q
+                q = session.query(Clients).filter(Clients.municipio_id == municipio).all()
+                result.extend(q)
+            result = list(set(result))
+        return result
     
     #cargar datos en QComboBox porvincias
     def loadPaises(self, paises):
