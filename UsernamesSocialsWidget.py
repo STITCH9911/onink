@@ -44,6 +44,7 @@ class UsernamesSocialWidget(QWidget,Ui_UsernamesSocials):
 
     def loadData(self):
         datas = dict()
+        self.lb_cliente_name.setText(f"Cliente: {self.client.nombre_apellidos}")
         with Session() as session:
             socials = session.query(Socials).all()
             usernames = session.query(t_r_clients_socials).filter_by(client_id=self.client.id).all()
