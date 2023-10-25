@@ -73,9 +73,6 @@ class UsernamesSocialWidget(QWidget,Ui_UsernamesSocials):
     def clients_list(self):
         from ClientsList import ClientListWidget
         stacked = self.parentWidget()
-        w = stacked.findChildren(ClientListWidget)
-        for i in w:
-            i.setParent(None)
-        w = ClientListWidget(parent=stacked)
+        w = stacked.findChild(ClientListWidget)
         stacked.addWidget(w)
         stacked.setCurrentWidget(w)
