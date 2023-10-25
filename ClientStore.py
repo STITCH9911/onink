@@ -224,9 +224,6 @@ class ClientStoreWidget(QWidget, Ui_ClientStore):
     def back(self):
         from ClientsList import ClientListWidget
         stacked = self.parentWidget()
-        w = stacked.findChildren(ClientListWidget)
-        for i in w:
-            i.setParent(None)
-        w = ClientListWidget(parent=stacked)
+        w = stacked.findChild(ClientListWidget)
         stacked.addWidget(w)
         stacked.setCurrentWidget(w)
