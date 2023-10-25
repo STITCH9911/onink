@@ -128,7 +128,6 @@ class ClientListWidget(QWidget, Ui_ClientsListWidget):
                     {"Ver detalles": self.showClienteData, show: size},
                     {"Editar datos": self.edit_client_data, edit : size},
                     {"Redes sociales": self.edit_usernames_socials, social: size},
-                    {"Servicios": self.client_works, service: size},
                     {"Nuevo trabajo": self.newWorkClient, service:size},
                     {"Eliminar": self.delete_client, trash : size}
                 ]
@@ -186,7 +185,7 @@ class ClientListWidget(QWidget, Ui_ClientsListWidget):
         stacked.addWidget(w)
         stacked.setCurrentWidget(w)
     
-    def client_works(self, client:Clients):
+    """ def client_works(self, client:Clients):
         from ClientWorks import ClientWorks
         stacked: QStackedWidget = self.parentWidget()
         w = stacked.findChildren(ClientWorks)
@@ -194,7 +193,7 @@ class ClientListWidget(QWidget, Ui_ClientsListWidget):
             i.setParent(None)
         w = ClientWorks(parent=stacked, client=client)
         stacked.addWidget(w)
-        stacked.setCurrentWidget(w)
+        stacked.setCurrentWidget(w) """
 
     def newWorkClient(self, client: Clients):
         stacked = self.parentWidget()
