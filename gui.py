@@ -84,6 +84,8 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.productosForm = ProductosForm(self.stackedWidget)
         self.rangoWidget = RangoStats(self.stackedWidget)
         self.statsProducts = StatsProd(self.stackedWidget)
+        from ClientsList import ClientListWidget
+        self.clients_list = ClientListWidget(self.stackedWidget)
 
         #add widgets a stackedWidget
         self.stackedWidget.addWidget(self.home)
@@ -112,6 +114,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.stackedWidget.addWidget(self.productosForm)
         self.stackedWidget.addWidget(self.rangoWidget)
         self.stackedWidget.addWidget(self.statsProducts)
+        self.stackedWidget.addWidget(self.clients_list)
         
         #establecer widgetInicial
         self.stackedWidget.setCurrentWidget(self.home)
@@ -128,7 +131,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         #btMenus
         self.bt_menu_home.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.home))
         self.bt_menu.clicked.connect(self.mover_menu)
-        self.bt_menu_clientes.clicked.connect(self.clienList)
+        self.bt_menu_clientes.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.clients_list))
         self.bt_menu_paises.clicked.connect(self.paisesIndex)
         self.bt_menu_sociales.clicked.connect(self.socialIndex)
         self.bt_menu_provincias.clicked.connect(self.provincias_index)
@@ -148,13 +151,6 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
         self.setWindowOpacity(1)
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
         self.setCorner(Qt.Corner.BottomRightCorner, Qt.DockWidgetArea.RightDockWidgetArea)
-
-    #abrir widget clientes
-    def clienList(self):
-        from ClientsList import ClientListWidget
-        w = self.stackedWidget.findChild(ClientListWidget)
-        self.stackedWidget.addWidget(w)
-        self.stackedWidget.setCurrentWidget(w)
 
     #obtener y mostrar mensaje con cumpleañeros del dia
     def cumple(self):
