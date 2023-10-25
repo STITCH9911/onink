@@ -98,6 +98,7 @@ class ShowCLient(QWidget, Ui_showClient):
                 label.setText(f"{s.social} :")
                 line_edit = QLineEdit(self)
                 line_edit.setText(str(i.username))
+                line_edit.setReadOnly(True)
                 socialName = str(s.social).replace(" ", "_")
                 line_edit.setObjectName(f'le_{socialName}')
                 hlayout = QHBoxLayout()

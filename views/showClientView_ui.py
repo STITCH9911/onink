@@ -35,7 +35,10 @@ class Ui_showClient(object):
         self.horizontalLayout_5.addItem(spacerItem1)
         self.verticalLayout_6.addLayout(self.horizontalLayout_5)
         self.scrollArea = QtWidgets.QScrollArea(parent=showClient)
-        self.scrollArea.setStyleSheet("QWidget{\n"
+        self.scrollArea.setStyleSheet("QLineEdit{\n"
+"background-color: rgb(70, 90, 110);\n"
+"}\n"
+"QWidget{\n"
 "background-color: rgb(44, 62, 80);\n"
 "}\n"
 "QScrollArea {\n"
@@ -81,6 +84,29 @@ class Ui_showClient(object):
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 645, 553))
+        self.scrollAreaWidgetContents.setStyleSheet(" QLineEdit {\n"
+"        background-color: rgb(70, 90, 110);\n"
+"        color: white;\n"
+"        border: 2px solid white;\n"
+"        border-radius: 10px;\n"
+"        font-family: \"Oswald\";\n"
+"        font-size: 12pt;\n"
+"        padding: 5px;\n"
+"    }\n"
+"    QLineEdit:focus {\n"
+"        border: 2px solid rgb(255, 140, 0);\n"
+"    }\n"
+"QTextEdit {\n"
+"        background-color: rgb(70, 90, 110);\n"
+"        color: white;\n"
+"        border: 2px solid white;\n"
+"        border-radius: 10px;\n"
+"        font-size: 12pt;\n"
+"        padding: 5px;\n"
+"    }\n"
+"    QTextEdit:focus {\n"
+"         border: 2px solid rgb(255, 140, 0);\n"
+"    }")
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -223,12 +249,17 @@ class Ui_showClient(object):
         self.verticalLayout.addWidget(self.line_2)
         self.layoutWorks = QtWidgets.QVBoxLayout()
         self.layoutWorks.setObjectName("layoutWorks")
+        self.label_19 = QtWidgets.QLabel(parent=self.scrollAreaWidgetContents)
+        self.label_19.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.label_19.setObjectName("label_19")
+        self.layoutWorks.addWidget(self.label_19)
         self.horizontalLayout_24 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_24.setObjectName("horizontalLayout_24")
         self.label_18 = QtWidgets.QLabel(parent=self.scrollAreaWidgetContents)
         self.label_18.setObjectName("label_18")
         self.horizontalLayout_24.addWidget(self.label_18)
         self.gasto_total = QtWidgets.QLineEdit(parent=self.scrollAreaWidgetContents)
+        self.gasto_total.setReadOnly(True)
         self.gasto_total.setObjectName("gasto_total")
         self.horizontalLayout_24.addWidget(self.gasto_total)
         self.layoutWorks.addLayout(self.horizontalLayout_24)
@@ -254,4 +285,5 @@ class Ui_showClient(object):
         self.txted_notas_show_2.setPlaceholderText(_translate("showClient", "Sin notas"))
         self.label_17.setText(_translate("showClient", "Vía de llegada: "))
         self.txted_alcance_show_2.setPlaceholderText(_translate("showClient", "Sin información de como llegó hasta nosotros"))
+        self.label_19.setText(_translate("showClient", "Resumen de trabajos"))
         self.label_18.setText(_translate("showClient", "Gasto total: "))

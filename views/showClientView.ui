@@ -77,7 +77,10 @@
    <item>
     <widget class="QScrollArea" name="scrollArea">
      <property name="styleSheet">
-      <string notr="true">QWidget{
+      <string notr="true">QLineEdit{
+background-color: rgb(70, 90, 110);
+}
+QWidget{
 background-color: rgb(44, 62, 80);
 }
 QScrollArea {
@@ -131,6 +134,31 @@ QScrollBar:vertical {
         <width>645</width>
         <height>553</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"> QLineEdit {
+        background-color: rgb(70, 90, 110);
+        color: white;
+        border: 2px solid white;
+        border-radius: 10px;
+		font-family: &quot;Oswald&quot;;
+		font-size: 12pt;
+        padding: 5px;
+    }
+    QLineEdit:focus {
+        border: 2px solid rgb(255, 140, 0);
+    }
+QTextEdit {
+        background-color: rgb(70, 90, 110);
+        color: white;
+        border: 2px solid white;
+        border-radius: 10px;
+		font-size: 12pt;
+        padding: 5px;
+    }
+    QTextEdit:focus {
+         border: 2px solid rgb(255, 140, 0);
+    }</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
@@ -389,6 +417,16 @@ QScrollBar:vertical {
        <item>
         <layout class="QVBoxLayout" name="layoutWorks">
          <item>
+          <widget class="QLabel" name="label_19">
+           <property name="text">
+            <string>Resumen de trabajos</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
           <layout class="QHBoxLayout" name="horizontalLayout_24">
            <item>
             <widget class="QLabel" name="label_18">
@@ -398,7 +436,11 @@ QScrollBar:vertical {
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="gasto_total"/>
+            <widget class="QLineEdit" name="gasto_total">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
