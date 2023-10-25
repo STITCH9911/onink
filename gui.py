@@ -152,10 +152,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
     #abrir widget clientes
     def clienList(self):
         from ClientsList import ClientListWidget
-        w = self.stackedWidget.findChildren(ClientListWidget)
-        for i in w:
-            i.setParent(None)
-        w = ClientListWidget(parent=self.stackedWidget)
+        w = self.stackedWidget.findChild(ClientListWidget)
         self.stackedWidget.addWidget(w)
         self.stackedWidget.setCurrentWidget(w)
 
