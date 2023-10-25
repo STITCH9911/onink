@@ -165,3 +165,44 @@ def execute_falsos():
     cr_del_wr_db(Base, engine)
     set_config("DATABASE", 'created', True)
     print("Base de datos creada correctamente.")
+
+def funcionClientesMillares():
+    clientes = []
+
+    cis = random.sample([fake.random_number(digits=11) for _ in range(1000)], 1000)
+    direcciones = [fake.address() for _ in range(1000)]
+    notas = [fake.paragraph() for _ in range(1000)]
+    creados = [fake.date_time() for _ in range(1000)]
+    telefonos = [fake.phone_number() for _ in range(1000)]
+    alcances = [fake.paragraph() for _ in range(1000)]
+
+    for i in range(1000):
+        ci = cis[i]
+        dir = direcciones[i]
+        n = notas[i]
+        c_at = creados[i]
+        t = telefonos[i]
+        alc = alcances[i]
+
+        client_obj = Clients(direccion=dir, ci=ci, notes= n, created_at= c_at, phone=t, alcance=alc)
+        client_obj.nombre_apellidos = fake.name()
+        client_obj.municipio_id = 0
+        clientes.append(client_obj)
+    
+    with Session() as session:
+        session.add_all(clientes)
+        session.commit()
+    
+    print("TERMINADO")
+
+def rectificar():
+    with Session() as session:
+        clients = session.query(Clients).all()
+        for c in clients:
+            c.municipio_id = 1
+        session.add_all(clients)
+        session.commit()
+    print("Terminado")
+if __name__ == "__main__":
+    #funcionClientesMillares()
+    rectificar()
