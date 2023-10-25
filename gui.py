@@ -160,7 +160,7 @@ class MainWindow(QMainWindow,Ui_OnInkMainWindow):
             return
         texto: str = f"Hoy tenemos {len(c)} cliente(s) de cumpleaños:\n"
         for i in c:
-            texto = texto + f"- {i.nombre_apellidos} ({get_age(i.ci)})\n"
+            texto = texto + f"- {i.nombre_apellidos} ({i.phone})\n"
         QMessageBox.information(self, "Cumpleaños del día", texto, QMessageBox.StandardButton.Ok)
 
     #Evento abrir ventana
